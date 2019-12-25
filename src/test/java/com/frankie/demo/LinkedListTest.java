@@ -14,15 +14,17 @@ public class LinkedListTest {
     public static Node node;
 
     static {
-        Node n3 = new Node("3", null);
-        Node n2 = new Node("1", n3);
-        node    = new Node("2", n2);
+        // 1 -> 3 -> 5 -> 2 -> 7
+        Node n1 = new Node("7", null);
+        Node n2 = new Node("2", n1);
+        Node n3 = new Node("5", n2);
+        Node n4 = new Node("3", n3);
+        node    = new Node("1", n4);
     }
 
     @Test
     public void buildAndPrintNodes(){
-        String result = LinkedListUtils.printNode(node);
-        System.out.println(result);
+        LinkedListUtils.printNode(node);
     }
 
     @Test
@@ -30,4 +32,33 @@ public class LinkedListTest {
         boolean isContainNode = LinkedListUtils.isContainNode(node, "1");
         System.out.println("isContainNode: " + isContainNode);
     }
+
+    @Test
+    public void deleteNode(){
+
+        System.out.println(">>>> 初始Node >>>>");
+//        >>>> 初始Node >>>>
+//        1 -> 3 -> 5 -> 2 -> 7
+        LinkedListUtils.printNode(node);
+
+        System.out.println(">>>> 删除首节点 >>>>");
+//        >>>> 删除首节点 >>>>
+//        3 -> 5 -> 2 -> 7
+        Node processedNode1 = LinkedListUtils.deleteNode(LinkedListTest.node, "1");
+        LinkedListUtils.printNode(processedNode1);
+
+        System.out.println(">>>> 删除中间节点 >>>>");
+//        >>>> 删除中间节点 >>>>
+//        1 -> 3 -> 2 -> 7
+        Node processedNode2 = LinkedListUtils.deleteNode(LinkedListTest.node, "5");
+        LinkedListUtils.printNode(processedNode2);
+
+        System.out.println(">>>> 删除尾节点 >>>>");
+//        >>>> 删除尾节点 >>>>
+//        1 -> 3 -> 5 -> 2
+        Node processedNode3 = LinkedListUtils.deleteNode(LinkedListTest.node, "7");
+        LinkedListUtils.printNode(processedNode3);
+
+    }
+
 }

@@ -9,20 +9,22 @@ public class LinkedListUtils {
     /**
      * 打印链表。
      */
-    public static String printNode(Node node){
+    public static void printNode(Node node){
         StringBuilder sb = new StringBuilder();
+        String result;
         while (node != null){
             sb.append(node.getVal());
             sb.append(" -> ");
             node = node.getNextNode();
         }
-        String result = new String(sb);
-        int length = result.length();
+        String sbStr = new String(sb);
+        int length = sbStr.length();
         if (length > 2){
-            return result.substring(0, length - 4);
+            result = sbStr.substring(0, length - 4);
         } else {
-            return result;
+            result = sbStr;
         }
+        System.out.println(result);
     }
 
     /**
@@ -36,5 +38,34 @@ public class LinkedListUtils {
             node = node.getNextNode();
         }
         return false;
+    }
+
+    /**
+     * 删除链表节点，主要分为两种情况
+     * 1. 首节点，preNode = null, return node.getNextNode();
+     * 2. 其他节点(中间、尾节点)，preNode.setNextNode(curNode.getNextNode()); return node;
+     */
+    public static Node deleteNode(Node node, String val){
+        Node curNode = node;
+        Node preNode = null;
+
+        // 定位当前节点与前一个节点。
+        while (curNode != null){
+            if (val.equals(curNode.getVal())) break;
+            preNode = curNode;
+            curNode = curNode.getNextNode();
+        }
+
+        // 特殊情况，删除节点为头结点。
+        if (preNode == null){
+            return curNode.getNextNode();
+        }
+        // 分为两种情况
+        // 1. 删除的节点为中间节点。
+        // 2. 删除的节点为尾节点。
+        else {
+            preNode.setNextNode(curNode.getNextNode());
+            return node;
+        }
     }
 }
