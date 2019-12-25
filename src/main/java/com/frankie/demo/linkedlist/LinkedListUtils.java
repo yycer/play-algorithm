@@ -68,4 +68,17 @@ public class LinkedListUtils {
             return node;
         }
     }
+
+    public static Node addNode(Node node, String val){
+        if (node == null){
+            return new Node(val, null);
+        }
+        Node curNode = node;
+        // 定位到最后一个节点。
+        while (curNode.getNextNode() != null){
+            curNode = curNode.getNextNode();
+        }
+        curNode.setNextNode(new Node(val, null));
+        return node;
+    }
 }

@@ -61,4 +61,11 @@ public class LinkedListTest {
 
     }
 
+    @Test
+    public void addValTest(){
+        LinkedListUtils.printNode(node);
+        Node node = LinkedListUtils.addNode(LinkedListTest.node, "10");
+        LinkedListUtils.printNode(node);
+    }
+
 }
