@@ -97,9 +97,43 @@ public class LinkedListUtils {
 
     /**
      * 在O(1)时间复杂度下删除节点。
+     * 边界条件：不存在待删除节点、待删除节点为首、尾节点、中间节点。
      */
     public static Node deleteNodeUsingO1(Node node, String val){
-        return null;
+        Node curNode = node;
+
+        // Step1: 定位待删除节点。
+        while (curNode != null){
+            if (val.equals(curNode.getVal())) break;
+            curNode = curNode.getNextNode();
+        }
+
+        // Step2: 若链表中午待删除节点。
+        if (curNode == null){
+            return node;
+        }
+
+        // Step3: 若待删除节点为首节点。
+        else if (curNode == node){
+            return node.getNextNode();
+        }
+
+        // Step4: 若待删除节点为尾节点。
+        else if (curNode.getNextNode() == null){
+            // 定位到前一个节点。
+            Node preNode = node;
+            while (preNode.getNextNode() != curNode){
+                preNode = preNode.getNextNode();
+            }
+            preNode.setNextNode(null);
+        }
+
+        // Step5: 若待删除节点为中间节点。
+        else {
+            curNode.setVal(curNode.getNextNode().getVal());
+            curNode.setNextNode(curNode.getNextNode().getNextNode());
+        }
+        return node;
     }
 
     /**

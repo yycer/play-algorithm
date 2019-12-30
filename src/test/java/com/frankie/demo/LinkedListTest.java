@@ -74,4 +74,36 @@ public class LinkedListTest {
         LinkedListUtils.printNode(node);
     }
 
+    @Test
+    public void deleteNodeUsingO1Test(){
+        System.out.println(">>>> 初始Node >>>>");
+//        >>>> 初始Node >>>>
+//        1 -> 3 -> 5 -> 2 -> 7
+        LinkedListUtils.printNode(node);
+
+        System.out.println(">>>> 删除不存在节点 >>>>");
+//        >>>> 删除不存在节点 >>>>
+//        1 -> 3 -> 5 -> 2 -> 7
+        Node processedNode1 = LinkedListUtils.deleteNodeUsingO1(LinkedListTest.node, "4");
+        LinkedListUtils.printNode(processedNode1);
+
+        System.out.println(">>>> 删除首节点 >>>>");
+//        >>>> 删除首节点 >>>>
+//        3 -> 5 -> 2 -> 7
+        Node processedNode2 = LinkedListUtils.deleteNodeUsingO1(LinkedListTest.node, "1");
+        LinkedListUtils.printNode(processedNode2);
+
+        System.out.println(">>>> 删除尾节点 >>>>");
+//        >>>> 删除尾节点 >>>>
+//        1 -> 3 -> 5 -> 2
+        Node processedNode3 = LinkedListUtils.deleteNodeUsingO1(LinkedListTest.node, "7");
+        LinkedListUtils.printNode(processedNode3);
+//
+        System.out.println(">>>> 删除中间节点 >>>>");
+//        >>>> 删除中间节点 >>>>
+//        1 -> 3 -> 2 -> 7
+        Node processedNode4 = LinkedListUtils.deleteNodeUsingO1(LinkedListTest.node, "5");
+        LinkedListUtils.printNode(processedNode4);
+    }
+
 }
