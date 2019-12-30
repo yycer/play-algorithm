@@ -65,6 +65,7 @@ public class LinkedListUtils {
      * 删除链表节点，主要分为两种情况
      * 1. 首节点，preNode = null, return node.getNextNode();
      * 2. 其他节点(中间、尾节点)，preNode.setNextNode(curNode.getNextNode()); return node;
+     * * 边界情况：若链表中不存在待删除节点。
      */
     public static Node deleteNode(Node node, String val){
         Node curNode = node;
@@ -77,13 +78,17 @@ public class LinkedListUtils {
             curNode = curNode.getNextNode();
         }
 
-        // 特殊情况，删除节点为头结点。
-        if (preNode == null){
+        // 边界情况1：链表中不存在待删除节点。
+        if (curNode == null){
+            return node;
+        }
+        // 边界情况2：待删除节点为头结点。
+        else if (preNode == null){
             return curNode.getNextNode();
         }
         // 分为两种情况
-        // 1. 删除的节点为中间节点。
-        // 2. 删除的节点为尾节点。
+        // 1. 待删除的节点为中间节点。
+        // 2. 待删除的节点为尾节点。
         else {
             preNode.setNextNode(curNode.getNextNode());
             return node;

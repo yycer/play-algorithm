@@ -59,6 +59,12 @@ public class LinkedListTest {
         Node processedNode3 = LinkedListUtils.deleteNode(LinkedListTest.node, "7");
         LinkedListUtils.printNode(processedNode3);
 
+        System.out.println(">>>> 边界条件: 删除不存在节点 >>>>");
+//        >>>> 删除不存在节点 >>>>
+//        1 -> 3 -> 5 -> 2 -> 7
+        Node processedNode4 = LinkedListUtils.deleteNode(LinkedListTest.node, "4");
+        LinkedListUtils.printNode(processedNode4);
+
     }
 
     @Test
