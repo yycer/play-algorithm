@@ -106,4 +106,29 @@ public class LinkedListTest {
         LinkedListUtils.printNode(processedNode4);
     }
 
+    @Test
+    public void deleteNodeInSortedLinkedListTest(){
+        Node node1 = new Node("2", null);
+        Node node2 = new Node("1", node1);
+        Node node = new Node("1", node2);
+//        Node node4 = new Node("2", node3);
+//        Node node  = new Node("1", node4);
+
+        /**
+         * 1. 常规:  1 -> 2 -> 2 -> 3
+         * 2. 更多:  1 -> 2 -> 2 -> 2 -> 3
+         * 3. 首部:  1 -> 1 -> 2
+         * 4. 尾部:  1 -> 2 -> 2
+         * 5. 多样： 1 -> 2 -> 2 -> 3 -> 3 -> 4
+         * 6. 无重:  1 -> 2 -> 3
+         * 7. 单个:  1
+         * 8. 仅重： 1 -> 1
+         */
+        System.out.println(">>>> 正常情况 >>>>");
+        LinkedListUtils.printNode(node);
+        Node result = LinkedListUtils.deleteDuplicateNode(node);
+        System.out.println(">>>> 删除重复节点 >>>>");
+        LinkedListUtils.printNode(result);
+    }
+
 }

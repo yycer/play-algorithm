@@ -108,7 +108,7 @@ public class LinkedListUtils {
             curNode = curNode.getNextNode();
         }
 
-        // Step2: 若链表中午待删除节点。
+        // Step2: 若链表中无待删除节点。
         if (curNode == null){
             return node;
         }
@@ -137,10 +137,36 @@ public class LinkedListUtils {
     }
 
     /**
-     * 删除链表中的重复节点。
+     * 删除有序链表中的重复节点。
      */
     public static Node deleteDuplicateNode(Node node){
-        return null;
+        Node curNode = node;
+        Node preNode = null;
+
+        while (curNode.getNextNode() != null){
+            // 如果当前结点与下一个节点相等。
+            if (curNode.getVal().equals(curNode.getNextNode().getVal())){
+                String dupValue = curNode.getVal();
+                Node   nextNode = curNode.getNextNode();
+                // 考虑多个相等节点的情况。
+                while (dupValue.equals(nextNode.getVal())){
+                    // 若首节点存在重复，
+                    if (preNode == null){
+                        node = nextNode.getNextNode();
+                    } else {
+                        preNode.setNextNode(nextNode.getNextNode());
+                    }
+                    curNode = curNode.getNextNode();
+                    nextNode = nextNode.getNextNode();
+                }
+            }
+            // 若不相等，设置preNode，并遍历至下一个节点。
+            else {
+                preNode = curNode;
+                curNode = curNode.getNextNode();
+            }
+        }
+        return node;
     }
 
     /**
