@@ -6,6 +6,22 @@ package com.frankie.demo.linkedlist;
  */
 public class LinkedListUtils {
 
+
+    // region Basic
+
+    public static Node addNode(Node node, String val){
+        if (node == null){
+            return new Node(val, null);
+        }
+        Node curNode = node;
+        // 定位到最后一个节点。
+        while (curNode.getNextNode() != null){
+            curNode = curNode.getNextNode();
+        }
+        curNode.setNextNode(new Node(val, null));
+        return node;
+    }
+
     /**
      * 打印链表。
      */
@@ -40,6 +56,11 @@ public class LinkedListUtils {
         return false;
     }
 
+
+    // endregion
+
+    // region Delete node
+
     /**
      * 删除链表节点，主要分为两种情况
      * 1. 首节点，preNode = null, return node.getNextNode();
@@ -69,16 +90,27 @@ public class LinkedListUtils {
         }
     }
 
-    public static Node addNode(Node node, String val){
-        if (node == null){
-            return new Node(val, null);
-        }
-        Node curNode = node;
-        // 定位到最后一个节点。
-        while (curNode.getNextNode() != null){
-            curNode = curNode.getNextNode();
-        }
-        curNode.setNextNode(new Node(val, null));
-        return node;
+    /**
+     * 在O(1)时间复杂度下删除节点。
+     */
+    public static Node deleteNodeUsingO1(Node node, String val){
+        return null;
     }
+
+    /**
+     * 删除链表中的重复节点。
+     */
+    public static Node deleteDuplicateNode(Node node){
+        return null;
+    }
+
+    /**
+     * 删除链表中间节点。
+     */
+    public static Node deleteMiddleNode(Node node){
+        return null;
+    }
+
+    // endregion
+
 }
