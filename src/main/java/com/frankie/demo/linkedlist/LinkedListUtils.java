@@ -143,6 +143,55 @@ public class LinkedListUtils {
         }
     }
 
+    /**
+     * Print the last k node using minus(count - k).
+     * eg. 1 -> 2 -> 3 -> 4 -> 5, if k = 2, print 4.
+     */
+    public static String printLastKNodeUsingMinus(Node node, int k){
+        Node curNode = node;
+        // Step1: Count the nodes.
+        int count = countNodes(curNode);
+
+        // Step2: Calculate steps you should go.
+        if (k < 0 || k > count){
+            return null;
+        }
+        int step = count - k;
+
+        // Step3: Navigate to the last k node.
+        while (step > 0){
+            curNode = curNode.getNextNode();
+            step--;
+        }
+        return curNode.getVal();
+    }
+
+    /**
+     * Print the last k node using fast and slow node.
+     */
+    public static String printLastKNodeUsingFastMode(Node node, int k){
+
+        if (node == null || k <= 0 || k > countNodes(node)){
+            return null;
+        }
+
+        Node fastNode = node;
+        Node slowNode = node;
+
+        // Step1: Fast node move k steps firstly.
+        while (k > 0){
+            fastNode = fastNode.getNextNode();
+            k--;
+        }
+
+        // Step2: Slow node stop until fast node goes to the end.
+        while (fastNode != null){
+            fastNode = fastNode.getNextNode();
+            slowNode = slowNode.getNextNode();
+        }
+        return slowNode.getVal();
+    }
+
     // endregion
 
     // region Delete node

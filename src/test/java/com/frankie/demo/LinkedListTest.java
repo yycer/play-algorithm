@@ -290,4 +290,19 @@ public class LinkedListTest {
         LinkedListUtils.printNodeReversely(llu1.head);
 //        LinkedListUtils.printNodeReversely(null);
     }
+
+    @Test
+    public void printLastKNodeUsingMinusTest(){
+        LinkedListUtils llu1 = new LinkedListUtils("1");
+        llu1.addNodeForward("2");
+        llu1.addNodeForward("3");
+        llu1.addNodeForward("4");
+        llu1.addNodeForward("5");
+
+        System.out.println("Print nodes.");
+        LinkedListUtils.printNode(llu1.head);
+//        String kNode = LinkedListUtils.printLastKNodeUsingMinus(llu1.head, 2);
+        String kNode = LinkedListUtils.printLastKNodeUsingFastMode(llu1.head, 2);
+        System.out.println("Print the last k node value is " + kNode);
+    }
 }
