@@ -1,5 +1,7 @@
 package com.frankie.demo.linkedlist;
 
+import java.util.Stack;
+
 /**
  * @author: Yao Frankie
  * @date: 2019/12/25 15:46
@@ -117,6 +119,29 @@ public class LinkedListUtils {
         return node;
     }
 
+    /**
+     * Print nodes reversely.
+     */
+    public static void printNodeReversely(Node node){
+        Stack<String> stack = new Stack<>();
+        Node        curNode = node;
+
+        // Push val into stack.
+        while (curNode != null){
+            stack.push(curNode.getVal());
+            curNode = curNode.getNextNode();
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()){
+            sb.append(stack.pop());
+            sb.append(" -> ");
+        }
+        String result = new String(sb);
+        if (result.length() > 4){
+            System.out.println("Revered linked list is " + result.substring(0, result.length() - 4));
+        }
+    }
 
     // endregion
 

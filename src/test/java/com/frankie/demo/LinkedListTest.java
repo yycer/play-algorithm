@@ -275,4 +275,19 @@ public class LinkedListTest {
         LinkedListUtils.printNode(llu1.head);
         LinkedListUtils.buildCircleLinkedList(llu1.head, "3");
     }
+
+    @Test
+    public void printNodesReverselyTest(){
+        LinkedListUtils llu1 = new LinkedListUtils("1");
+        llu1.addNodeForward("2");
+        llu1.addNodeForward("3");
+        llu1.addNodeForward("4");
+        llu1.addNodeForward("5");
+
+        System.out.println("Print nodes.");
+        LinkedListUtils.printNode(llu1.head);
+        System.out.println("Print nodes reversely.");
+        LinkedListUtils.printNodeReversely(llu1.head);
+//        LinkedListUtils.printNodeReversely(null);
+    }
 }
