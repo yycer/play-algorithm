@@ -221,4 +221,34 @@ public class LinkedListTest {
 //        1 -> 2 -> 2 -> 3
         LinkedListUtils.printNode(llu.head);
     }
+
+    @Test
+    public void deleteMiddleNodeTest(){
+        // 奇数: 1 -> 2 -> 3 -> 4 -> 5
+        LinkedListUtils llu1 = new LinkedListUtils("1");
+        llu1.addNodeForward("2");
+        llu1.addNodeForward("3");
+        llu1.addNodeForward("4");
+        llu1.addNodeForward("5");
+
+        System.out.println(">>>> 正常情况 >>>>");
+        LinkedListUtils.printNode(llu1.head);
+        Node result1 = LinkedListUtils.deleteMiddleNode(llu1.head);
+        System.out.println(">>>> 删除中间节点 >>>>");
+        LinkedListUtils.printNode(result1);
+
+        // 偶数: 1 -> 2 -> 3 -> 4 -> 5 -> 6
+        LinkedListUtils llu2 = new LinkedListUtils("1");
+        llu2.addNodeForward("2");
+        llu2.addNodeForward("3");
+        llu2.addNodeForward("4");
+        llu2.addNodeForward("5");
+        llu2.addNodeForward("6");
+
+        System.out.println(">>>> 正常情况 >>>>");
+        LinkedListUtils.printNode(llu2.head);
+        Node result2 = LinkedListUtils.deleteMiddleNode(llu2.head);
+        System.out.println(">>>> 删除中间节点 >>>>");
+        LinkedListUtils.printNode(result2);
+    }
 }

@@ -205,7 +205,21 @@ public class LinkedListUtils {
      * 删除链表中间节点。
      */
     public static Node deleteMiddleNode(Node node){
-        return null;
+
+        // Step1: Navigate to the to be deleted node using fast and slow mode.
+        Node fastNode = node;
+        Node slowNode = node;
+
+        while (fastNode != null && fastNode.getNextNode() != null){
+            fastNode = fastNode.getNextNode().getNextNode();
+            slowNode = slowNode.getNextNode();
+        }
+
+        // Step2: Delete node using O(1).
+        slowNode.setVal(slowNode.getNextNode().getVal());
+        slowNode.setNextNode(slowNode.getNextNode().getNextNode());
+
+        return node;
     }
 
     // endregion
