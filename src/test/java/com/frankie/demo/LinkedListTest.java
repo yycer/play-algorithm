@@ -251,4 +251,28 @@ public class LinkedListTest {
         System.out.println(">>>> 删除中间节点 >>>>");
         LinkedListUtils.printNode(result2);
     }
+
+    @Test
+    public void countNodesTest(){
+        LinkedListUtils llu1 = new LinkedListUtils("1");
+        llu1.addNodeForward("2");
+        llu1.addNodeForward("3");
+
+        LinkedListUtils.printNode(llu1.head);
+
+        int count = LinkedListUtils.countNodes(llu1.head);
+        System.out.println(">>>> 总结点数:" + count + " >>>>");
+    }
+
+    @Test
+    public void buildCircleLinkedListTest(){
+        LinkedListUtils llu1 = new LinkedListUtils("1");
+        llu1.addNodeForward("2");
+        llu1.addNodeForward("3");
+        llu1.addNodeForward("4");
+        llu1.addNodeForward("5");
+
+        LinkedListUtils.printNode(llu1.head);
+        LinkedListUtils.buildCircleLinkedList(llu1.head, "3");
+    }
 }

@@ -77,6 +77,46 @@ public class LinkedListUtils {
         return false;
     }
 
+    /**
+     * Count nodes in linked list.
+     * eg. 1 -> 2 -> 3 return 3.
+     */
+    public static int countNodes(Node node){
+        Node curNode = node;
+        int count = 0;
+        while (curNode != null){
+            count++;
+            curNode = curNode.getNextNode();
+        }
+        return count;
+    }
+
+    /**
+     * Build a simple circle linked list.
+     */
+    public static Node buildCircleLinkedList(Node node, String connectedVal){
+
+        // curNode is used to find the connected and last node.
+        Node curNode       = node;
+        Node connectedNode = null;
+
+        if (curNode == null){
+            return null;
+        }
+
+        // Step1: Navigate to to be linked node and the last node.
+        while (curNode.getNextNode() != null){
+            if (connectedVal.equals(curNode.getVal())){
+                connectedNode = curNode;
+            }
+            curNode = curNode.getNextNode();
+        }
+
+        // Step2: Link to be linked node to the last node.
+        curNode.setNextNode(connectedNode);
+        return node;
+    }
+
 
     // endregion
 
