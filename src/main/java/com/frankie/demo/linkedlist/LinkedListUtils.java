@@ -164,24 +164,35 @@ public class LinkedListUtils {
         Node curNode = node;
         Node preNode = null;
 
-        while (curNode.getNextNode() != null){
-            // 如果当前结点与下一个节点相等。
+        // curNode != null prevents 1 -> 2 -> 2
+        while (curNode != null && curNode.getNextNode() != null){
+            // If current node's value is same to the next node's value.
             if (curNode.getVal().equals(curNode.getNextNode().getVal())){
+
+                int    dupCount = 0;
                 String dupValue = curNode.getVal();
                 Node   nextNode = curNode.getNextNode();
-                // 考虑多个相等节点的情况。
-                while (dupValue.equals(nextNode.getVal())){
+                // nextNode != null prevents 1 -> 2 -> 2
+                while (nextNode != null && dupValue.equals(nextNode.getVal())){
                     // 若首节点存在重复，
                     if (preNode == null){
-                        node = nextNode.getNextNode();
+                        node     = nextNode.getNextNode();
+                        nextNode = nextNode.getNextNode();
+                        dupCount++;
+                        continue;
                     } else {
                         preNode.setNextNode(nextNode.getNextNode());
+                        nextNode = nextNode.getNextNode();
+                        dupCount++;
                     }
+                }
+                // Adjust the position of the current node.
+                while (dupCount >= 0){
                     curNode = curNode.getNextNode();
-                    nextNode = nextNode.getNextNode();
+                    dupCount--;
                 }
             }
-            // 若不相等，设置preNode，并遍历至下一个节点。
+            // If it is different, set the previous node and next node.
             else {
                 preNode = curNode;
                 curNode = curNode.getNextNode();

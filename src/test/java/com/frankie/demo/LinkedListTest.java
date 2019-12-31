@@ -108,11 +108,6 @@ public class LinkedListTest {
 
     @Test
     public void deleteNodeInSortedLinkedListTest(){
-        Node node1 = new Node("2", null);
-        Node node2 = new Node("1", node1);
-        Node node = new Node("1", node2);
-//        Node node4 = new Node("2", node3);
-//        Node node  = new Node("1", node4);
 
         /**
          * 1. 常规:  1 -> 2 -> 2 -> 3
@@ -124,11 +119,96 @@ public class LinkedListTest {
          * 7. 单个:  1
          * 8. 仅重： 1 -> 1
          */
+
+        // 1. 常规:  1 -> 2 -> 2 -> 3
+        LinkedListUtils llu1 = new LinkedListUtils("1");
+        llu1.addNodeForward("2");
+        llu1.addNodeForward("2");
+        llu1.addNodeForward("3");
+
         System.out.println(">>>> 正常情况 >>>>");
-        LinkedListUtils.printNode(node);
-        Node result = LinkedListUtils.deleteDuplicateNode(node);
+        LinkedListUtils.printNode(llu1.head);
+        Node result1 = LinkedListUtils.deleteDuplicateNode(llu1.head);
         System.out.println(">>>> 删除重复节点 >>>>");
-        LinkedListUtils.printNode(result);
+        LinkedListUtils.printNode(result1);
+
+//        2. 更多:  1 -> 2 -> 2 -> 2 -> 3
+        LinkedListUtils llu2 = new LinkedListUtils("1");
+        llu2.addNodeForward("2");
+        llu2.addNodeForward("2");
+        llu2.addNodeForward("2");
+        llu2.addNodeForward("3");
+
+        System.out.println(">>>> 正常情况 >>>>");
+        LinkedListUtils.printNode(llu2.head);
+        Node result2 = LinkedListUtils.deleteDuplicateNode(llu2.head);
+        System.out.println(">>>> 删除重复节点 >>>>");
+        LinkedListUtils.printNode(result2);
+
+//        3. 首部:  1 -> 1 -> 2
+        LinkedListUtils llu3 = new LinkedListUtils("1");
+        llu3.addNodeForward("1");
+        llu3.addNodeForward("2");
+
+        System.out.println(">>>> 正常情况 >>>>");
+        LinkedListUtils.printNode(llu3.head);
+        Node result3 = LinkedListUtils.deleteDuplicateNode(llu3.head);
+        System.out.println(">>>> 删除重复节点 >>>>");
+        LinkedListUtils.printNode(result3);
+
+//      4. 尾部:  1 -> 2 -> 2
+        LinkedListUtils llu4 = new LinkedListUtils("1");
+        llu4.addNodeForward("2");
+        llu4.addNodeForward("2");
+
+        System.out.println(">>>> 正常情况 >>>>");
+        LinkedListUtils.printNode(llu4.head);
+        Node result4 = LinkedListUtils.deleteDuplicateNode(llu4.head);
+        System.out.println(">>>> 删除重复节点 >>>>");
+        LinkedListUtils.printNode(result4);
+
+//      5. 多样： 1 -> 2 -> 2 -> 3 -> 3 -> 4
+        LinkedListUtils llu5 = new LinkedListUtils("1");
+        llu5.addNodeForward("2");
+        llu5.addNodeForward("2");
+        llu5.addNodeForward("3");
+        llu5.addNodeForward("3");
+        llu5.addNodeForward("4");
+
+        System.out.println(">>>> 正常情况 >>>>");
+        LinkedListUtils.printNode(llu5.head);
+        Node result5 = LinkedListUtils.deleteDuplicateNode(llu5.head);
+        System.out.println(">>>> 删除重复节点 >>>>");
+        LinkedListUtils.printNode(result5);
+
+//        6. 无重:  1 -> 2 -> 3
+        LinkedListUtils llu6 = new LinkedListUtils("1");
+        llu6.addNodeForward("2");
+        llu6.addNodeForward("3");
+
+        System.out.println(">>>> 正常情况 >>>>");
+        LinkedListUtils.printNode(llu6.head);
+        Node result6 = LinkedListUtils.deleteDuplicateNode(llu6.head);
+        System.out.println(">>>> 删除重复节点 >>>>");
+        LinkedListUtils.printNode(result6);
+
+//        7. 单个:  1
+        LinkedListUtils llu7 = new LinkedListUtils("1");
+        System.out.println(">>>> 正常情况 >>>>");
+        LinkedListUtils.printNode(llu7.head);
+        Node result7 = LinkedListUtils.deleteDuplicateNode(llu7.head);
+        System.out.println(">>>> 删除重复节点 >>>>");
+        LinkedListUtils.printNode(result7);
+
+//        8. 仅重： 1 -> 1
+        LinkedListUtils llu8 = new LinkedListUtils("1");
+        llu8.addNodeForward("1");
+
+        System.out.println(">>>> 正常情况 >>>>");
+        LinkedListUtils.printNode(llu8.head);
+        Node result8 = LinkedListUtils.deleteDuplicateNode(llu8.head);
+        System.out.println(">>>> 删除重复节点 >>>>");
+        LinkedListUtils.printNode(result8);
     }
 
     @Test
