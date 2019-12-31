@@ -6,8 +6,29 @@ package com.frankie.demo.linkedlist;
  */
 public class LinkedListUtils {
 
+    public Node head;
+
+    public LinkedListUtils(String val){
+        this.head = new Node(val, null);
+    }
 
     // region Basic
+
+    /**
+     * Add node forward.
+     */
+    public void addNodeForward(String val){
+        Node curNode = head;
+        if (curNode == null){
+            head = new Node(val, null);
+        } else {
+            // Navigate to the last node.
+            while (curNode.getNextNode() != null){
+                curNode = curNode.getNextNode();
+            }
+            curNode.setNextNode(new Node(val, null));
+        }
+    }
 
     public static Node addNode(Node node, String val){
         if (node == null){

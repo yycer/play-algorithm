@@ -131,4 +131,14 @@ public class LinkedListTest {
         LinkedListUtils.printNode(result);
     }
 
+    @Test
+    public void addNodeForwardTest(){
+        LinkedListUtils llu = new LinkedListUtils("1");
+        llu.addNodeForward("2");
+        llu.addNodeForward("2");
+        llu.addNodeForward("3");
+
+//        1 -> 2 -> 2 -> 3
+        LinkedListUtils.printNode(llu.head);
+    }
 }
