@@ -409,4 +409,41 @@ public class LinkedListUtils {
         return mergedNode;
     }
 
+    /**
+     * Find the first public node between two single linked list.
+     */
+    public static String findFirstPublicNode(Node n1, Node n2){
+        // Base check.
+        if (n1 == null || n2 == null) return null;
+
+        // Step1: Calculate the length of two single linked lists, shorter linked list walk k steps.
+        int l1  = countNodes(n1);
+        int l2  = countNodes(n2);
+        int gap = Math.abs(l2 - l1);
+
+        if (l1 >= l2){
+            while (gap > 0){
+                n1 = n1.getNextNode();
+                gap--;
+            }
+        } else {
+            while (gap > 0){
+                n2 = n2.getNextNode();
+                gap--;
+            }
+        }
+
+        // Step2: Find the first public node.
+        while (n1 != null && n1.getVal() != n2.getVal()){
+            n1 = n1.getNextNode();
+            n2 = n2.getNextNode();
+        }
+        // If two linked list does not have common node.
+        if (n1 == null || n2 == null){
+            return null;
+        }
+
+        return n1.getVal();
+    }
+
 }

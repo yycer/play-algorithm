@@ -370,6 +370,91 @@ public class LinkedListTest {
         System.out.println("mergedSort3: ");
         LinkedListUtils.printNode(mergedSort3);
 
+    }
 
+    @Test
+    public void findFirstPublicNodeTest(){
+        LinkedListUtils llu1 = new LinkedListUtils("1");
+        llu1.addNodeForward("2");
+        llu1.addNodeForward("3");
+        llu1.addNodeForward("4");
+        llu1.addNodeForward("8");
+        llu1.addNodeForward("9");
+        llu1.addNodeForward("10");
+
+        LinkedListUtils llu2 = new LinkedListUtils("5");
+        llu2.addNodeForward("6");
+        llu2.addNodeForward("7");
+        llu2.addNodeForward("8");
+        llu2.addNodeForward("9");
+        llu2.addNodeForward("10");
+
+        System.out.println("llu1: ");
+        LinkedListUtils.printNode(llu1.head);
+
+        System.out.println("llu2: ");
+        LinkedListUtils.printNode(llu2.head);
+
+        String firstPublicNodeVal1 = LinkedListUtils.findFirstPublicNode(llu1.head, llu2.head);
+        System.out.println("firstPublicNodeVal1: " + firstPublicNodeVal1);
+
+        /**
+         * Two linked list are identical.
+         */
+        LinkedListUtils llu3 = new LinkedListUtils("1");
+        llu3.addNodeForward("2");
+        llu3.addNodeForward("3");
+
+        LinkedListUtils llu4 = new LinkedListUtils("1");
+        llu4.addNodeForward("2");
+        llu4.addNodeForward("3");
+
+        System.out.println("llu3: ");
+        LinkedListUtils.printNode(llu3.head);
+
+        System.out.println("llu4: ");
+        LinkedListUtils.printNode(llu4.head);
+
+        String firstPublicNodeVal2 = LinkedListUtils.findFirstPublicNode(llu3.head, llu4.head);
+        System.out.println("firstPublicNodeVal2: " + firstPublicNodeVal2);
+
+        /**
+         * Two linked list does not have common node.
+//         */
+        LinkedListUtils llu5 = new LinkedListUtils("1");
+        llu5.addNodeForward("2");
+        llu5.addNodeForward("3");
+
+        LinkedListUtils llu6 = new LinkedListUtils("11");
+        llu6.addNodeForward("22");
+        llu6.addNodeForward("33");
+
+        System.out.println("llu5: ");
+        LinkedListUtils.printNode(llu5.head);
+
+        System.out.println("llu6: ");
+        LinkedListUtils.printNode(llu6.head);
+
+        String firstPublicNodeVal3 = LinkedListUtils.findFirstPublicNode(llu5.head, llu6.head);
+        System.out.println("firstPublicNodeVal3: " + firstPublicNodeVal3);
+
+        /**
+         * Last node is the public node.
+         */
+        LinkedListUtils llu7 = new LinkedListUtils("1");
+        llu7.addNodeForward("2");
+        llu7.addNodeForward("3");
+
+        LinkedListUtils llu8 = new LinkedListUtils("4");
+        llu8.addNodeForward("3");
+
+        System.out.println("llu7: ");
+        LinkedListUtils.printNode(llu7.head);
+
+        System.out.println("llu8: ");
+        LinkedListUtils.printNode(llu8.head);
+
+        String firstPublicNodeVal4 = LinkedListUtils.findFirstPublicNode(llu7.head, llu8.head);
+        System.out.println("firstPublicNodeVal4: " + firstPublicNodeVal4);
     }
 }
