@@ -389,4 +389,24 @@ public class LinkedListUtils {
     }
 
     // endregion
+
+    /**
+     * Merge two sorted linked list Recursively.
+     */
+    public static Node mergeSortedNode(Node n1, Node n2){
+        if (n1 == null) return n2;
+        else if (n2 == null) return n1;
+
+        // Initial merged node.
+        Node mergedNode = new Node("0", null);
+        if (Integer.parseInt(n1.getVal()) <Integer.parseInt(n2.getVal())){
+            mergedNode.setVal(n1.getVal());
+            mergedNode.setNextNode(mergeSortedNode(n1.getNextNode(), n2));
+        } else {
+            mergedNode.setVal(n2.getVal());
+            mergedNode.setNextNode(mergeSortedNode(n1, n2.getNextNode()));
+        }
+        return mergedNode;
+    }
+
 }

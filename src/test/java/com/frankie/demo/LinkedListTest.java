@@ -322,4 +322,54 @@ public class LinkedListTest {
         System.out.println("entranceVal = " + entranceVal);
 //        entranceVal = 3
     }
+
+    @Test
+    public void mergeTwoSortedLinkedListTest(){
+        LinkedListUtils llu1 = new LinkedListUtils("1");
+        llu1.addNodeForward("3");
+        llu1.addNodeForward("5");
+        llu1.addNodeForward("6");
+
+        LinkedListUtils llu2 = new LinkedListUtils("2");
+        llu2.addNodeForward("4");
+        llu2.addNodeForward("7");
+
+        System.out.println("llu1: ");
+        LinkedListUtils.printNode(llu1.head);
+        System.out.println("llu2: ");
+        LinkedListUtils.printNode(llu2.head);
+//
+        Node mergedSort1 = LinkedListUtils.mergeSortedNode(llu1.head, llu2.head);
+        System.out.println("mergedSort1: ");
+        LinkedListUtils.printNode(mergedSort1);
+
+        /**
+         * Test only has one node.
+         */
+        LinkedListUtils llu3 = new LinkedListUtils("1");
+//        LinkedListUtils llu3 = new LinkedListUtils("3");
+
+        System.out.println("llu3: ");
+        LinkedListUtils.printNode(llu3.head);
+
+        Node mergedSort2 = LinkedListUtils.mergeSortedNode(llu2.head, llu3.head);
+        System.out.println("mergedSort2: ");
+        LinkedListUtils.printNode(mergedSort2);
+
+        /**
+         * Test a linked list containing duplicate nodes.
+         */
+
+        LinkedListUtils llu4 = new LinkedListUtils("3");
+        llu4.addNodeForward("3");
+
+        System.out.println("llu4: ");
+        LinkedListUtils.printNode(llu4.head);
+
+        Node mergedSort3 = LinkedListUtils.mergeSortedNode(llu2.head, llu4.head);
+        System.out.println("mergedSort3: ");
+        LinkedListUtils.printNode(mergedSort3);
+
+
+    }
 }
