@@ -305,4 +305,21 @@ public class LinkedListTest {
         String kNode = LinkedListUtils.printLastKNodeUsingFastMode(llu1.head, 2);
         System.out.println("Print the last k node value is " + kNode);
     }
+
+    @Test
+    public void printEntranceNodeTest(){
+        LinkedListUtils llu1 = new LinkedListUtils("1");
+        llu1.addNodeForward("2");
+        llu1.addNodeForward("3");
+        llu1.addNodeForward("4");
+        llu1.addNodeForward("5");
+
+        LinkedListUtils.printNode(llu1.head);
+//        1 -> 2 -> 3 -> 4 -> 5
+        LinkedListUtils.buildCircleLinkedList(llu1.head, "3");
+
+        String entranceVal = LinkedListUtils.printEntranceNode(llu1.head);
+        System.out.println("entranceVal = " + entranceVal);
+//        entranceVal = 3
+    }
 }

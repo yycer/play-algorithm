@@ -338,4 +338,55 @@ public class LinkedListUtils {
 
     // endregion
 
+    // region Circle Linked List.
+
+    /**
+     * Print the entrance node.
+     */
+    public static String printEntranceNode(Node circleNode){
+        Node curCircleNode = circleNode;
+
+        // Step1: Navigate the meeting node, fast node takes two steps, slow node take one step.
+        Node meetingNode = getMeetingNode(circleNode);
+
+        // Step2: Navigate the entrance node, fast node is the meeting node, slow node starts from head.
+        Node entranceNode = getEntranceNode(curCircleNode, meetingNode);
+        if (entranceNode != null){
+            return entranceNode.getVal();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Get the meeting node from a circle linked list.
+     */
+    private static Node getMeetingNode(Node circleNode) {
+        Node fastNode = circleNode.getNextNode().getNextNode();
+        Node slowNode = circleNode.getNextNode();
+
+        while (fastNode != slowNode){
+            fastNode = fastNode.getNextNode().getNextNode();
+            slowNode = slowNode.getNextNode();
+        }
+        // return fastNode or slowNode.
+        return fastNode;
+    }
+
+    /**
+     * Get the entrance node from a circle linked list.
+     */
+    private static Node getEntranceNode(Node circleNode, Node meetingNode) {
+        Node fastNode = meetingNode;
+        Node slowNode = circleNode;
+
+        while (fastNode != slowNode){
+            fastNode = fastNode.getNextNode();
+            slowNode = slowNode.getNextNode();
+        }
+        // return fastNode or slowNode.
+        return fastNode;
+    }
+
+    // endregion
 }
