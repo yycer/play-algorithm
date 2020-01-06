@@ -20,9 +20,12 @@ public class TreeUtils {
         }
         if (val < curNode.getVal()){
             curNode.setLeftNode(addTreeNodeRecursively(curNode.getLeftNode(), val));
-        } else if (val > curNode.getVal()){
+        }
+        else if (val > curNode.getVal()){
             curNode.setRightNode(addTreeNodeRecursively(curNode.getRightNode(), val));
-        } else {
+        }
+        // Binary search tree has no nodes with same value.
+        else {
             return curNode;
         }
         return curNode;
@@ -48,7 +51,7 @@ public class TreeUtils {
 
         Stack<TreeNode> stack = new Stack<>();
         stack.push(node);
-        System.out.println("开始前序遍历: ");
+        System.out.println("PreOrder traversal using stack and loop: ");
 
         while (!stack.isEmpty()){
 
@@ -61,5 +64,16 @@ public class TreeUtils {
                 stack.push(curNode.getLeftNode());
             }
         }
+    }
+
+    /**
+     * Pre-order traversal using recursion.
+     */
+    public static void preOrderTraversalUsingRecursion(TreeNode node){
+        if (node == null) return;
+
+        System.out.print(node.getVal() + " ");
+        preOrderTraversalUsingRecursion(node.getLeftNode());
+        preOrderTraversalUsingRecursion(node.getRightNode());
     }
 }

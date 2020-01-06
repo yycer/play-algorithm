@@ -15,10 +15,10 @@ public class TreeTest {
     @Test
     public void addAndPrintTreeNodeTest(){
         TreeUtils tu = new TreeUtils();
-        tu.addTreeNode(5);
-        tu.addTreeNode(3);
-        tu.addTreeNode(8);
         tu.addTreeNode(4);
+        tu.addTreeNode(2);
+        tu.addTreeNode(6);
+        tu.addTreeNode(3);
         BinaryTreePrinter.printNode(tu.root);
     }
 
@@ -62,5 +62,21 @@ public class TreeTest {
         BinaryTreePrinter.printNode(tu.root);
 
         TreeUtils.preOrderTraversalUsingStackAndLoop(tu.root);
+    }
+
+    @Test
+    public void preOrderTraversalRecursiveTest(){
+        TreeUtils tu = new TreeUtils();
+        tu.addTreeNode(4);
+        tu.addTreeNode(2);
+        tu.addTreeNode(6);
+        tu.addTreeNode(1);
+        tu.addTreeNode(3);
+        tu.addTreeNode(5);
+        tu.addTreeNode(7);
+        BinaryTreePrinter.printNode(tu.root);
+
+        System.out.println("PreOrder traversal using recursion: ");
+        TreeUtils.preOrderTraversalUsingRecursion(tu.root);
     }
 }
