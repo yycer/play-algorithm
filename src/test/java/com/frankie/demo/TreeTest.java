@@ -65,7 +65,7 @@ public class TreeTest {
     }
 
     @Test
-    public void preOrderTraversalRecursiveTest(){
+    public void preOrderTraversalUsingRecursionTest(){
         TreeUtils tu = new TreeUtils();
         tu.addTreeNode(4);
         tu.addTreeNode(2);
