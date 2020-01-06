@@ -1,5 +1,7 @@
 package com.frankie.demo.tree;
 
+import java.util.Stack;
+
 /**
  * @author: Yao Frankie
  * @date: 2019/12/25 15:46
@@ -36,5 +38,28 @@ public class TreeUtils {
         return val < root.getVal() ?
                containTreeNode(root.getLeftNode(), val) :
                containTreeNode(root.getRightNode(), val);
+    }
+
+    /**
+     * Pre-order traversal using stack and while loop.
+     */
+    public static void preOrderTraversalUsingStackAndLoop(TreeNode node){
+        if (node == null) return;
+
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(node);
+        System.out.println("开始前序遍历: ");
+
+        while (!stack.isEmpty()){
+
+            TreeNode curNode = stack.pop();
+            System.out.print(curNode.getVal() + " ");
+            if (curNode.getRightNode() != null){
+                stack.push(curNode.getRightNode());
+            }
+            if (curNode.getLeftNode() != null){
+                stack.push(curNode.getLeftNode());
+            }
+        }
     }
 }

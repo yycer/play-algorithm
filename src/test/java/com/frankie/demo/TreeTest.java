@@ -48,4 +48,19 @@ public class TreeTest {
         boolean contain2 = TreeUtils.containTreeNode(tu.root, 2);
 
     }
+
+    @Test
+    public void preOrderTraversalUsingStackAndLoopTest(){
+        TreeUtils tu = new TreeUtils();
+        tu.addTreeNode(4);
+        tu.addTreeNode(2);
+        tu.addTreeNode(6);
+        tu.addTreeNode(1);
+        tu.addTreeNode(3);
+        tu.addTreeNode(5);
+        tu.addTreeNode(7);
+        BinaryTreePrinter.printNode(tu.root);
+
+        TreeUtils.preOrderTraversalUsingStackAndLoop(tu.root);
+    }
 }
