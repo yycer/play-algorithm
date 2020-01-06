@@ -25,4 +25,16 @@ public class TreeUtils {
         }
         return curNode;
     }
+
+    /**
+     * Determine the tree contains a tree node.
+     */
+    public static boolean containTreeNode(TreeNode root, int val){
+        if (val < 0 || root == null) return false;
+        if (val == root.getVal())    return true;
+
+        return val < root.getVal() ?
+               containTreeNode(root.getLeftNode(), val) :
+               containTreeNode(root.getRightNode(), val);
+    }
 }
