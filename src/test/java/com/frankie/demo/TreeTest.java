@@ -21,4 +21,14 @@ public class TreeTest {
         tu.addTreeNode(4);
         BinaryTreePrinter.printNode(tu.root);
     }
+
+    @Test
+    public void addSameTreeNodeTest(){
+        TreeUtils tu = new TreeUtils();
+        tu.addTreeNode(5);
+        tu.addTreeNode(3);
+        tu.addTreeNode(7);
+        tu.addTreeNode(3);
+        BinaryTreePrinter.printNode(tu.root);
+    }
 }
