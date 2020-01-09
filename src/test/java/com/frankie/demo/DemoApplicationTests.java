@@ -26,4 +26,11 @@ class DemoApplicationTests {
         System.out.println(nums.pop().toString());
         System.out.println(nums);
     }
+
+    @Test
+    public void test(){
+        Object a = null;
+        CharSequence result = (CharSequence) a;
+        System.out.println(result);
+    }
 }

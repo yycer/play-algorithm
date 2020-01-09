@@ -76,4 +76,36 @@ public class TreeUtils {
         preOrderTraversalUsingRecursion(node.getLeftNode());
         preOrderTraversalUsingRecursion(node.getRightNode());
     }
+
+    /**
+     * In-order traversal using stack and loop.
+     */
+    public static void inOrderTraversalUsingStackAndLoop(TreeNode node){
+        if (node == null) return;
+        TreeNode curNode = node;
+        Stack<TreeNode> stack = new Stack<>();
+
+        while (curNode != null || !stack.isEmpty()){
+            // Step1: Add curNode and left nodes into stack.
+            while (curNode != null){
+                stack.push(curNode);
+                curNode = curNode.getLeftNode();
+            }
+
+            // Step2: Pop and print node.
+            TreeNode poppedNode = stack.pop();
+            System.out.print(poppedNode.getVal() + " ");
+
+            // Step3: Navigate to the right node.
+            curNode = poppedNode.getRightNode();
+        }
+    }
+
+    public static void inOrderTraversalUsingRecursion(TreeNode node){
+        if (node == null) return;
+
+        inOrderTraversalUsingRecursion(node.getLeftNode());
+        System.out.print(node.getVal() + " ");
+        inOrderTraversalUsingRecursion(node.getRightNode());
+    }
 }

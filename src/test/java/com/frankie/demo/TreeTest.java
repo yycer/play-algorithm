@@ -79,4 +79,36 @@ public class TreeTest {
         System.out.println("PreOrder traversal using recursion: ");
         TreeUtils.preOrderTraversalUsingRecursion(tu.root);
     }
+
+    @Test
+    public void inOrderTraversalUsingStackAndLoopTest(){
+        TreeUtils tu = new TreeUtils();
+        tu.addTreeNode(4);
+        tu.addTreeNode(2);
+        tu.addTreeNode(6);
+        tu.addTreeNode(1);
+        tu.addTreeNode(3);
+        tu.addTreeNode(5);
+        tu.addTreeNode(7);
+        BinaryTreePrinter.printNode(tu.root);
+
+        System.out.println("InOrder traversal using stack and loop: ");
+        TreeUtils.inOrderTraversalUsingStackAndLoop(tu.root);
+    }
+
+    @Test
+    public void inOrderTraversalUsingRecursionTest(){
+        TreeUtils tu = new TreeUtils();
+        tu.addTreeNode(4);
+        tu.addTreeNode(2);
+        tu.addTreeNode(6);
+        tu.addTreeNode(1);
+        tu.addTreeNode(3);
+        tu.addTreeNode(5);
+        tu.addTreeNode(7);
+        BinaryTreePrinter.printNode(tu.root);
+
+        System.out.println("InOrder traversal using recursion: ");
+        TreeUtils.inOrderTraversalUsingRecursion(tu.root);
+    }
 }
