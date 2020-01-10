@@ -1,5 +1,6 @@
 package com.frankie.demo.tree;
 
+import java.util.ArrayDeque;
 import java.util.Stack;
 
 /**
@@ -142,4 +143,42 @@ public class TreeUtils {
         postOrderTraversalUsingRecursion(node.getRightNode());
         System.out.print(node.getVal() + " ");
     }
+
+    /**
+     * Level order traversal using queue and while loop.
+     */
+    public static void levelOrderTraversalUsingQueueAndLoop(TreeNode node){
+        if (node == null) return;
+
+        TreeNode curNode = node;
+        ArrayDeque<TreeNode> queue = new ArrayDeque<>();
+        queue.addLast(curNode);
+
+        while(!queue.isEmpty()){
+            TreeNode poppedNode = queue.pollFirst();
+            System.out.print(poppedNode.getVal() + " ");
+            if (poppedNode.getLeftNode() != null){
+                queue.addLast(poppedNode.getLeftNode());
+            }
+            if (poppedNode.getRightNode() != null){
+                queue.addLast(poppedNode.getRightNode());
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
