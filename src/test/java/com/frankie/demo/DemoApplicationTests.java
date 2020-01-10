@@ -39,9 +39,9 @@ class DemoApplicationTests {
 
     @Test
     public void sealCertNoTest(){
-//        String certNo = "310112199608174610";
+//        String certNo = "111";
 //        String certNo = "0123456789";
-        String phone = "15900617310";
+        String phone = "11111222223";
 
 //        String result = SealUtils.showHideField(certNo, 0, 4);
         String result = SealUtils.showHideField(phone, 3, 4);
