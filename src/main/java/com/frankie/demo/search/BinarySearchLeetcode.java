@@ -1,5 +1,6 @@
 package com.frankie.demo.search;
 
+import java.awt.font.NumericShaper;
 import java.util.Arrays;
 
 /**
@@ -33,22 +34,28 @@ public class BinarySearchLeetcode {
         int lo1 = 0, len = nums.length, hi1= len - 1;
         int lo2 = 0, hi2 = len - 1;
 
-        while (lo1 < hi1){
+        while (lo1 <= hi1){
             int mid = lo1 + ((hi1 - lo1) >> 1);
-            if (nums[mid] >= target){
-                hi1 = mid;
-            } else {
+            if (nums[mid] > target){
                 lo1 = mid + 1;
+            } else {
+                hi1 = mid;
             }
         }
+        if (lo1 >= len || nums[lo1] != target){
+            lo1 = -1;
+        }
 
-        while (lo2 < hi2){
+        while (lo2 <= hi2){
             int mid = lo2 + ((hi2 - lo2) >> 1);
-            if (nums[mid] <= target){
-                lo2 = mid;
-            } else {
+            if (nums[mid] > target){
                 hi2 = mid - 1;
+            } else {
+                lo2 = mid;
             }
+        }
+        if (lo2 >= len || nums[lo2] != target){
+            lo2 = -1;
         }
 
         return new int[]{lo1, lo2};
