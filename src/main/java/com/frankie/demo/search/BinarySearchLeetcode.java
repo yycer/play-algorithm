@@ -24,8 +24,8 @@ public class BinarySearchLeetcode {
      */
     private static void p34() {
         int[] nums1 = {2, 3, 4, 4, 5, 6, 7};
-//        int target = 4;
-        int target = 8;
+        int target = 4;
+//        int target = 8;
         int[] ret1 = searchRange(nums1, target);
         System.out.println(Arrays.toString(ret1));
     }
@@ -34,31 +34,33 @@ public class BinarySearchLeetcode {
         int lo1 = 0, len = nums.length, hi1= len - 1;
         int lo2 = 0, hi2 = len - 1;
 
+        // Left
         while (lo1 <= hi1){
             int mid = lo1 + ((hi1 - lo1) >> 1);
-            if (nums[mid] > target){
+            if (nums[mid] < target){
                 lo1 = mid + 1;
             } else {
-                hi1 = mid;
+                hi1 = mid - 1;
             }
         }
         if (lo1 >= len || nums[lo1] != target){
             lo1 = -1;
         }
 
+        // Right
         while (lo2 <= hi2){
             int mid = lo2 + ((hi2 - lo2) >> 1);
             if (nums[mid] > target){
                 hi2 = mid - 1;
             } else {
-                lo2 = mid;
+                lo2 = mid + 1;
             }
         }
-        if (lo2 >= len || nums[lo2] != target){
-            lo2 = -1;
+        if (hi2 >= len || nums[hi2] != target){
+            hi2 = -1;
         }
 
-        return new int[]{lo1, lo2};
+        return new int[]{lo1, hi2};
     }
 
     /**
