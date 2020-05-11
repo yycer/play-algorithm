@@ -1,7 +1,5 @@
 package com.frankie.demo.hashTable;
 
-import org.omg.CORBA.INTERNAL;
-
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
