@@ -23,14 +23,20 @@ public class BinarySearchLeetcode {
      * Find First and Last Position of Element in Sorted Array
      */
     private static void p34() {
-        int[] nums1 = {2, 3, 4, 4, 5, 6, 7};
-        int target = 4;
-//        int target = 8;
-        int[] ret1 = searchRange(nums1, target);
-        System.out.println(Arrays.toString(ret1));
+//        int[] nums1 = {2, 3, 4, 4, 5, 6, 7};
+//        int target1 = 2;
+//        int[] ret1 = searchRange(nums1, target1);
+//        System.out.println(Arrays.toString(ret1));
+        int[] nums2 = {1};
+        int target2 = 0;
+        int[] ret2 = searchRange(nums2, target2);
+        System.out.println(Arrays.toString(ret2));
     }
 
     private static int[] searchRange(int[] nums, int target) {
+        if (nums == null || nums.length == 0){
+            return new int[]{-1, -1};
+        }
         int lo1 = 0, len = nums.length, hi1= len - 1;
         int lo2 = 0, hi2 = len - 1;
 
@@ -56,7 +62,7 @@ public class BinarySearchLeetcode {
                 lo2 = mid + 1;
             }
         }
-        if (hi2 >= len || nums[hi2] != target){
+        if (hi2 < 0 || hi2 >= len || nums[hi2] != target){
             hi2 = -1;
         }
 
