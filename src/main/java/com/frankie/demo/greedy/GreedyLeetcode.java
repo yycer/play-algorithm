@@ -1,7 +1,9 @@
 package com.frankie.demo.greedy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author: Yao Frankie
@@ -16,8 +18,242 @@ public class GreedyLeetcode {
 //        p121();
 //        p122();
 //        p605();
+//        p392();
+//        p665();
+//        p53();
+//        p763();
+//        p406();
     }
 
+    /**
+     * 406. Queue Reconstruction by Height
+     */
+    private static void p406() {
+        int[][] people = {{7,0}, {4,4}, {7,1}, {5,0}, {6,1}, {5,2}};
+        int[][] ret = reconstructQueue(people);
+        for (int[] child: ret){
+            System.out.println(Arrays.toString(child));
+        }
+    }
+
+    private static void listAddIndexTest() {
+        ArrayList<Integer> list = new ArrayList<>(10);
+        list.add(0);
+        list.add(1);
+        list.add(2);
+
+        list.add(1, 3);
+        System.out.println(list); // [0, 3, 1, 2]
+    }
+
+    private static void sort406Test() {
+        int[][] people = {{7,0}, {4,4}, {7,1}, {5,0}, {6,1}, {5,2}};
+
+        // [h, k]，先按照h倒序，若h相等，则根据k升序排列。
+        Arrays.sort(people, (a, b) -> (a[0] == b[0]) ? a[1] - b[1] : b[0] - a[0]);
+
+        for (int[] child: people){
+            System.out.println(Arrays.toString(child));
+        }
+    }
+
+    private static int[][] reconstructQueue(int[][] people) {
+        ArrayList<int[]> retList = new ArrayList<>();
+        if (people == null || people.length == 0){
+            return new int[0][0];
+        }
+        Arrays.sort(people, (a, b) -> (a[0] == b[0]) ? a[1] - b[1] : b[0] - a[0]);
+        for (int[] p: people){
+            retList.add(p[1], p);
+        }
+        return retList.toArray(new int[people.length][]);
+    }
+
+    /**
+     * 763. Partition Labels
+     */
+    private static void p763() {
+//        String S = "aaa";
+//        partitionLabelsOriginNotWork(S);
+        String S1 = "ababcbacadefegdehijhklij";
+        List<Integer> ret = partitionLabels(S1);
+        System.out.println(ret);
+    }
+
+    private static List<Integer> partitionLabels(String S) {
+
+        List<Integer> retList = new ArrayList<>();
+        int[] lastIndexArr = new int[26];
+        for (int i = 0; i < S.length(); i++){
+            lastIndexArr[S.charAt(i) - 97] = i;
+        }
+
+        int firstIndex = 0;
+        while (firstIndex < S.length()){
+            int lastIndex = firstIndex;
+            for (int j = firstIndex; j < S.length() && j <= lastIndex; j++){
+                int index = lastIndexArr[S.charAt(j) - 'a'];
+                if (index > lastIndex){
+                    lastIndex = index;
+                }
+            }
+            retList.add(lastIndex - firstIndex + 1);
+            firstIndex = lastIndex + 1;
+        }
+
+        return retList;
+    }
+
+    private static List<Integer> partitionLabelsOriginNotWork(String S) {
+        ArrayList<Integer> ret = new ArrayList<>();
+        if (S == null || S.length() == 0){
+            return ret;
+        }
+
+        for (int i = 0; i < S.length();){
+            int curLastIndex = S.lastIndexOf(S.charAt(i));
+            if (curLastIndex > i){
+                for (int j = i + 1; j < curLastIndex; j++){
+
+                }
+            }
+
+        }
+
+        return null;
+    }
+
+    /**
+     * 53. Maximum Subarray
+     */
+    private static void p53() {
+//        int[] nums1 = {5, -2, 4, 9, -3};
+//        int ret1 = maxSubArrayOriginNotWork(nums1);
+//        System.out.println(ret1);
+        int[] nums2 = {5, -2, 4, 9, -3};
+        int ret2 = maxSubArray(nums2);
+        System.out.println(ret2);
+    }
+
+    private static int maxSubArray(int[] nums) {
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+        int preSum = nums[0];
+        int maxSum = preSum;
+
+        for (int i = 1; i < nums.length; i++){
+            preSum = preSum > 0 ? preSum + nums[i] : nums[i];
+            maxSum = Math.max(maxSum, preSum);
+        }
+        return maxSum;
+    }
+
+    private static int maxSubArrayOriginNotWork(int[] nums) {
+         int max = 0, maxSoFar = 0;
+         for (int i = 0; i < nums.length; i++){
+             max += nums[i];
+             maxSoFar = Math.max(maxSoFar, max);
+         }
+         return maxSoFar;
+    }
+
+    /**
+     * 665. Non-decreasing Array
+     */
+    private static void p665() {
+//        int[] nums1 = {4, 2, 3};
+//        boolean ret1 = checkPossibilityOriginNotWork(nums1);
+//        System.out.println(ret1);
+//        int[] nums2 = {4, 3, 2};
+//        boolean ret2 = checkPossibilityOriginNotWork(nums2);
+//        System.out.println(ret2);
+        int[] nums3 = {3, 4, 2, 3};
+        boolean ret3 = checkPossibility(nums3);
+        System.out.println(ret3);
+    }
+
+    private static boolean checkPossibility(int[] nums) {
+
+        int threshold = 0;
+        for (int i = 1; i < nums.length; i++){
+            if (nums[i] >= nums[i - 1]){
+                continue;
+            }
+            threshold++;
+            if ((i - 2) >= 0 && nums[i - 2] > nums[i]){
+                nums[i] = nums[i - 1];
+            } else {
+                nums[i - 1] = nums[i];
+            }
+        }
+        return threshold <= 1;
+    }
+
+    private static boolean checkPossibilityOriginNotWork(int[] nums) {
+        if (nums == null || nums.length == 0){
+            return false;
+        }
+        int threshold = 0;
+        for (int i = 1; i < nums.length; i++){
+            if (nums[i] < nums[i - 1]){
+                threshold++;
+            }
+        }
+        return threshold <= 1;
+    }
+
+    /**
+     * 392. Is Subsequence
+     */
+    private static void p392() {
+
+//        String s1 = "abc";
+//        String t1 = "ahbgdc";
+//        boolean ret1 = isSubsequence(s1, t1);
+//        System.out.println(ret1);
+//        String s2 = "axc";
+//        String t2 = "ahbgdc";
+//        boolean ret2 = isSubsequence(s2, t2);
+//        System.out.println(ret2);
+//        String s3 = "";
+//        String t3 = "ahbgdc";
+//        boolean ret3 = isSubsequence(s3, t3);
+//        System.out.println(ret3);
+        String s4 = "acg";
+        String t4 = "ahbgdc";
+        boolean ret4 = isSubsequenceAmazing(s4, t4);
+        System.out.println(ret4);
+    }
+
+    private static boolean isSubsequenceAmazing(String s, String t) {
+        int index = -1;
+        for (char c: s.toCharArray()){
+            index = t.indexOf(c, index + 1);
+            if (index == -1){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isSubsequence(String s, String t) {
+        if (s.length() == 0 && t.length() != 0){
+            return true;
+        }
+        int i = 0, j = 0;
+        while (i < s.length() && j < t.length()){
+            if (s.charAt(i) == t.charAt(j)){
+                i++;
+            }
+            j++;
+        }
+        return i >= s.length();
+    }
+
+    /**
+     * 605. Can Place Flowers
+     */
     private static void p605() {
 //        int[] flowerbed1 = {1, 0, 1, 0, 1};
 //        int n1 = 1;
