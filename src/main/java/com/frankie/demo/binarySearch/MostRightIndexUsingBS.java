@@ -1,4 +1,4 @@
-package com.frankie.demo.search;
+package com.frankie.demo.binarySearch;
 
 /**
  * @author: Yao Frankie

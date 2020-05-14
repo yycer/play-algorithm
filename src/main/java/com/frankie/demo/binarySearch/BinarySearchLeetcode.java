@@ -1,6 +1,5 @@
-package com.frankie.demo.search;
+package com.frankie.demo.binarySearch;
 
-import java.awt.font.NumericShaper;
 import java.util.Arrays;
 
 /**
