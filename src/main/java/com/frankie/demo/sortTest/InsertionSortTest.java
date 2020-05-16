@@ -8,15 +8,18 @@ import java.util.Arrays;
  * @author: Yao Frankie
  * @date: 2020/5/6 11:30
  */
-public class InsertSortTest {
+public class InsertionSortTest {
 
     public static void main(String[] args) {
         int[] arr = {5, 3, 5, 2, 4};
-        insertSort(arr);
+        insertionSort(arr);
         System.out.println(Arrays.toString(arr));
     }
 
-    private static void insertSort(int[] arr) {
+    /**
+     * 从第二个元素开始，将当前元素插入有序区域。
+     */
+    private static void insertionSort(int[] arr) {
         for (int i = 1; i < arr.length; i++){
             for (int j = i; j > 0; j--){
                 if (arr[j] < arr[j - 1]){
