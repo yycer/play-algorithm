@@ -2,7 +2,6 @@ package com.frankie.demo.sortTest;
 
 import com.frankie.demo.utils.Utils;
 
-import javax.rmi.CORBA.Util;
 import java.util.Arrays;
 
 /**
@@ -16,10 +15,100 @@ public class BubbleSortTest {
      * @param args
      */
     public static void main(String[] args) {
-        int[] arr = {5, 3, 5, 2, 4};
-        bubbleSort(arr);
+//        int[] arr = {5, 3, 5, 2, 4};
+//        int[] arr = {5, 8, 3, 9, 2, 3, 7};
+//        int[] arr = {6, 1, 2, 3, 4, 5};
+//        int[] arr = {3, 2, 1, 4, 5, 6, 7, 8};
+        int[] arr = {2, 3, 4, 5, 6, 7, 8, 1};
+
+
+//        bubbleSort(arr);
 //        bubbleSortOptimize1(arr);
+//        playBubble(arr);
+//        playBubbleOptimizeBreak(arr);
+//        playBubbleUsingBorder(arr);
+//        System.out.println(Arrays.toString(arr));
+
+//        playBubbleUsingCocktail(arr);
         System.out.println(Arrays.toString(arr));
+    }
+
+    /**
+     * 元素的比较与互换是双向的。
+     */
+    private static void playBubbleUsingCocktail(int[] arr) {
+        int compareCount = 0;
+        int len = arr.length;
+        for (int i = 0; i < len / 2; i++){
+            // 1. Left to right.
+            boolean isSort = true;
+            for (int j = i + 1; j <= len - i - 1; j++){
+                compareCount++;
+                if (arr[j] < arr[j - 1]){
+                    Utils.swap(arr, j, j - 1);
+                    isSort = false;
+                }
+            }
+            if (isSort){
+                break;
+            }
+
+            // 2. Right to left.
+            isSort = true;
+            for (int j = len - 1 - i - 1; j > i; j--){
+                compareCount++;
+                if (arr[j] < arr[j - 1]){
+                    Utils.swap(arr, j, j - 1);
+                    isSort = false;
+                }
+            }
+            if (isSort){
+                break;
+            }
+        }
+        System.out.println(compareCount);
+    }
+
+    private static void playBubbleUsingBorder(int[] arr) {
+
+        int len = arr.length;
+        int compareCount      = 0;
+        int lastExchangeIndex = 0;
+        for (int order = len - 1; order > 0;){
+           boolean isSorted = true;
+           for (int j = 1; j <= order; j++){
+               compareCount++;
+               if (arr[j] < arr[j - 1]){
+                   Utils.swap(arr, j, j - 1);
+                   isSorted = false;
+                   lastExchangeIndex = j - 1;
+               }
+           }
+           order = lastExchangeIndex;
+           if (isSorted){
+               break;
+           }
+        }
+        System.out.println(compareCount);
+    }
+
+    private static void playBubbleOptimizeBreak(int[] arr) {
+        int len = arr.length;
+        int compareCount = 0;
+        for (int i = len - 1; i > 0; i--){
+            boolean isSorted = true;
+            for (int j = 1; j <= i; j++){
+                compareCount++;
+                if (arr[j] < arr[j - 1]){
+                    Utils.swap(arr, j, j - 1);
+                    isSorted = false;
+                }
+            }
+            if (isSorted){
+                break;
+            }
+        }
+        System.out.println(compareCount);
     }
 
     private static void bubbleSort(int[] arr) {
@@ -48,5 +137,23 @@ public class BubbleSortTest {
             }
             if (!flag) break;
         }
+    }
+
+    /**
+     * 2020_0516_0844
+     * 将当前元素与前一个元素比较，若小于，则互换位置，否则，继续遍历下一个元素。
+     */
+    public static void playBubble(int[] arr){
+        int compareCount = 0;
+        int len = arr.length;
+        for (int i = len - 1; i > 0; i--){
+            for (int j = 1; j <= i; j++){
+                compareCount++;
+                if (arr[j] < arr[j - 1]){
+                    Utils.swap(arr, j, j- 1);
+                }
+            }
+        }
+        System.out.println(compareCount);
     }
 }
