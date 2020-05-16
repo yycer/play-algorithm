@@ -1,4 +1,4 @@
-package com.frankie.demo.doublePointer;
+package com.frankie.demo.twoPointer;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
@@ -8,41 +8,49 @@ import java.util.List;
  * @author: Yao Frankie
  * @date: 2020/5/14 15:27
  */
-public class DoublePointerTest {
+public class TwoPointerTest {
 
     public static void main(String[] args) {
 //        p167();
 //        p633();
 //        p345();
-        p680();
+//        p680();
     }
 
     /**
      * 680. Valid Palindrome II
      */
     private static void p680() {
-//        String s1 = "aba";
-//        boolean ret1 = validPalindrome(s1);
-//        System.out.println(ret1);
-//        String s2 = "abca";
-//        boolean ret2 = validPalindrome(s2);
-//        System.out.println(ret2);
+        String s1 = "aba";
+        boolean ret1 = validPalindrome(s1);
+        System.out.println(ret1);
+        String s2 = "abca";
+        boolean ret2 = validPalindrome(s2);
+        System.out.println(ret2);
         String s3 = "abc";
         boolean ret3 = validPalindrome(s3);
         System.out.println(ret3);
     }
 
     private static boolean validPalindrome(String s) {
-        int lo = 0, hi = s.length() - 1;
-        int diffCount = 0;
-        while (lo <= hi){
+        for (int i = 0, j = s.length() - 1; i < j; i++, j--){
+            // 遇到不相等的两个字符，进行内部校验。
+            if (s.charAt(i) != s.charAt(j)){
+                return doValidPalindrome(s, i, j - 1) || doValidPalindrome(s, i + 1, j);
+            }
+        }
+        return true;
+    }
+
+    private static boolean doValidPalindrome(String s, int lo, int hi) {
+        while (lo < hi){
             if (s.charAt(lo) != s.charAt(hi)){
-                diffCount++;
+                return false;
             }
             lo++;
             hi--;
         }
-        return diffCount <= 1;
+        return true;
     }
 
     /**
