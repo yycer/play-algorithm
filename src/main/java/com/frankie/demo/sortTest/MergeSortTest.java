@@ -9,7 +9,8 @@ import java.util.Arrays;
 public class MergeSortTest {
 
     public static void main(String[] args) {
-        int[] arr = {11, 8, 3, 9, 7, 1, 2, 5, 6};
+//        int[] arr = {11, 8, 3, 9, 7, 1, 2, 5, 6};
+        int[] arr = {4, 3, 5, 2, 6, 4};
         mergeSort(arr);
         System.out.println(Arrays.toString(arr));
     }
@@ -23,7 +24,7 @@ public class MergeSortTest {
             return;
         }
 
-        int mid = l + (r - l) / 2;
+        int mid = l + ((r - l) >> 1);
         sep(arr, l, mid);
         sep(arr, mid + 1, r);
         merge(arr, l, mid + 1, r);
