@@ -11,12 +11,12 @@ import java.util.Arrays;
 public class QuickSortTest {
 
     public static void main(String[] args) {
-//        int[] nums = {5, 3, 8, 4, 1, 7, 9};
-//        quickSortUsingDoublePointer(nums);
+        int[] nums1 = {5, 3, 8, 4, 1, 7, 9};
+        quickSortUsingDoublePointer(nums1);
 
-        int[] nums = {4, 3, 5, 2, 4};
-        quickSortUsingSinglePointer(nums);
-        System.out.println(Arrays.toString(nums));
+        int[] nums2 = {4, 3, 5, 2, 4};
+        quickSortUsingSinglePointer(nums2);
+        System.out.println(Arrays.toString(nums2));
     }
 
     private static void quickSortUsingSinglePointer(int[] nums) {

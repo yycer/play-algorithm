@@ -11,7 +11,7 @@ import java.util.*;
 public class SortLeetcode {
 
     public static void main(String[] args) {
-//        p215();
+        p215();
 //        p347();
 //        p75();
     }
@@ -183,12 +183,49 @@ public class SortLeetcode {
      * 215. Kth Largest Element in an Array
      */
     private static void p215() {
-        int[] nums = {5, 2, 1, 8, 3};
-        int k = 2;
+//        int[] nums = {5, 2, 1, 8, 3};
+//        int[] nums = {5, 2, 1, 8, 3, 5, 7};
+        int[] nums = {3, 2, 3, 1, 2, 4, 5, 5, 6};
+        int k = 4;
 //        int ret1 = findKthLargestUsingSort(nums, k);
 //        System.out.println(ret1);
         int ret2 = findKthLargestUsingPQ(nums, k);
-        System.out.println(ret2);
+//        System.out.println(ret2);
+        int ret3 = findKthLargestUsingQuickSort(nums, k);
+        System.out.println(ret3);
+    }
+
+    private static int findKthLargestUsingQuickSort(int[] nums, int k) {
+        int len = nums.length;
+        int lo = 0, hi = len - 1, index = len - k;
+        while (lo < hi){
+            int pivotIndex = getPivotIndex(nums, lo, hi);
+            if (pivotIndex < index)      lo = pivotIndex + 1;
+            else if (pivotIndex > index) hi = pivotIndex - 1;
+            else return nums[pivotIndex];
+        }
+        return nums[lo];
+    }
+
+    private static int getPivotIndex(int[] nums, int lo, int hi) {
+        int pivot = nums[lo];
+        // Be careful start = lo.
+        int start = lo, end = hi;
+
+        while (start != end){
+            while (start < end && nums[end] > pivot){
+                end--;
+            }
+            while (start < end && nums[start] <= pivot){
+                start++;
+            }
+            if (start < end){
+                Utils.swap(nums, start, end);
+            }
+        }
+        nums[lo]    = nums[start];
+        nums[start] = pivot;
+        return start;
     }
 
     private static int findKthLargestUsingPQ(int[] nums, int k) {
