@@ -11,9 +11,9 @@ import java.util.*;
 public class SortLeetcode {
 
     public static void main(String[] args) {
-        p215();
+//        p215();
 //        p347();
-//        p75();
+        p75();
     }
 
     /**
@@ -21,17 +21,17 @@ public class SortLeetcode {
      */
     private static void p75() {
         int[] nums = {2, 0, 1, 1, 0, 2};
-//        sortColorsUsingBubble(nums);
-//        System.out.println(Arrays.toString(nums));
+        sortColorsUsingBubble(nums);
+        System.out.println(Arrays.toString(nums));
 
-//        sortColorsUsingSelection(nums);
-//        System.out.println(Arrays.toString(nums));
+        sortColorsUsingSelection(nums);
+        System.out.println(Arrays.toString(nums));
 
-//        sortColorUsingInsertion(nums);
-//        System.out.println(Arrays.toString(nums));
+        sortColorUsingInsertion(nums);
+        System.out.println(Arrays.toString(nums));
 
-//        sortColorUsingMerge(nums);
-//        System.out.println(Arrays.toString(nums));
+        sortColorUsingMerge(nums);
+        System.out.println(Arrays.toString(nums));
 
         sortColorAmazing(nums);
         System.out.println(Arrays.toString(nums));
@@ -50,6 +50,7 @@ public class SortLeetcode {
             }
         }
     }
+
 
     private static void sortColorUsingMerge(int[] nums) {
         seperate(nums, 0, nums.length - 1);
@@ -143,24 +144,102 @@ public class SortLeetcode {
      * 347. Top K Frequent Elements
      */
     private static void p347() {
-//        int[] nums1 = {1, 1, 1, 2, 2, 3};
-//        int k1 = 2;
-//        int[] ret1 = topKFrequent(nums1, k1);
-//        System.out.println(Arrays.toString(ret1));
-        int[] nums2 = {1, 2};
-        int k2 = 2;
-        int[] ret2 = topKFrequent(nums2, k2);
-        System.out.println(Arrays.toString(ret2));
+        int[] nums1 = {5, 5, 5, 3, 1, 1};
+        int k1 = 2;
+        int[] ret1 = topKFrequent(nums1, k1);
+        System.out.println(Arrays.toString(ret1));
+//        int[] nums2 = {1, 2};
+//        int k2 = 2;
+//        int[] ret2 = topKFrequent(nums2, k2);
+//        System.out.println(Arrays.toString(ret2));
+        int[] nums3 = {5, 5, 5, 5, 2, 2, 2, 4, 4, 1};
+        int k3 = 2;
+        int[] ret3 = topKFrequentOptimize(nums3, k3);
+        System.out.println(Arrays.toString(ret3));
+
+        int[] nums4 = {5, 5, 5, 5, 2, 2, 2, 4, 4, 4, 1};
+        int k4 = 2;
+        int[] ret4 = topKFrequentUsingBucket(nums4, k4);
+        System.out.println(Arrays.toString(ret4));
+
+//        int[] nums5 = {1};
+//        int k5 = 1;
+//        int[] ret5 = topKFrequentUsingBucket(nums5, k5);
+//        System.out.println(Arrays.toString(ret5));
     }
 
-    private static int[] topKFrequent(int[] nums, int k) {
-        ArrayList<Integer> retList = new ArrayList<>();
-        HashMap<Integer, Integer> map = new HashMap<>();
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
+    /**
+     * https://leetcode.com/problems/top-k-frequent-elements/discuss/81602/Java-O(n)-Solution-Bucket-Sort
+     */
+    private static int[] topKFrequentUsingBucket(int[] nums, int k) {
+
+        // Step1: Build frequency map.
+        HashMap<Integer, Integer> map = new HashMap<>(64);
         for (int n: nums){
             map.put(n, map.getOrDefault(n, 0) + 1);
         }
 
+        // Step2: Build bucket array.
+        List<Integer>[] bucketArr = new List[nums.length + 1];
+        for (Map.Entry<Integer, Integer> entry: map.entrySet()){
+            int frequency = entry.getValue();
+            if (bucketArr[frequency] == null){
+                bucketArr[frequency] = new ArrayList<>();
+            }
+            bucketArr[frequency].add(entry.getKey());
+        }
+
+        // Step3: Build result list.
+        ArrayList<Integer> retList = new ArrayList<>();
+        for (int i = bucketArr.length - 1; i >= 0 && retList.size() < k; i--){
+            if (bucketArr[i] != null){
+                retList.addAll(bucketArr[i]);
+            }
+        }
+
+        return retList.subList(0, k).stream().mapToInt(x -> x).toArray();
+    }
+
+    /**
+     * https://leetcode.com/problems/top-k-frequent-elements/discuss/81733/*Java*-straightforward-O(N-%2B-(N-k)lg-k)-solution
+     */
+    private static int[] topKFrequentOptimize(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>(64);
+        ArrayList<Integer> retList    = new ArrayList<>();
+
+        // Step1: Build frequency map.
+        for (int n: nums){
+            map.put(n, map.getOrDefault(n, 0) + 1);
+        }
+
+        // Step2: Build priority queue.
+        PriorityQueue<Map.Entry<Integer, Integer>> pq = new PriorityQueue<>(
+                Comparator.comparingInt(Map.Entry::getValue));
+        for (Map.Entry<Integer, Integer> entry: map.entrySet()){
+            pq.offer(entry);
+            if (pq.size() > k){
+                pq.poll();
+            }
+        }
+
+        // Step3: Build result list.
+        while (!pq.isEmpty()){
+            retList.add(pq.poll().getKey());
+        }
+
+        return retList.stream().mapToInt(x -> x).toArray();
+    }
+
+    private static int[] topKFrequent(int[] nums, int k) {
+
+        // Step1: Build frequency map.
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int n: nums){
+            map.put(n, map.getOrDefault(n, 0) + 1);
+        }
+
+        // Step2: Build max heap.
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
         for (int value: map.values()){
             pq.add(value);
             if (pq.size() > k){
@@ -168,6 +247,8 @@ public class SortLeetcode {
             }
         }
 
+        // Step3: Build result list.
+        ArrayList<Integer> retList = new ArrayList<>();
         for (int n: pq){
             for (Map.Entry<Integer, Integer> entry: map.entrySet()){
                 if (n == entry.getValue()){
