@@ -3,6 +3,9 @@ package com.frankie.demo.tree;
 import com.frankie.demo.utils.TreeNode;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author: Yao Frankie
@@ -13,7 +16,132 @@ public class BSTLeetcode {
     public static void main(String[] args) {
 //        p230();
 //        p538();
-        p235();
+//        p235();
+//        p109();
+//        p653();
+        p501();
+    }
+
+    /**
+     * 501. Find Mode in Binary Search Tree
+     */
+    private static void p501() {
+        TreeNode n5  = new TreeNode(5);
+        TreeNode n31 = new TreeNode(31);
+        TreeNode n32 = new TreeNode(32);
+        TreeNode n33 = new TreeNode(33);
+        TreeNode n1  = new TreeNode(1);
+        TreeNode n4  = new TreeNode(4);
+        TreeNode n81 = new TreeNode(81);
+        TreeNode n82 = new TreeNode(82);
+        TreeNode n83 = new TreeNode(83);
+        TreeNode n6  = new TreeNode(6);
+        TreeNode n12 = new TreeNode(12);
+
+        n5.left   = n31;
+        n5.right  = n81;
+        n31.left  = n32;
+        n31.right = n33;
+        n32.left  = n1;
+        n33.right = n4;
+        n81.left  = n6;
+        n81.right = n82;
+        n82.left  = n83;
+        n82.right = n12;
+
+        int[] ret = findMode(n5);
+        System.out.println(Arrays.toString(ret));
+    }
+
+    private static int max = 1;
+    private static int cur = 1;
+    private static  List<Integer> freqNums = new ArrayList<>();
+    private static TreeNode preNode = null;
+
+    private static int[] findMode(TreeNode root) {
+
+        getFreqNums(root);
+
+        int size = freqNums.size();
+        int[] retArr = new int[size];
+        for (int i = 0; i < size; i++){
+            retArr[i] = freqNums.get(i);
+        }
+        return retArr;
+    }
+
+    private static void getFreqNums(TreeNode root) {
+        if (root == null) return;
+
+        getFreqNums(root.left);
+
+        if (preNode != null){
+            if (root.val == preNode.val){
+                cur++;
+            } else {
+                cur = 1;
+            }
+        }
+
+        if (cur == max){
+            freqNums.add(root.val);
+        } else if (cur > max){
+            max = cur;
+            freqNums.clear();
+            freqNums.add(root.val);
+        }
+
+        preNode = root;
+        getFreqNums(root.right);
+    }
+
+    private static void p653() {
+
+    }
+
+    /**
+     * 109. Convert Sorted List to Binary Search Tree
+     */
+    private static void p109() {
+
+        ListNode head = new ListNode(-10);
+        ListNode n3 = new ListNode(-3);
+        ListNode n0 = new ListNode(0);
+        ListNode n5 = new ListNode(5);
+        ListNode n9 = new ListNode(9);
+
+        head.next = n3;
+        n3.next = n0;
+        n0.next = n5;
+        n5.next = n9;
+
+        sortedListToBST(head);
+    }
+
+    private static TreeNode sortedListToBST(ListNode head) {
+        if (head == null) return null;
+        if (head.next == null) return new TreeNode(head.val);
+        ListNode preMidNode = getPreMid(head);
+        ListNode midNode = preMidNode.next;
+        preMidNode.next = null;
+        TreeNode curNode = new TreeNode(midNode.val);
+        curNode.left  = sortedListToBST(head);
+        curNode.right = sortedListToBST(midNode.next);
+        return curNode;
+    }
+
+    private static ListNode getPreMid(ListNode head) {
+        ListNode fastNode   = head;
+        ListNode slowNode   = head;
+        ListNode preMidNode = head;
+
+        while (fastNode != null && fastNode.next != null){
+            preMidNode = slowNode;
+            fastNode   = fastNode.next.next;
+            slowNode   = slowNode.next;
+        }
+
+        return preMidNode;
     }
 
     /**
