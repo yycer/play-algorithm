@@ -12,7 +12,44 @@ public class BSTLeetcode {
 
     public static void main(String[] args) {
 //        p230();
-        p538();
+//        p538();
+        p235();
+    }
+
+    /**
+     * 235. Lowest Common Ancestor of a Binary Search Tree
+     */
+    private static void p235() {
+        TreeNode n0 = new TreeNode(0);
+        TreeNode n1 = new TreeNode(1);
+        TreeNode n2 = new TreeNode(2);
+        TreeNode n3 = new TreeNode(3);
+        TreeNode n4 = new TreeNode(4);
+        TreeNode n5 = new TreeNode(5);
+        TreeNode n6 = new TreeNode(6);
+        TreeNode n7 = new TreeNode(7);
+        TreeNode n8 = new TreeNode(8);
+        TreeNode n9 = new TreeNode(9);
+
+        n4.left  = n3;
+        n4.right = n5;
+        n2.left  = n0;
+        n2.right = n4;
+        n8.left  = n7;
+        n8.right = n9;
+        n6.left  = n2;
+        n6.right = n8;
+        lowestCommonAncestor(n6, n2, n4);
+    }
+
+    private static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root.val > p.val && root.val > q.val){
+            return lowestCommonAncestor(root.left, p, q);
+        }
+        if (root.val < p.val && root.val < q.val){
+            return lowestCommonAncestor(root.right, p, q);
+        }
+        return root;
     }
 
     /**
