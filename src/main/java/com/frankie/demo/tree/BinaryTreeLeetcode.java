@@ -33,8 +33,35 @@ public class BinaryTreeLeetcode {
 
     public static void main(String[] args) {
 //        p110();
-        p104();
+//        p104();
 //        p543();
+        p111();
+    }
+
+    /**
+     * 111. Minimum Depth of Binary Tree
+     */
+    private static void p111() {
+        TreeNode root = new TreeNode(1);
+        TreeNode n2 = new TreeNode(2);
+        TreeNode n3 = new TreeNode(3);
+        TreeNode n4 = new TreeNode(4);
+        TreeNode n5 = new TreeNode(5);
+
+        root.left  = n2;
+        root.right = n3;
+        n2.left    = n4;
+        n2.right   = n5;
+        int ret1 = minDepth(root);
+        System.out.println(ret1);
+    }
+
+    private static int minDepth(TreeNode root) {
+        if (root == null) return 0;
+
+        int left  = minDepth(root.left);
+        int right = minDepth(root.right);
+        return Math.min(left, right) + 1;
     }
 
     /**

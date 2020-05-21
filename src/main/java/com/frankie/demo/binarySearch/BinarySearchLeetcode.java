@@ -14,7 +14,63 @@ public class BinarySearchLeetcode {
 //        p540();
 //        p278();
 //        p153();
-        p34();
+//        p34();
+        p33();
+    }
+
+    /**
+     * 33. Search in Rotated Sorted Array
+     */
+    private static void p33() {
+        int[] nums = {5, 1, 3};
+        int target = 3;
+        searchNotWork(nums, target);
+    }
+
+    private static int searchNotWork(int[] nums, int target) {
+        if (nums == null || nums.length == 0){
+            return -1;
+        }
+        int ans = -1;
+        if (nums[0] > target){
+            ans = getIndexFromEnd(nums, target);
+        } else {
+            ans = getIndexFromStart(nums, target);
+        }
+
+        return ans;
+    }
+
+    private static int getIndexFromStart(int[] nums, int t) {
+        int lo = 0, len = nums.length, hi = len - 1;
+        while (lo <= hi){
+            int mid = (lo + hi) >>> 1;
+            if (nums[mid] == t){
+                return mid;
+            } else if (nums[mid] > t){
+                hi = mid - 1;
+            } else {
+                lo = mid + 1;
+            }
+        }
+
+        return hi >= 0 && nums[hi] == t ? hi : -1;
+    }
+
+    private static int getIndexFromEnd(int[] nums, int t) {
+        int lo = 0, len = nums.length, hi = len - 1;
+        while (lo <= hi){
+            int mid = (lo + hi) >>> 1;
+            if (nums[mid] == t){
+                return mid;
+            } else if (nums[mid] > nums[hi]){
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+
+        return lo < len && nums[lo] == t ? lo : -1;
     }
 
 
