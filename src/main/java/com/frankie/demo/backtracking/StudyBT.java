@@ -26,6 +26,9 @@ public class StudyBT {
     /**
      * https://juejin.im/post/
      * https://www.cnblogs.com/newflydd/p/5091646.html
+     * https://en.wikipedia.org/wiki/Eight_queens_puzzle
+     * https://leetcode.wang/leetCode-51-N-Queens.html
+     * https://labuladong.gitbook.io/algo/di-ling-zhang-bi-du-xi-lie/hui-su-suan-fa-xiang-jie-xiu-ding-ban
      * n = 8 , using 62
      * n = 14, using 36459
      */
@@ -38,12 +41,15 @@ public class StudyBT {
     private static void putQueen(short[][] board, int row) {
 
         if (row == board.length){
+            // Find a solution.
             queenPlacedCount++;
+            // Print the board.
             printBoard(board);
             return;
         }
 
         for (int col = 0; col < board.length; col++){
+            // Check the current place is valid.
             if (!isValid(board, row, col)){
                 continue;
             }
@@ -68,17 +74,17 @@ public class StudyBT {
      * 对于当前节点来说，只需要校验前半部分的列元素，左上角和右上角。
      */
     private static boolean isValid(short[][] board, int row, int col) {
-        // Step1: Check column.
+        // Step1: Check the column element above.
         for (int i = 0; i < row; i++){
             if (board[i][col] == 1) return false;
         }
 
-        // Step2: Check upper left corner.
+        // Step2: Check the element in the upper left corner.
         for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--){
             if (board[i][j] == 1) return false;
         }
 
-        // Step3: Check upper right corner.
+        // Step3: Check the element in the upper right corner.
         for (int i = row - 1, j = col + 1; i >= 0 && j < board.length; i--, j++){
             if (board[i][j] == 1) return false;
         }
