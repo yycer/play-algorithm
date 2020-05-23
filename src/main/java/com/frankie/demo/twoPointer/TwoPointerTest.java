@@ -2,6 +2,7 @@ package com.frankie.demo.twoPointer;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public class TwoPointerTest {
     public static void main(String[] args) {
 //        p167();
 //        p633();
-//        p345();
+        p345();
 //        p680();
     }
 
@@ -57,13 +58,50 @@ public class TwoPointerTest {
      * 345. Reverse Vowels of a String
      */
     private static void p345() {
-        String s1 = "leetcode";
-        String ret1 = reverseVowelsUsingStack(s1);
-        System.out.println(ret1);
-
-        String ret2 = reverseVowels(s1);
-        System.out.println(ret2);
+//        String s1 = "leetcode";
+//        String ret1 = reverseVowelsUsingStack(s1);
+//        System.out.println(ret1);
+//
+//        String ret2 = reverseVowels(s1);
+//        System.out.println(ret2);
 //        charArrayTest();
+
+        String s3 = "hello";
+        String ret1 = reverseVowels20200523(s3);
+        System.out.println(ret1);
+    }
+
+    /**
+     * https://leetcode.com/problems/reverse-vowels-of-a-string/discuss/81225/Java-Standard-Two-Pointer-Solution
+     * @param s
+     * @return
+     */
+    private static String reverseVowels20200523(String s) {
+//        HashSet<Character> vowelSet = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
+        String vowels = "aeiouAEIOU";
+        char[] arr = s.toCharArray();
+        int lo = 0, len = arr.length, hi = len - 1;
+        while (lo < hi){
+            // Find the leftmost vowel.
+            while (lo < hi && vowels.indexOf(arr[lo]) == -1){
+                lo++;
+            }
+
+            // Find the rightmost vowel.
+            while (lo < hi && vowels.indexOf(arr[hi]) == -1){
+                hi--;
+            }
+
+            if (lo < hi){
+                char tmp = arr[lo];
+                arr[lo]  = arr[hi];
+                arr[hi]  = tmp;
+                lo++;
+                hi--;
+            }
+        }
+
+        return new String(arr);
     }
 
     private static void charArrayTest() {
@@ -127,24 +165,36 @@ public class TwoPointerTest {
      * 633. Sum of Square Numbers
      */
     private static void p633() {
-        int c1 = 5;
-        boolean ret1 = judgeSquareSum(c1);
-        System.out.println(ret1);
-        int c2 = 1;
-        boolean ret2 = judgeSquareSum(c2);
-        System.out.println(ret2);
-        int c3 = 0;
-        boolean ret3 = judgeSquareSum(c3);
-        System.out.println(ret3);
-        int c4 = 100000;
-        boolean ret4 = judgeSquareSum(c4);
-        System.out.println(ret4);
-        int c5 = 9;
-        boolean ret5 = judgeSquareSum(c5);
-        System.out.println(ret5);
-        int c6 = 3;
-        boolean ret6 = judgeSquareSum(c6);
-        System.out.println(ret6);
+//        int c1 = 5;
+//        boolean ret1 = judgeSquareSum(c1);
+//        System.out.println(ret1);
+//        int c2 = 1;
+//        boolean ret2 = judgeSquareSum(c2);
+//        System.out.println(ret2);
+//        int c3 = 0;
+//        boolean ret3 = judgeSquareSum(c3);
+//        System.out.println(ret3);
+//        int c4 = 100000;
+//        boolean ret4 = judgeSquareSum(c4);
+//        System.out.println(ret4);
+//        int c5 = 9;
+//        boolean ret5 = judgeSquareSum(c5);
+//        System.out.println(ret5);
+//        int c6 = 3;
+//        boolean ret6 = judgeSquareSum(c6);
+//        System.out.println(ret6);
+        boolean ret7 = judgeSquareSumAmazing(5);
+        System.out.println(ret7);
+    }
+
+    private static boolean judgeSquareSumAmazing(int c) {
+        for (int i = 0; i < (int) Math.sqrt(c); i++){
+            double rest = Math.sqrt(c - i * i);
+            if (Math.floor(rest) == rest) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static boolean judgeSquareSum(int c) {
