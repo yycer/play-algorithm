@@ -2,7 +2,6 @@ package com.frankie.demo.twoPointer;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -14,23 +13,86 @@ public class TwoPointerTest {
     public static void main(String[] args) {
 //        p167();
 //        p633();
-        p345();
+//        p345();
 //        p680();
+        p125();
+    }
+
+    /**
+     * 125. Valid Palindrome
+     */
+    private static void p125() {
+        String s = "A man, a plan, a canal: Panama";
+        boolean ret1 = isPalindrome125(s);
+        System.out.println(ret1);
+    }
+
+    private static boolean isAlphanumeric(String s) {
+        return s.matches("^[a-zA-Z0-9]+$");
+    }
+
+    /**
+     * https://leetcode.com/problems/valid-palindrome/discuss/40029/Accepted-pretty-Java-solution(271ms)
+     */
+    private static boolean isPalindrome125(String s) {
+        s = s.toLowerCase();
+        int lo = 0, len = s.length(), hi = len - 1;
+        while (lo < hi){
+            while (lo < hi && !Character.isLetterOrDigit(s.charAt(lo))){
+                lo++;
+            }
+            while (lo < hi && !Character.isLetterOrDigit(s.charAt(hi))){
+                hi--;
+            }
+
+            if (Math.abs(s.charAt(lo) - s.charAt(hi)) != 0){
+                return false;
+            }
+            lo++;
+            hi--;
+        }
+        return true;
     }
 
     /**
      * 680. Valid Palindrome II
      */
     private static void p680() {
-        String s1 = "aba";
-        boolean ret1 = validPalindrome(s1);
-        System.out.println(ret1);
-        String s2 = "abca";
-        boolean ret2 = validPalindrome(s2);
-        System.out.println(ret2);
+//        String s1 = "aba";
+//        boolean ret1 = validPalindrome(s1);
+//        System.out.println(ret1);
+//        String s2 = "abca";
+//        boolean ret2 = validPalindrome(s2);
+//        System.out.println(ret2);
         String s3 = "abc";
-        boolean ret3 = validPalindrome(s3);
-        System.out.println(ret3);
+//        boolean ret3 = validPalindrome(s3);
+//        System.out.println(ret3);
+
+        boolean ret4 = validPalindrome20200523(s3);
+        System.out.println(ret4);
+    }
+
+    private static boolean validPalindrome20200523(String s) {
+        int lo = 0, hi = s.length() - 1;
+
+        while (lo < hi){
+            if (s.charAt(lo) != s.charAt(hi)){
+                return isPalindrome(s, lo + 1, hi) || isPalindrome(s, lo, hi - 1);
+            }
+            lo++;
+            hi--;
+        }
+
+        return true;
+    }
+
+    private static boolean isPalindrome(String s, int lo, int hi) {
+        while (lo < hi){
+            if (s.charAt(lo++) != s.charAt(hi--)){
+                return false;
+            }
+        }
+        return true;
     }
 
     private static boolean validPalindrome(String s) {
