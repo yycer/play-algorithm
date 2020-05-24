@@ -2,7 +2,9 @@ package com.frankie.demo.twoPointer;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author: Yao Frankie
@@ -15,7 +17,88 @@ public class TwoPointerTest {
 //        p633();
 //        p345();
 //        p680();
-        p125();
+//        p125();
+        p524();
+    }
+
+    /**
+     * 524. Longest Word in Dictionary through Deleting
+     */
+    private static void p524() {
+//        String s1 = "abpcplea";
+//        List<String> d1 = Arrays.asList("ale", "apple", "monkey", "plea");
+//        String ret1 = findLongestWord2(s1, d1);
+//        System.out.println(ret1);
+
+//        String s2 = "aewfafwafjlwajflwajflwafj";
+//        List<String> d2 = Arrays.asList("apple","ewaf","awefawfwaf","awef","awefe","ewafeffewafewf");
+//        String ret2 = findLongestWord2(s2, d2);
+//        System.out.println(ret2);
+
+        sortDescendAndCompareTest();
+    }
+
+    private static void sortDescendAndCompareTest() {
+        List<String> l1 = Arrays.asList("apple", "ewaf", "awefawfwaf", "awef", "awefe", "ewafeffewafewf");
+        Collections.sort(l1, (a, b) -> a.length() != b.length() ? b.length() - a.length() : a.compareTo(b));
+        System.out.println(l1);
+    }
+
+    private static String findLongestWord2(String s, List<String> d) {
+        Collections.sort(d, (a, b) -> a.length() != b.length() ? b.length() - a.length() : a.compareTo(b));
+        for (String t: d){
+            int i = 0;
+            for (char c: s.toCharArray()){
+                if (i < t.length() && t.indexOf(i) == c){
+                    i++;
+                }
+            }
+            if (i == t.length()){
+                return t;
+            }
+        }
+        return "";
+    }
+
+    private static String findLongestWord(String s, List<String> d) {
+        int max = Integer.MIN_VALUE;
+        d = d.stream().sorted().collect(Collectors.toList());
+        int dicSize = d.size();
+        int[] matchCountArr = new int[dicSize];
+        int[] freArr = new int[128];
+        for (int i = 0; i < s.length(); i++){
+            freArr[s.charAt(i)]++;
+        }
+
+        for (int i = 0; i < dicSize; i++){
+            int cur = countMatch(freArr, d.get(i));
+            matchCountArr[i] = cur;
+            max = Math.max(max, cur);
+        }
+
+        for (int i = 0; i < dicSize; i++){
+            if (matchCountArr[i] == max){
+                return d.get(i);
+            }
+        }
+        return null;
+    }
+
+    private static int countMatch(int[] sfreArr, String t) {
+        int match = 0;
+        int[] tFreArr = new int[128];
+        for (int i = 0; i < t.length(); i++){
+            tFreArr[t.charAt(i)]++;
+        }
+
+        for (int i = 0; i < 128; i++){
+            if (tFreArr[i] > sfreArr[i]){
+                return -1;
+            } else {
+                match += tFreArr[i];
+            }
+        }
+        return match;
     }
 
     /**
