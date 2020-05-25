@@ -9,10 +9,10 @@ import java.util.Arrays;
 public class DynamicProgrammingLC {
 
     public static void main(String[] args) {
-//        p509();
-//        p322();
-//        p300();
-        p53();
+//        p509(); // Fibonacci Number
+//        p322(); // Coin Change
+//        p300(); // Longest Increasing Subsequence
+//        p53();  // Maximum Subarray
     }
 
     /**
