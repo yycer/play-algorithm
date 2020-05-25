@@ -11,7 +11,56 @@ public class DynamicProgrammingLC {
     public static void main(String[] args) {
 //        p509();
 //        p322();
-        p300();
+//        p300();
+        p53();
+    }
+
+    /**
+     * 53. Maximum Subarray
+     */
+    private static void p53() {
+        int[] nums1 = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+//        int ret1 = maxSubArray(nums1);
+        int ret1 = maxSubArrayOptimize(nums1);
+        System.out.println(ret1);
+    }
+
+    private static int maxSubArrayOptimize(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        int len  = nums.length;
+        int[] dp = new int[len];
+        dp[0] = nums[0];
+        for (int i = 1; i < len; i++){
+            int cur = nums[i];
+            int dpBefore = dp[i - 1];
+            dp[i] = Math.max(cur, cur + dpBefore);
+//            dp[i] = Math.max(nums[i], nums[i] + dp[i - 1]);
+        }
+        return Arrays.stream(dp).max().orElse(0);
+    }
+
+    private static int maxSubArray(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        int len  = nums.length;
+        int[] dp = new int[len];
+        dp[0] = nums[0];
+        for (int i = 1; i < len; i++){
+            int cur = nums[i];
+            int dpBefore = dp[i - 1];
+            /**
+             * cur    dpBefore(*)    ret
+             * 1      -1             cur
+             * 1       1             cur + dpBefore
+             * -1      1             cur + dpBefore
+             * -1     -1             cur
+             */
+            if (dpBefore > 0){
+                dp[i] = cur + dpBefore;
+            } else {
+                dp[i] = cur;
+            }
+        }
+        return Arrays.stream(dp).max().orElse(0);
     }
 
     /**
