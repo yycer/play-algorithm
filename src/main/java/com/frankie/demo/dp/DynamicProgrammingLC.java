@@ -13,6 +13,64 @@ public class DynamicProgrammingLC {
 //        p322(); // Coin Change
 //        p300(); // Longest Increasing Subsequence
 //        p53();  // Maximum Subarray
+        p518();
+    }
+
+    /**
+     * 518. Coin Change 2
+     * https://labuladong.gitbook.io/algo/dong-tai-gui-hua-xi-lie/bei-bao-ling-qian
+     * https://leetcode.com/problems/coin-change-2/discuss/99212/Knapsack-problem-Java-solution-with-thinking-process-O(nm)-Time-and-O(m)-Space
+     * https://leetcode.com/problems/coin-change-2/discuss/99222/Video-explaining-how-dynamic-programming-works-with-the-Coin-Change-problem
+     */
+    private static void p518() {
+        int amount = 4;
+        int[] coins = {1, 2, 5};
+//        int ret1 = change(amount, coins);
+//        int ret1 = changeUsingDP(amount, coins);
+        int ret1 = changeUsingDPOptimize(amount, coins);
+        System.out.println(ret1);
+    }
+
+    private static int changeUsingDP(int amount, int[] coins) {
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;
+        for (int c: coins){
+            for (int a = 1; a <= amount; a++){
+                if (a - c >= 0){
+                    dp[a] += dp[a - c];
+                }
+            }
+        }
+        return dp[amount];
+    }
+
+    private static int changeUsingDPOptimize(int amount, int[] coins) {
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;
+        for (int c: coins){
+            for (int a = c; a <= amount; a++){
+                dp[a] += dp[a - c];
+            }
+        }
+        return dp[amount];
+    }
+
+    private static int change(int amount, int[] coins) {
+        int coinSize = coins.length;
+        int[][] dp = new int[coinSize + 1][amount + 1];
+        for (int i = 0; i <= coinSize; i++){
+            dp[i][0] = 1;
+        }
+        for (int c = 1; c <= coinSize; c++){
+            for (int a = 1; a <= amount; a++){
+                if (a - coins[c - 1] >= 0){
+                    dp[c][a] = dp[c - 1][a] + dp[c][a - coins[c - 1]];
+                } else {
+                    dp[c][a] = dp[c - 1][a];
+                }
+            }
+        }
+        return dp[coinSize][amount];
     }
 
     /**
