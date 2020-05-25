@@ -1,5 +1,7 @@
 package com.frankie.demo.dp;
 
+import java.util.Arrays;
+
 /**
  * @author: Yao Frankie
  * @date: 2020/5/25 9:42
@@ -8,7 +10,47 @@ public class DynamicProgrammingLC {
 
     public static void main(String[] args) {
 //        p509();
-        p322();
+//        p322();
+        p300();
+    }
+
+    /**
+     * 300. Longest Increasing Subsequence
+     * Binary Search: https://leetcode.com/problems/longest-increasing-subsequence/discuss/74824/JavaPython-Binary-search-O(nlogn)-time-with-explanation
+     */
+    private static void p300() {
+//        int[] nums1 = {10, 9, 2, 5, 3, 7, 101, 18};
+//        int ret1 = lengthOfLIS(nums1);
+//        System.out.println(ret1);
+        int[] nums2 = {1, 3, 6, 7, 9, 4, 10, 5, 6};
+        int ret2 = lengthOfLIS(nums2);
+        System.out.println(ret2);
+    }
+
+    /**
+     * 数学归纳法：根据f(0 ... n-1)，求出f(n)。
+     */
+    private static int lengthOfLIS(int[] nums) {
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+        int len = nums.length;
+        // dp[i]的含义：当前元素nums[i]的最长递增子序列。
+        int[] dp = new int[len];
+
+        for (int i = 0; i < len; i++){
+            int max = 1;
+            int cur = nums[i];
+            int end = i;
+            // 求之前所有小于当前元素的最大最长递增子序列，并加一。
+            while (--end >= 0){
+                if (nums[end] < cur) {
+                    max = Math.max(max, dp[end] + 1);
+                }
+            }
+            dp[i] = max;
+        }
+        return Arrays.stream(dp).max().orElse(0);
     }
 
     /**
