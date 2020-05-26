@@ -13,7 +13,83 @@ public class DynamicProgrammingLC {
 //        p322(); // Coin Change
 //        p300(); // Longest Increasing Subsequence
 //        p53();  // Maximum Subarray
-        p518();
+//        p518(); // Coin Change 2
+        p416();
+    }
+
+    /**
+     * 416. Partition Equal Subset Sum
+     */
+    private static void p416() {
+        int[] nums = {1, 2, 6, 3};
+//        boolean ret1 = canPartition(nums);
+        boolean ret1 = canPartitionOptimize1(nums);
+        System.out.println(ret1);
+    }
+
+    /**
+     * https://labuladong.gitbook.io/algo/dong-tai-gui-hua-xi-lie/bei-bao-zi-ji
+     */
+    private static boolean canPartition(int[] nums) {
+        // ---------------------------------------------------------------------------
+        // dp[i][j]: 对于容量为j的背包，若只是使用前i个物品，是否有一种方法将其装满。
+        // If bag has rest:     dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
+        // If bag has not rest: dp[i][j] = dp[i - 1][j]
+        // ---------------------------------------------------------------------------
+        // [1, 3, 2, 2], half = 4
+        //       0 1 2 3 4
+        //    0: 0 0 0 0 0
+        // [1]1: 1 1 0 0 0
+        // [3]2: 1 1 1 1 0
+        // [2]3: 1 1 1 1 1
+        // [2]4: 1 1 1 1 1
+
+        int sum = Arrays.stream(nums).sum();
+        // sum is odd.
+        if ((sum & 1) == 1){
+            return false;
+        }
+        int len  = nums.length;
+        int half = sum / 2;
+        boolean[][] dp = new boolean[len + 1][half + 1];
+        for (int i = 1; i <= len; i++){
+            dp[i][0] = true;
+            for (int j = 1; j <= half; j++){
+                // If bag has not rest.
+                if (j - nums[i - 1] < 0){
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
+                }
+            }
+        }
+        return dp[len][half];
+    }
+
+    private static boolean canPartitionOptimize1(int[] nums) {
+        // [1, 3, 2, 2], half = 4
+        // <-----------
+        //    0 1 2 3 4 (Amount)
+        // 1: 1 1 0 0 0
+        // 3: 1 1 0 1 1
+        // 2: 1 1 1 1 1
+        // 2: 1 1 1 1 1
+
+        int sum = Arrays.stream(nums).sum();
+        // sum is odd.
+        if ((sum & 1) == 1){
+            return false;
+        }
+        int half = sum / 2;
+        boolean[] dp = new boolean[half + 1];
+        dp[0] = true;
+        for (int n: nums){
+            // Big to small.
+            for (int j = half; j >= n; j--){
+                dp[j] |= dp[j - n];
+            }
+        }
+        return dp[half];
     }
 
     /**
