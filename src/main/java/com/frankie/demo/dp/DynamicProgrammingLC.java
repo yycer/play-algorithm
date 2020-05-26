@@ -8,13 +8,110 @@ import java.util.Arrays;
  */
 public class DynamicProgrammingLC {
 
+    /**
+     * https://www.cnblogs.com/miserweyte/p/11681350.html
+     * 子串：  字符串x在字符串s中出现，所以子串是连续的。如："ab"是"dabc"的子串。
+     * 子序列：字符串x可以由字符串s删除某些字符后得到。  如："ac"是"dabc"的子序列。
+     */
     public static void main(String[] args) {
 //        p509(); // Fibonacci Number
 //        p322(); // Coin Change
 //        p300(); // Longest Increasing Subsequence
 //        p53();  // Maximum Subarray
 //        p518(); // Coin Change 2
-        p416();
+//        p416(); // Partition Equal Subset Sum
+//        p1143(); // Longest Common Subsequence
+        p516();
+    }
+
+    /**
+     * 516. Longest Palindromic Subsequence
+     */
+    private static void p516() {
+        String s = "bbbab";
+        longestPalindromeSubseq(s);
+    }
+
+    /**
+     * 在子串s[i...j]中，最长回文子序列为 dp[i][j]。
+     *
+     */
+    private static int longestPalindromeSubseq(String s) {
+        return 1;
+    }
+
+    /**
+     * 1143. Longest Common Subsequence
+     */
+    private static void p1143() {
+        // longest common subsequence is ace.
+        String text1 = "ab";
+        String text2 = "cac";
+        int ret1 = longestCommonSubsequence(text1, text2);
+        System.out.println(ret1);
+    }
+
+    /**
+     * k = dp[i][j]: 对于s1[1...i]和s2[1...j]，他们的LCS长度为k。
+     * eg. text1 = "ab", text2 = "cac";
+     *       c a c
+     *     0 0 0 0
+     *  a: 0 0 1 1
+     *  b: 0 0 1 1
+     *
+     *  s1 = "bsbininm";
+     *  s2 = "jmjkbkjkv";
+     *      b s b i n i n m
+     *    0 0 0 0 0 0 0 0 0
+     *  j 0 0 0 0 0 0 0 0 0
+     *  m 0 0 0 0 0 0 0 0 1
+     *  j 0 0 0 0 0 0 0 0 1
+     *  k 0 0 0 0 0 0 0 0 1
+     *  b 0 1 0 1 0 0 0 0 1
+     *  k 0 1 0 1 0 0 0 0 1
+     *  j 0 0 0 0 0 0 0 0 0
+     *  k 0 0 0 0 0 0 0 0 0
+     *  v 0 0 0 0 0 0 0 0 0
+     *
+     */
+    private static int longestCommonSubsequence(String text1, String text2) {
+        int len1 = text1.length(), len2 = text2.length();
+        if (len1 == 0 || len2 == 0) return 0;
+        int[][] dp = new int[len1 + 1][len2 + 1];
+
+        for (int i = 1; i <= len1; i++){
+            for (int j = 1; j <= len2; j++){
+                if (text1.charAt(i - 1) == text2.charAt(j - 1)){
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[len1][len2];
+    }
+
+    /**
+     * Not work.
+     * eg. text1 = "ab", text2 = "cac";
+     * Output  : 0
+     * Expected: 1
+     */
+    private static int longestCommonSubsequenceNotWork(String text1, String text2) {
+        int len1 = text1.length(), len2= text2.length();
+        if (len1 == 0 || len2 == 0) return 0;
+        int i = len1 - 1, j = len2 - 1;
+        int ans = 0;
+        while (i >= 0 || j >= 0){
+            if (text1.charAt(i) == text2.charAt(j)){
+                i--;
+                j--;
+                ans++;
+            } else {
+                i--;
+            }
+        }
+        return ans;
     }
 
     /**
@@ -22,8 +119,8 @@ public class DynamicProgrammingLC {
      */
     private static void p416() {
         int[] nums = {1, 2, 6, 3};
-//        boolean ret1 = canPartition(nums);
-        boolean ret1 = canPartitionOptimize1(nums);
+        boolean ret1 = canPartition(nums);
+//        boolean ret1 = canPartitionOptimize1(nums);
         System.out.println(ret1);
     }
 
