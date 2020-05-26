@@ -8,12 +8,12 @@ import java.util.Arrays;
  * @author: Yao Frankie
  * @date: 2020/5/15 15:06
  */
-public class ArrayAndMatrixTest {
+public class ArrayAndMatrixLC {
 
     public static void main(String[] args) {
-//        p283();
+        p283();
 //        p485();
-        p645();
+//        p645();
     }
 
     /**
@@ -108,8 +108,29 @@ public class ArrayAndMatrixTest {
 //        System.out.println(Arrays.toString(nums5));
 //        moveZerosUsingInsertion(nums5);
 
-        moveZerosAmazing(nums5);
-        System.out.println(Arrays.toString(nums5));
+//        moveZerosAmazing(nums5);
+////        System.out.println(Arrays.toString(nums5));
+        moveZeros20200526(nums1);
+    }
+
+    // {1, 0, 3, 0, 5}
+    private static void moveZeros20200526(int[] nums) {
+        int zeroIndex = -1;
+    }
+
+    private static int findFirstZeroIndex(int[] nums, int lo){
+        for (int i = lo; i < nums.length; i++){
+            if (nums[i] == 0){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private static void swap(int[] nums, int i, int j){
+        int t   = nums[i];
+        nums[i] = nums[j];
+        nums[j] = t;
     }
 
     /**
