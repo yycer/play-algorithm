@@ -111,11 +111,17 @@ public class ArrayAndMatrixLC {
 //        moveZerosAmazing(nums5);
 ////        System.out.println(Arrays.toString(nums5));
         moveZeros20200526(nums1);
+        System.out.println(Arrays.toString(nums1));
     }
 
     // {1, 0, 3, 0, 5}
     private static void moveZeros20200526(int[] nums) {
-        int zeroIndex = -1;
+        int start = 0, len = nums.length;
+        for (int i = 0; i < len; i++){
+            if (nums[i] != 0){
+                swap(nums, i, start++);
+            }
+        }
     }
 
     private static int findFirstZeroIndex(int[] nums, int lo){
