@@ -15,7 +15,7 @@ public class ArrayAndMatrixLC {
 //        p485(); // Max Consecutive Ones
 //        p645(); // Set Mismatch
 //        p240(); // Search a 2D Matrix II
-        p287();
+//        p287(); // Find the Duplicate Number
     }
 
     /**
@@ -28,11 +28,22 @@ public class ArrayAndMatrixLC {
     }
 
     private static int findDuplicate(int[] nums) {
-        // n = 4
-        //     -3  -4  -2  -2
-        // [1,  3,  4,  2,  2]
-        //  0,  1,  2,  3,  4
-        return -1;
+        if (nums.length == 0) return 0;
+        int len = nums.length;
+        int lo = 1, hi = len - 1;
+        while (lo < hi){
+            int lessThanCount = 0;
+            int mid = (lo + hi) >>> 1;
+            for (int n: nums){
+                if (n <= mid) lessThanCount++;
+            }
+            if (lessThanCount > mid){
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return lo;
     }
 
     /**
