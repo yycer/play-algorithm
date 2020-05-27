@@ -15,13 +15,13 @@ public class DynamicProgrammingLC {
      */
     public static void main(String[] args) {
 //        p509(); // Fibonacci Number
-//        p322(); // Coin Change
+        p322(); // Coin Change
 //        p300(); // Longest Increasing Subsequence
 //        p53();  // Maximum Subarray
 //        p518(); // Coin Change 2
 //        p416(); // Partition Equal Subset Sum
 //        p1143(); // Longest Common Subsequence
-        p516();
+//        p516();
     }
 
     /**
@@ -348,18 +348,52 @@ public class DynamicProgrammingLC {
 //        int ret2 = coinChange(coins2, amount2);
 //        System.out.println(ret2);
 
-//        int[] coins3 = {1, 2, 5};
-//        int amount3  = 4;
+        int[] coins3 = {1, 2, 5};
+        int amount3  = 6;
 //        int[] memo3 = new int[amount3 + 1];
 //        int ret3 = coinChangeUsingMemoWorks(coins3, amount3, memo3);
 //        int ret3 = coinChangeUsingMemoTE(coins3, amount3, memo3);
 //        int ret3 = coinChangeUsingDP(coins3, amount3);
 //        System.out.println(ret3);
 
-        int[] coins4 = {2};
-        int amount4 = 2;
-        int ret4 = coinChangeUsingDP(coins4, amount4);
-        System.out.println(ret4);
+//        int[] coins4 = {2};
+//        int amount4 = 2;
+//        int ret4 = coinChangeUsingDP(coins4, amount4);
+//        System.out.println(ret4);
+
+        int ret5 = coinChangeUsingDP20200527_1(coins3, amount3);
+        System.out.println(ret5);
+    }
+
+    /**
+     * coins: [1, 2, 5], amount = 6
+     * 选择： 你做出什么行为，才能改变状态的值。
+     * 1. 状态：目标金额
+     * 2. dp函数定义：若当前目标金额为n,至少需要dp(n)个硬币凑出该金额。
+     * 3. 选择：选择从面额列表中选一个硬币，导致目标金额减少。
+     *
+     * Border case:
+     * coins: [3], amount = 2;
+     * coins: [2], amount = 3;
+     * dp: 0 -1  1  0
+     *     0  1  2  3
+     */
+    private static int coinChangeUsingDP20200527_1(int[] coins, int amount) {
+
+        int[] dp = new int[amount + 1];
+        for (int a = 1; a <= amount; a++){
+            int min = Integer.MAX_VALUE;
+            for (int c: coins){
+                int cap = a - c;
+                // Border case: coins: [2], amount = 3;
+                if (cap < 0 || dp[cap] == -1){
+                    continue;
+                }
+                min = Math.min(min, dp[cap] + 1);
+            }
+            dp[a] = min == Integer.MAX_VALUE ? -1 : min;
+        }
+        return dp[amount];
     }
 
     private static int coinChangeUsingDP(int[] coins, int amount) {
