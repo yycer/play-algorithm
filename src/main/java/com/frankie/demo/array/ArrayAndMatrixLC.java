@@ -11,9 +11,65 @@ import java.util.Arrays;
 public class ArrayAndMatrixLC {
 
     public static void main(String[] args) {
-        p283();
-//        p485();
-//        p645();
+//        p283(); // Move Zeroes
+//        p485(); // Max Consecutive Ones
+//        p645(); // Set Mismatch
+//        p240(); // Search a 2D Matrix II
+        p287();
+    }
+
+    /**
+     * 287. Find the Duplicate Number
+     */
+    private static void p287() {
+        int[] nums = {1, 3, 4, 2, 2};
+        int ans1 = findDuplicate(nums);
+        System.out.println(ans1);
+    }
+
+    private static int findDuplicate(int[] nums) {
+        // n = 4
+        //     -3  -4  -2  -2
+        // [1,  3,  4,  2,  2]
+        //  0,  1,  2,  3,  4
+        return -1;
+    }
+
+    /**
+     * Search a 2D Matrix II
+     */
+    private static void p240() {
+        int[][] matrix = {{1, 4, 7}, {2, 5, 8}, {3, 6, 9}};
+        int target = 7;
+        boolean ans1 = searchMatrix(matrix, target);
+        System.out.println(ans1);
+    }
+
+    private static boolean searchMatrix(int[][] matrix, int target) {
+        // target = 23
+//        [                <------.
+//          [1,   4,  7, 11, 15], |
+//          [2,   5,  8, 12, 19], |
+//          [3,   6,  9, 16, 22], |
+//          [10, 13, 14, 17, 24], ↓
+//          [18, 21, 23, 26, 30]
+//        ]
+        if (matrix.length == 0) return false;
+        int row = matrix.length;
+        int col = matrix[0].length;
+
+        int r = 0, c = col - 1;
+        while (r < row && c >= 0){
+            int cur = matrix[r][c];
+            if (cur == target){
+                return true;
+            } else if (cur > target){
+                c--;
+            } else {
+                r++;
+            }
+        }
+        return false;
     }
 
     /**
