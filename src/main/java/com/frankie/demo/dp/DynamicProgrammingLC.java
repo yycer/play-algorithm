@@ -14,14 +14,94 @@ public class DynamicProgrammingLC {
      * 子序列：字符串x可以由字符串s删除某些字符后得到。  如："ac"是"dabc"的子序列。
      */
     public static void main(String[] args) {
-//        p509(); // Fibonacci Number
-        p322(); // Coin Change
-//        p300(); // Longest Increasing Subsequence
-//        p53();  // Maximum Subarray
-//        p518(); // Coin Change 2
-//        p416(); // Partition Equal Subset Sum
+//        p509();  // Fibonacci Number
+//        p322();  // Coin Change
+//        p300();  // Longest Increasing Subsequence
+//        p53();   // Maximum Subarray
+//        p518();  // Coin Change 2
+//        p416();  // Partition Equal Subset Sum
 //        p1143(); // Longest Common Subsequence
-//        p516();
+//        p516();  // Longest Palindromic Subsequence
+    }
+
+    private static void p121() {
+//        int[] prices = {7, 1, 5, 3, 6, 4};
+//        int ret1 = maxProfit2(prices);
+//        System.out.println(ret1);
+//        int[] prices2 = {1, 2};
+//        int ret2 = maxProfit2(prices2);
+//        System.out.println(ret2);
+//        int[] prices2 = {1, 4, 2};
+//        int ret2 = maxProfit20200527(prices2);
+//        System.out.println(ret2);
+        int[] prices3 = {3, 2, 6, 5, 0, 3};
+        int ret3 = maxProfit20200527(prices3);
+        System.out.println(ret3);
+    }
+
+    /**
+     * prices:[3  2  6  5  0  3]
+     * index : 0  1  2  3  4  5
+     * preMin: 3  2  2  2  0  0
+     * maxPro:-X -1  4  3 -2  3
+     *
+     * Exception: [7, 6, 4, 3, 1]
+     *
+     */
+    private static int maxProfit20200527(int[] prices) {
+        if (prices == null || prices.length == 0) return 0;
+        int len    = prices.length;
+        int preMin = prices[0];
+        int maxPro = Integer.MIN_VALUE;
+
+        for (int i = 1; i < len; i++){
+            int cur = prices[i];
+            maxPro = Math.max(maxPro, cur - preMin);
+            if (cur < preMin){
+                preMin = cur;
+            }
+        }
+        return Math.max(maxPro, 0);
+    }
+
+    private static int maxProfit(int[] prices) {
+        // 7, 1, 5, 3, 6, 4
+        // 0  1  2  3  4  5
+        if (prices == null || prices.length == 0) return 0;
+        int max = 0;
+        int len = prices.length;
+        for (int i = 0; i < len - 1; i++){
+            int cur = prices[i];
+            for (int j = i + 1; j < len; j++){
+                max = Math.max(max, prices[j] - cur);
+            }
+        }
+        return max;
+    }
+
+    /**
+     * Border case: prices: [1, 2]
+     * Border case: prices: [1, 4, 2]
+     * Not work: [3,2,6,5,0,3]
+     */
+    private static int maxProfitNotWork(int[] prices) {
+        // 7, 1, 5, 3, 6, 4
+        // 0  1  2  3  4  5
+        if (prices == null || prices.length == 0) return 0;
+        int len = prices.length;
+        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        int lo = 0, hi = len - 1;
+        while (lo <= hi){
+            if (prices[lo] < min){
+                min = prices[lo];
+            }
+            if (prices[hi] > max){
+                max = prices[hi];
+            }
+            lo++;
+            hi--;
+        }
+        return max > min ? max - min : 0;
     }
 
     /**
