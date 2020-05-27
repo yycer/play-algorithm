@@ -2,7 +2,11 @@ package com.frankie.demo.array;
 
 import com.frankie.demo.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author: Yao Frankie
@@ -16,6 +20,81 @@ public class ArrayAndMatrixLC {
 //        p645(); // Set Mismatch
 //        p240(); // Search a 2D Matrix II
 //        p287(); // Find the Duplicate Number
+        p229(); // Majority Element II
+    }
+
+    /**
+     * 229. Majority Element II
+     */
+    private static void p229() {
+//        int[] nums = {1, 1, 1, 3, 3, 2, 2, 2};
+//        List<Integer> ans = majorityElement(nums);
+//        System.out.println(ans);
+        int[] nums2 = {1, 1, 1, 3, 3, 2, 2, 2};
+        List<Integer> ans2 = majorityElementUsingBM(nums2);
+        System.out.println(ans2);
+    }
+
+    /**
+     * Boyer-Moore Majority Vote algorithm
+     * https://gregable.com/2013/10/majority-vote-algorithm-find-majority.html
+     * https://leetcode.com/problems/majority-element-ii/discuss/63520/Boyer-Moore-Majority-Vote-algorithm-and-my-elaboration
+     */
+    private static List<Integer> majorityElementUsingBM(int[] nums) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        if (nums == null || nums.length == 0) return ans;
+        int len = nums.length;
+
+        // Step1: Get two candidate.
+        int candidate1 = 0, candidate2 = 0;
+        int count1     = 0, count2     = 0;
+
+        for (int n: nums){
+            if (n == candidate1){
+                count1++;
+            } else if (n == candidate2){
+                count2++;
+            } else if (count1 == 0){
+                candidate1 = n;
+                count1 = 1;
+            } else if (count2 == 0){
+                candidate2 = n;
+                count2 = 1;
+            } else {
+                count1--;
+                count2--;
+            }
+        }
+
+        // Step2: Get the answer use the candidates.
+        int[] candidates = {candidate1, candidate2};
+        for (int i = 0; i < candidates.length; i++){
+            int cur = candidates[i];
+            int fre = 0;
+            for (int n: nums){
+                if (n == cur){
+                    fre++;
+                }
+            }
+            if (fre > len / 3){
+                ans.add(cur);
+            }
+        }
+        return ans.stream().distinct().collect(Collectors.toList());
+    }
+
+    private static List<Integer> majorityElement(int[] nums) {
+        int len = nums.length;
+        ArrayList<Integer> ans = new ArrayList<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int n: nums){
+            int cur = map.getOrDefault(n, 0) + 1;
+            if (cur > len / 3){
+                ans.add(n);
+            }
+            map.put(n, cur);
+        }
+        return ans.stream().distinct().collect(Collectors.toList());
     }
 
     /**
