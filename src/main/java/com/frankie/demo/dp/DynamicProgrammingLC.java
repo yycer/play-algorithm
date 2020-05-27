@@ -35,33 +35,8 @@ public class DynamicProgrammingLC {
 //        int ret2 = maxProfit20200527(prices2);
 //        System.out.println(ret2);
         int[] prices3 = {3, 2, 6, 5, 0, 3};
-        int ret3 = maxProfit20200527(prices3);
-        System.out.println(ret3);
-    }
-
-    /**
-     * prices:[3  2  6  5  0  3]
-     * index : 0  1  2  3  4  5
-     * preMin: 3  2  2  2  0  0
-     * maxPro:-X -1  4  3 -2  3
-     *
-     * Exception: [7, 6, 4, 3, 1]
-     *
-     */
-    private static int maxProfit20200527(int[] prices) {
-        if (prices == null || prices.length == 0) return 0;
-        int len    = prices.length;
-        int preMin = prices[0];
-        int maxPro = Integer.MIN_VALUE;
-
-        for (int i = 1; i < len; i++){
-            int cur = prices[i];
-            maxPro = Math.max(maxPro, cur - preMin);
-            if (cur < preMin){
-                preMin = cur;
-            }
-        }
-        return Math.max(maxPro, 0);
+//        int ret3 = maxProfit20200527(prices3);
+//        System.out.println(ret3);
     }
 
     private static int maxProfit(int[] prices) {
