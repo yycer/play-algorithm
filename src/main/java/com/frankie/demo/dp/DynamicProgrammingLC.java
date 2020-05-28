@@ -34,9 +34,9 @@ public class DynamicProgrammingLC {
 
     /**
      * 343. Integer Break
-     * todo: Waiting for solve.
      * https://leetcode.com/problems/integer-break/discuss/80689/A-simple-explanation-of-the-math-part-and-a-O(n)-solution
      * https://leetcode.com/problems/integer-break/discuss/80694/Java-DP-solution
+     * https://wangxin1248.github.io/algorithm/2020/05/leetcode-343.html
      */
     private static void p343() {
         int n = 10;
@@ -45,7 +45,20 @@ public class DynamicProgrammingLC {
     }
 
     private static int integerBreak(int n) {
-        return 0;
+        int[] dp = new int[n + 1];
+        dp[2] = 1;
+        dp[3] = 2;
+
+        for (int i = 4; i <= n; i++){
+            for (int j = 2; j <= (i >> 1); j++){
+                dp[i] = max3(dp[i], j * (i - j), j * dp[i - j]);
+            }
+        }
+        return dp[n];
+    }
+
+    private static int max3(int a, int b, int c) {
+        return Math.max(a, Math.max(b, c));
     }
 
     /**
