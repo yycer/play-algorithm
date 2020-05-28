@@ -24,7 +24,158 @@ public class DynamicProgrammingLC {
 //        p516();  // Longest Palindromic Subsequence
 //        p70();   // Climbing Stairs
 //        p746();  // Min Cost Climbing Stairs
-        p198();  // House Robber
+//        p198();  // House Robber
+//        p213();  // House Robber II
+//        p64();   // Minimum Path Sum
+//        p62();   // Unique Paths
+    }
+
+    /**
+     * 62. Unique Paths
+     */
+    private static void p62() {
+        int m = 7;
+        int n = 3;
+        int ret1 = uniquePaths(m, n);
+        System.out.println(ret1);
+    }
+
+    /**
+     * Exception: m = 1, n = 1
+     */
+    private static int uniquePaths(int m, int n) {
+        if (m < 1 || n < 1) return 0;
+        int[][] grid = new int[m][n];
+        // Step1: Set first row.
+        for (int i = 0; i < n; i++){
+            grid[0][i] = 1;
+        }
+
+        // Step2: Set first column.
+        for (int i = 1; i < m; i++){
+            grid[i][0] = 1;
+        }
+
+        // Step3: Set first others.
+        for (int i = 1; i < m; i++){
+            for (int j = 1; j < n; j++){
+                grid[i][j] = grid[i - 1][j] + grid[i][j - 1];
+            }
+        }
+        return grid[m - 1][n - 1];
+    }
+
+    /**
+     * 64. Minimum Path Sum
+     */
+    private static void p64() {
+        int[][] grid = {{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
+        int ret1 = minPathSum(grid);
+        System.out.println(ret1);
+    }
+
+    private static int minPathSum(int[][] grid) {
+        int rowNum = grid.length, colNum = grid[0].length;
+        if (rowNum == 0 || colNum == 0) return 0;
+
+        // Step1: Set first row.
+        for (int i = 1; i < colNum; i++){
+            grid[0][i] += grid[0][i - 1];
+        }
+
+        // Step2: Set first column.
+        for (int i = 1; i < rowNum; i++){
+            grid[i][0] += grid[i - 1][0];
+        }
+
+        // Step3: Set others.
+        for (int i = 1; i < rowNum; i++){
+            for (int j = 1; j < colNum; j++){
+                grid[i][j] = Math.min(grid[i - 1][j], grid[i][j - 1]) + grid[i][j];
+            }
+        }
+        return grid[rowNum - 1][colNum - 1];
+    }
+
+    /**
+     * 213. House Robber II
+     */
+    private static void p213() {
+//        int[] nums = {2, 3, 2};
+        int[] nums = {100, 5, 3, 7, 6, 4};
+//        int[] nums = {1, 2, 3, 1};
+//        int ret1 = rob_213_notwork(nums);
+        int ret1 = rob_213(nums);
+        System.out.println(ret1);
+    }
+
+    /**
+     * Split the nums to nums[0...len-1] and nums[1...len]
+     * https://leetcode.com/problems/house-robber-ii/discuss/59934/Simple-AC-solution-in-Java-in-O(n)-with-explanation
+     */
+    private static int rob_213(int[] nums) {
+        int len = nums.length;
+        if (len == 0) return 0;
+        if (len == 1) return nums[0];
+        return Math.max(subRobLeft(nums, 0, len - 2), subRobRight(nums, 1, len - 1));
+    }
+
+    private static int subRobRight(int[] nums, int lo, int hi) {
+        int len = hi - lo + 1;
+        int[] dp = new int[len + 1];
+        dp[0] = 0;
+        dp[1] = nums[lo];
+
+        for (int i = 2; i <= len; i++){
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i]);
+        }
+        return dp[len];
+    }
+
+    /**
+     * [100, 5, 3, 7, 6, 4]
+     * sub1: [100, 5, 3, 7, 6]
+     * sub2: [5, 3, 7, 6, 4]
+     * ---------------------------------------------
+     * sub1: [100, 5, 3, 7, 6]
+     *         0   1  2  3  4
+     * ---------------------------------------------
+     * Exception: [1, 2, 3, 1]
+     * len = 4
+     * subRob(nums, 0, 2) | subRob(nums, 1, 3)
+     * ---------------------------------------------
+     * left:  subRob(nums, 0, 2)
+     *    [1, 2, 3]: range[0, 2]
+     * [0, 1, 2, 4]
+     * ---------------------------------------------
+     * Right: subRob(nums, 1, 3)
+     *    [2, 3, 1]: range[1, 3]
+     * [0, 2, 3, 3]
+     */
+    private static int subRobLeft(int[] nums, int lo, int hi) {
+        int len = hi - lo + 1;
+        int[] dp = new int[len + 1];
+        dp[0] = 0;
+        dp[1] = nums[lo];
+
+        for (int i = 2; i <= len; i++){
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i - 1]);
+        }
+        return dp[len];
+    }
+
+    private static int rob_213_notwork(int[] nums) {
+        //    [100,  5,   3,   7,   6,   4]
+        //      0,   1,   2,   3,   4,   5
+        // [0, 100, 100, 103, 107, 109, 109]
+        int len = nums.length;
+        int[] dp = new int[len + 1];
+        dp[0] = 0;
+        dp[1] = nums[0];
+        for (int i = 2; i <= len; i++){
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i]);
+        }
+        return -1;
     }
 
     /**
@@ -32,7 +183,7 @@ public class DynamicProgrammingLC {
      */
     private static void p198() {
         int[] nums = {2, 7, 9, 3, 1};
-        int ret1 = rob(nums);
+        int ret1 = rob_198(nums);
         System.out.println(ret1);
     }
 
@@ -43,7 +194,7 @@ public class DynamicProgrammingLC {
      * Exception: [2, 1, 1, 2]
      *         [0, 2, 2, 3, 4]
      */
-    private static int rob(int[] nums) {
+    private static int rob_198(int[] nums) {
         int len = nums.length;
         if (len == 0) return 0;
         int[] dp = new int[len + 1];
