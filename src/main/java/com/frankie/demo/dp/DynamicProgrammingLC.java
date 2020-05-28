@@ -16,7 +16,7 @@ public class DynamicProgrammingLC {
     public static void main(String[] args) {
 //        p509();  // Fibonacci Number
 //        p322();  // Coin Change
-        p300();  // Longest Increasing Subsequence
+//        p300();  // Longest Increasing Subsequence
 //        p53();   // Maximum Subarray
 //        p518();  // Coin Change 2
 //        p416();  // Partition Equal Subset Sum
@@ -421,8 +421,28 @@ public class DynamicProgrammingLC {
         // longest common subsequence is ace.
         String text1 = "ab";
         String text2 = "cac";
-        int ret1 = longestCommonSubsequence(text1, text2);
+//        int ret1 = longestCommonSubsequence(text1, text2);
+        int ret1 = longestCommonSubsequence_2020_0528(text1, text2);
         System.out.println(ret1);
+    }
+
+    private static int longestCommonSubsequence_2020_0528(String text1, String text2) {
+        int len1 = text1.length(), len2 = text2.length();
+        // dp[i][j]的含义：text1中前i个字符与text2中前j个字符的最长公共子序列[LCS]。
+        int[][] dp = new int[len1 + 1][len2 + 1];
+
+        for (int i = 1; i <= len1; i++){
+            for (int j = 1; j <= len2; j++){
+                if (text1.charAt(i - 1) == text2.charAt(j - 1)){
+                    // 当前两个字符相等，则在去掉该字符基础的结果上加一。
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    // 否则，获取分别去掉当前字母的结果的最大值。
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][ j - 1]);
+                }
+            }
+        }
+        return dp[len1][len2];
     }
 
     /**
