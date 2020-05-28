@@ -28,6 +28,47 @@ public class DynamicProgrammingLC {
 //        p213();  // House Robber II
 //        p64();   // Minimum Path Sum
 //        p62();   // Unique Paths
+//        p413();  // Arithmetic Slices
+    }
+
+    /**
+     * 413. Arithmetic Slices
+     */
+    private static void p413() {
+        int[] A = {1, 2, 3, 4};
+//        int ret1 = numberOfArithmeticSlices(A);
+        int ret1 = numberOfArithmeticSlicesOptimize1(A);
+        System.out.println(ret1);
+    }
+
+    private static int numberOfArithmeticSlices(int[] A) {
+        int len = A.length;
+        if (len < 3) return 0;
+        int[] dp = new int[len];
+
+        for (int i = 2; i < len; i++){
+            if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]){
+                dp[i] = dp[i - 1] + 1;
+            }
+        }
+        return Arrays.stream(dp).sum();
+    }
+
+    private static int numberOfArithmeticSlicesOptimize1(int[] A) {
+        int len = A.length;
+        if (len < 3) return 0;
+        int[] dp = new int[len];
+        int ans = 0;
+
+        for (int i = 2; i < len; i++){
+            if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]){
+                // dp[i] represents: The number of arithmetic slices when ends of the A[i].
+                // dp[i]表示以A[i]结尾的等差递增子区间的个数！！！
+                dp[i] = dp[i - 1] + 1;
+                ans += dp[i];
+            }
+        }
+        return ans;
     }
 
     /**
