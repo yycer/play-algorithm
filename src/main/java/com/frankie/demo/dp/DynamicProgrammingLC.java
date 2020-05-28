@@ -22,6 +22,69 @@ public class DynamicProgrammingLC {
 //        p416();  // Partition Equal Subset Sum
 //        p1143(); // Longest Common Subsequence
 //        p516();  // Longest Palindromic Subsequence
+//        p70(); // Climbing Stairs
+//        p746(); // Min Cost Climbing Stairs
+    }
+
+    /**
+     * 746. Min Cost Climbing Stairs
+     */
+    private static void p746() {
+//        int[] cost = {10, 15, 20};
+        int[] cost = {1, 100, 1, 1, 1, 100, 1, 1, 100, 1};
+        int ret1 = minCostClimbingStairs(cost);
+        System.out.println(ret1);
+    }
+
+    /**
+     * Thanks for myself!!!
+     */
+    private static int minCostClimbingStairs(int[] cost) {
+        int len = cost.length;
+        if (len == 0) return 0;
+        if (len == 1) return cost[0];
+        int[] dp = new int[len];
+        dp[0] = cost[0];
+        dp[1] = cost[1];
+        for (int i = 2; i < len; i++){
+            dp[i] = Math.min(dp[i - 1], dp[i - 2]) + cost[i];
+        }
+        return Math.min(dp[len - 1], dp[len - 2]);
+    }
+
+    /**
+     * 70. Climbing Stairs
+     */
+    private static void p70() {
+        int n = 4;
+        int ret1 = climbStairs(n);
+        System.out.println(ret1);
+    }
+
+    /**
+     * 给你一个n阶楼梯，允许你一次走1阶或2阶，请问登顶的所有唯一选择
+     * f(n) = f(n - 1) + f(n - 2)
+     * 因为，当你在第n-1和n-2阶时，分别走1和2阶楼梯，就一定可以登顶！
+     * https://leetcode.com/problems/climbing-stairs/discuss/25299/Basically-it's-a-fibonacci.
+     * ----------------------------------------
+     * n = 4
+     * -oo 0 1 2 3 4
+     *   0 1 1 2 3 5
+     * ----------------------------------------
+     * n = 1 -> 1
+     * n = 2 -> 1+1; 2
+     * n = 3 -> 1+1+1; 1+2; 2+1
+     * n = 4 -> 1+1+1+1; 1+1+2; 1+2+1; 2+1+1; 2+2
+     */
+    private static int climbStairs(int n) {
+        if (n <= 0) return 0;
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++){
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
     }
 
     private static void p121() {

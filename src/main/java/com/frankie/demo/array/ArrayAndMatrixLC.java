@@ -2,10 +2,7 @@ package com.frankie.demo.array;
 
 import com.frankie.demo.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -20,7 +17,33 @@ public class ArrayAndMatrixLC {
 //        p645(); // Set Mismatch
 //        p240(); // Search a 2D Matrix II
 //        p287(); // Find the Duplicate Number
-        p229(); // Majority Element II
+//        p229(); // Majority Element II
+        p217(); // Contains Duplicate
+    }
+
+    /**
+     * 217. Contains Duplicate
+     */
+    private static void p217() {
+        int[] nums = {1, 2, 3, 1};
+//        containsDuplicate(nums);
+        containsDuplicateUsingSet(nums);
+    }
+
+    private static boolean containsDuplicateUsingSet(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+        for (int n: nums){
+            if (!set.add(n)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean containsDuplicate(int[] nums) {
+        int len = nums.length;
+        if (len == 0) return false;
+        return Arrays.stream(nums).distinct().count() != len;
     }
 
     /**
