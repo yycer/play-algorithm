@@ -16,7 +16,7 @@ public class DynamicProgrammingLC {
     public static void main(String[] args) {
 //        p509();  // Fibonacci Number
 //        p322();  // Coin Change
-//        p300();  // Longest Increasing Subsequence
+        p300();  // Longest Increasing Subsequence
 //        p53();   // Maximum Subarray
 //        p518();  // Coin Change 2
 //        p416();  // Partition Equal Subset Sum
@@ -29,6 +29,23 @@ public class DynamicProgrammingLC {
 //        p64();   // Minimum Path Sum
 //        p62();   // Unique Paths
 //        p413();  // Arithmetic Slices
+//        p343();  // Integer Break
+    }
+
+    /**
+     * 343. Integer Break
+     * todo: Waiting for solve.
+     * https://leetcode.com/problems/integer-break/discuss/80689/A-simple-explanation-of-the-math-part-and-a-O(n)-solution
+     * https://leetcode.com/problems/integer-break/discuss/80694/Java-DP-solution
+     */
+    private static void p343() {
+        int n = 10;
+        int ret1 = integerBreak(n);
+        System.out.println(ret1);
+    }
+
+    private static int integerBreak(int n) {
+        return 0;
     }
 
     /**
@@ -657,11 +674,40 @@ public class DynamicProgrammingLC {
      */
     private static void p300() {
 //        int[] nums1 = {10, 9, 2, 5, 3, 7, 101, 18};
+        int[] nums1 = {1, 3, 6, 7, 9, 4, 10, 5, 6};
 //        int ret1 = lengthOfLIS(nums1);
-//        System.out.println(ret1);
-        int[] nums2 = {1, 3, 6, 7, 9, 4, 10, 5, 6};
-        int ret2 = lengthOfLIS(nums2);
-        System.out.println(ret2);
+        int ret1 = lengthOfLIS_20200528(nums1);
+        System.out.println(ret1);
+//        int[] nums2 = {1, 3, 6, 7, 9, 4, 10, 5, 6};
+//        int ret2 = lengthOfLIS(nums2);
+//        System.out.println(ret2);
+    }
+
+    /**
+     * Exception: [1, 3, 6, 7, 9, 4, 10, 5, 6]
+     *             1  2  3  4  5  5  6   6  6
+     *
+     */
+    private static int lengthOfLIS_20200528(int[] nums) {
+        // 10, 9, 2, 5, 3, 7, 101, 18
+        // 1   1  1  2  2  3   4   4
+
+        int len  = nums.length;
+        if (len == 0) return 0;
+        int[] dp = new int[len];
+        dp[0] = 1;
+        for (int i = 1; i < len; i++){
+            int cur = nums[i];
+            int end = i;
+            int max = 1;
+            while (--end >= 0){
+                if (cur > nums[end]){
+                    max = Math.max(max, dp[end] + 1);
+                }
+            }
+            dp[i] = max;
+        }
+        return Arrays.stream(dp).max().orElse(0);
     }
 
     /**
