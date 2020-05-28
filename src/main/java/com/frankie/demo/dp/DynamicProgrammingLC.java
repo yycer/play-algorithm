@@ -22,8 +22,55 @@ public class DynamicProgrammingLC {
 //        p416();  // Partition Equal Subset Sum
 //        p1143(); // Longest Common Subsequence
 //        p516();  // Longest Palindromic Subsequence
-//        p70(); // Climbing Stairs
-//        p746(); // Min Cost Climbing Stairs
+//        p70();   // Climbing Stairs
+//        p746();  // Min Cost Climbing Stairs
+        p198();  // House Robber
+    }
+
+    /**
+     * 198. House Robber
+     */
+    private static void p198() {
+        int[] nums = {2, 7, 9, 3, 1};
+        int ret1 = rob(nums);
+        System.out.println(ret1);
+    }
+
+    /**
+     *    [2, 7, 9,  3,  1]
+     * [0, 2, 7, 11, 11, 12]
+     *
+     * Exception: [2, 1, 1, 2]
+     *         [0, 2, 2, 3, 4]
+     */
+    private static int rob(int[] nums) {
+        int len = nums.length;
+        if (len == 0) return 0;
+        int[] dp = new int[len + 1];
+        dp[0] = 0;
+        dp[1] = nums[0];
+
+        for (int i = 2; i <= len; i++){
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i - 1]);
+        }
+        return dp[len];
+    }
+
+    /**
+     * Exception: [2, 1, 1, 2]
+     *         [0, 2, 2, 3, 4]
+     */
+    private static int robNotWork(int[] nums) {
+        int len = nums.length;
+        if (len == 0) return 0;
+        int[] dp = new int[len + 1];
+        dp[0] = 0;
+        dp[1] = nums[0];
+
+        for (int i = 2; i <= len; i++) {
+            dp[i] = dp[i - 2] + nums[i - 1];
+        }
+        return Arrays.stream(dp).max().orElse(0);
     }
 
     /**
