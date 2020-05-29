@@ -19,7 +19,7 @@ public class DynamicProgrammingLC {
 //        p300();  // Longest Increasing Subsequence
 //        p53();   // Maximum Subarray
 //        p518();  // Coin Change 2
-//        p416();  // Partition Equal Subset Sum
+        p416();  // Partition Equal Subset Sum
 //        p1143(); // Longest Common Subsequence
 //        p516();  // Longest Palindromic Subsequence
 //        p70();   // Climbing Stairs
@@ -30,6 +30,36 @@ public class DynamicProgrammingLC {
 //        p62();   // Unique Paths
 //        p413();  // Arithmetic Slices
 //        p343();  // Integer Break
+//        p279();  // Perfect Squares
+    }
+
+    /**
+     * 279. Perfect Squares
+     */
+    private static void p279() {
+        int n = 12;
+        int ret1 = numSquares(n);
+        System.out.println(ret1);
+    }
+
+    /**
+     * https://leetcode.com/problems/perfect-squares/discuss/71495/An-easy-understanding-DP-solution-in-Java
+     */
+    private static int numSquares(int n) {
+        // dp[i]：可组成数值i的最少完全平方数量。
+        int[] dp = new int[n + 1];
+
+        for (int i = 1; i <= n; i++){
+            int min = Integer.MAX_VALUE;
+            int sqrt = (int) Math.sqrt(i);
+            for (int j = sqrt; j > 0; j--){
+                // dp[i] = Math.min(dp[i], dp[i - j * j])
+                min = Math.min(min, dp[i - j * j] + 1);
+            }
+            dp[i] = min;
+        }
+
+        return dp[n];
     }
 
     /**
@@ -525,10 +555,82 @@ public class DynamicProgrammingLC {
      * 416. Partition Equal Subset Sum
      */
     private static void p416() {
-        int[] nums = {1, 2, 6, 3};
-        boolean ret1 = canPartition(nums);
+        int[] nums = {1, 2, 3, 2};
+//        boolean ret1 = canPartition(nums);
+//        boolean ret1 = canPartition_2020_0529(nums);
+        boolean ret1 = canPartition_2020_0529_Optimize1(nums);
 //        boolean ret1 = canPartitionOptimize1(nums);
         System.out.println(ret1);
+    }
+
+    /**
+     * 二维数组不一定非要从右往左遍历。
+     * 而一维数组一定要从右到左遍历，因此无法保存上一轮dp[i-1][j-nums[i-1]]
+     * ----------------------------------------------------------------
+     * 再次明确dp[i][j]的含义：仅用前i个硬币，是否能凑齐j元。
+     *      0 1 2 3 4
+     *    0 1 0 0 0 0
+     * [1]1 1 1 0 0 0
+     * [2]2 1 1 1 1 0
+     * [3]3 1 1 1 1 1
+     * [2]4 1 1 1 1 1
+     * ----------------------------------------------------------------
+     * Exception: [1, 1] --> return dp[ave];
+     * Exception: [1, 2, 5]
+     */
+    private static boolean canPartition_2020_0529_Optimize1(int[] nums) {
+
+        // Step1: Get the average of the nums.
+        int len = nums.length;
+        int sum = Arrays.stream(nums).sum();
+        if ((sum & 1) == 1) return false;
+        int ave = sum >> 1;
+
+        // Step2: Build the dp table(one dimensional).
+        boolean[] dp = new boolean[ave + 1];
+        dp[0] = true;
+//        for (int n: nums){
+//            for (int i = ave; i >= n; i--){
+//                // If bag has rest.
+//                if (i - n >= 0){
+//                    dp[i] |= dp[i - n];
+//                }
+//            }
+//        }
+        for (int n: nums){
+            for (int i = ave; i >= n; i--){
+                dp[i] |= dp[i - n];
+            }
+        }
+        return dp[ave];
+    }
+
+    private static boolean canPartition_2020_0529(int[] nums) {
+
+        // Step1: Get the average of the nums.
+        int sum = Arrays.stream(nums).sum();
+        if ((sum & 1) == 1) return false;
+        int ave = sum >> 1;
+        int len = nums.length;
+
+        // Step2: Build the dp table.
+        boolean[][] dp = new boolean[len + 1][ave + 1];
+        dp[0][0] = true;
+        for (int i = 1; i <= len; i++){
+            dp[i][0] = true;
+            // From right to left.
+            for (int j = ave; j > 0; j--){
+                // If bag has rest: dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i-1]]
+                if (j - nums[i - 1] >= 0){
+                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
+                }
+                // If bag is  full: dp[i][j] = dp[i-1][j]
+                else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[len][ave];
     }
 
     /**
@@ -541,6 +643,7 @@ public class DynamicProgrammingLC {
         // If bag has not rest: dp[i][j] = dp[i - 1][j]
         // ---------------------------------------------------------------------------
         // [1, 3, 2, 2], half = 4
+        //      <---------
         //       0 1 2 3 4
         //    0: 0 0 0 0 0
         // [1]1: 1 1 0 0 0
