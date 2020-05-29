@@ -24,12 +24,32 @@ public class Play {
     private static void p189() {
         int[] nums = {1, 2, 3, 4, 5, 6, 7};
         int k = 2;
-        rotate(nums, k);
+        rotateAmazing(nums, k);
         System.out.println(Arrays.toString(nums));
     }
 
+    private static void rotateAmazing(int[] nums, int k) {
+        int len = nums.length;
+        k %= len;
+        reverse(nums, 0, len - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, len - 1);
+    }
 
-    private static void rotate(int[] nums, int k) {
+    private static void reverse(int[] nums, int lo, int hi) {
+        while (lo < hi){
+            int tmp = nums[lo];
+            nums[lo++] = nums[hi];
+            nums[hi--] = tmp;
+        }
+    }
+
+    /**
+     * nums = [1, 2]
+     * k = 3
+     * 体现出rotate Array!
+     */
+    private static void rotateNotWork(int[] nums, int k) {
         // len = 7, k = 2
         // 1, 2, 3, 4, 5, 6, 7
         // 0  1  2  3  4  5  6 index
