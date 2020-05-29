@@ -13,7 +13,97 @@ public class Play {
 
     public static void main(String[] args) {
 //        p509();
-        p118();
+//        p118();
+//        p53();
+        p189(); // Rotate Array
+    }
+
+    /**
+     * 189. Rotate Array
+     */
+    private static void p189() {
+        int[] nums = {1, 2, 3, 4, 5, 6, 7};
+        int k = 2;
+        rotate(nums, k);
+        System.out.println(Arrays.toString(nums));
+    }
+
+
+    private static void rotate(int[] nums, int k) {
+        // len = 7, k = 2
+        // 1, 2, 3, 4, 5, 6, 7
+        // 0  1  2  3  4  5  6 index
+        // 6, 7, 1, 2, 3, 4, 5
+
+        int len = nums.length;
+        if (len < k) return;
+        // Step1: Create an array1 of size k.
+        int[] arr1 = new int[k];
+        for (int i = 0; i < k; i++){
+            arr1[i] = nums[len - k + i];
+        }
+
+        // Step2: Move the first (len-k) element to k step.
+        for (int i = 0; i < len - k; i++){
+            nums[len - 1 - i] = nums[len - k - i - 1];
+        }
+
+        // Step3: Insert element from array1 to nums.
+        for (int i = 0; i < k; i++){
+            nums[i] = arr1[i];
+        }
+    }
+
+    private static void p53() {
+        int[] nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        int ret1 = maxSubArray(nums);
+        System.out.println(ret1);
+    }
+
+    private static int maxSubArray(int[] nums) {
+        // -2, 1, -3, 4, -1, 2, 1, -5, 4
+        // -2  1  -2  4   3  5  6  -1  3
+        int len = nums.length;
+        int[] dp = new int[len];
+        dp[0] = nums[0];
+
+        for (int i = 1; i < len; i++){
+            // preSum cur ret
+            //    1    1   +
+            //    1   -1   +
+            //   -1    1  cur
+            //   -1   -1  cur
+            int cur = nums[i];
+            int preSum = dp[i - 1];
+            if (preSum < 0){
+                dp[i] = cur;
+            } else {
+                dp[i] = cur + dp[i - 1];
+            }
+        }
+
+        return Arrays.stream(dp).max().orElse(0);
+    }
+
+    private static int maxSubArrayOptimize(int[] nums) {
+        // -2, 1, -3, 4, -1, 2, 1, -5, 4
+        // -2  1  -2  4   3  5  6  -1  3
+        int len  = nums.length;
+        int[] dp = new int[len];
+        dp[0] = nums[0];
+
+        for (int i = 1; i < len; i++){
+            // preSum cur ret
+            //    1    1   +
+            //    1   -1   +
+            //   -1    1  cur
+            //   -1   -1  cur
+            int cur = nums[i];
+            int preSum = dp[i - 1];
+            dp[i] = cur + ((preSum > 0) ? dp[i - 1] : 0);
+        }
+
+        return Arrays.stream(dp).max().orElse(0);
     }
 
     /**
