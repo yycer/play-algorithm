@@ -19,7 +19,7 @@ public class DynamicProgrammingLC {
 //        p300();  // Longest Increasing Subsequence
 //        p53();   // Maximum Subarray
 //        p518();  // Coin Change 2
-        p416();  // Partition Equal Subset Sum
+//        p416();  // Partition Equal Subset Sum
 //        p1143(); // Longest Common Subsequence
 //        p516();  // Longest Palindromic Subsequence
 //        p70();   // Climbing Stairs
@@ -31,6 +31,35 @@ public class DynamicProgrammingLC {
 //        p413();  // Arithmetic Slices
 //        p343();  // Integer Break
 //        p279();  // Perfect Squares
+//        p494();  // Target Sum
+    }
+
+    /**
+     * 494. Target Sum
+     */
+    private static void p494() {
+        int[] nums = {1, 1, 1, 1, 1};
+        int S = 3;
+        int ret1 = findTargetSumWays(nums, S);
+        System.out.println(ret1);
+    }
+
+    private static int findTargetSumWays(int[] nums, int S) {
+
+        int sum = Arrays.stream(nums).sum();
+        if (sum < S || ((sum + S) & 1) == 1){
+            return 0;
+        }
+        int W = (sum + S) >> 1;
+        int[] dp = new int[W + 1];
+        dp[0] = 1;
+        for (int n: nums){
+            for (int i = W; i >= n; i--){
+                dp[i] += dp[i - n];
+            }
+        }
+
+        return dp[W];
     }
 
     /**
