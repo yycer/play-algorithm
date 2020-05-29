@@ -53,7 +53,13 @@ public class GetNextProblem {
     public static void main(String[] args) {
         List<String> likeList      = getContent(likePath);
         List<String> interviewList = getContent(interviewPath);
-        likeList.retainAll(interviewList);
+        // 交集
+//        likeList.retainAll(interviewList);
+//        System.out.println(likeList.size());
+//        System.out.println(likeList);
+
+        // 差集
+        likeList.removeAll(interviewList);
         System.out.println(likeList.size());
         System.out.println(likeList);
     }
