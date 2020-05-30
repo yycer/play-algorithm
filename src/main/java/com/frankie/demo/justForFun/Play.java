@@ -15,9 +15,118 @@ public class Play {
     public static void main(String[] args) {
 //        p509();
 //        p118();
-        p53();
+//        p53();
 //        p189(); // Rotate Array
 //        p268(); // Missing Number
+//        p70();  // 70. Climbing Stairs
+//        p746(); // 746. Min Cost Climbing Stairs
+//        p198(); // 198. House Robber
+        p213();  // 213. House Robber II
+    }
+
+    private static void p213() {
+        int[] nums = {2, 7, 9, 3, 1, 6, 8};
+        int ret1 = rob_213_2020_0530(nums);
+        System.out.println(ret1);
+    }
+
+    private static int rob_213_2020_0530(int[] nums) {
+
+        int len = nums.length;
+        if (len == 0) return 0;
+        if (len == 1) return nums[0];
+        return Math.max(robSub(nums, 0, len - 1), robSub(nums, 1, len));
+    }
+
+    private static int robSub(int[] nums, int lo, int hi) {
+
+        int pre = 0;
+        int cur = nums[lo];
+        int ans = 0;
+
+        for (int i = lo + 1; i < hi; i++){
+            ans = Math.max(pre + nums[i], cur);
+            pre = cur;
+            cur = ans;
+        }
+        return ans;
+    }
+
+    private static void p198() {
+        int[] nums = {2, 7, 9, 3, 1};
+        int ret1 = rob_198_2020_0530(nums);
+        System.out.println(ret1);
+    }
+
+    private static int rob_198_2020_0530(int[] nums) {
+        int len  = nums.length;
+        if (len == 0) return 0;
+        int[] dp = new int[len + 1];
+        dp[1] = nums[0];
+        for (int i = 2; i <= len; i++){
+            int cur= nums[i - 1];
+            dp[i] = Math.max(cur + dp[i - 2], dp[i - 1]);
+        }
+        return dp[len];
+    }
+
+    private static void p746() {
+//        int[] cost = {3, 2, 3, 1, 2, 4};
+        int[] cost = {0, 0, 0, 1};
+        int ret1 = minCostClimbingStairs(cost);
+        System.out.println(ret1);
+    }
+
+    /**
+     * Exception: [0, 0, 0, 1]
+     *          0  0  0  1  0
+     */
+    private static int minCostClimbingStairs(int[] cost) {
+        //    3, 2, 3, 1, 2, 4 [cost] -> len = 6
+        // 0, 3, 2, 5, 3, 5, 7 [dp]
+
+        int len  = cost.length;
+        int[] dp = new int[len + 1];
+        dp[1] = cost[0];
+
+        for (int i = 2; i <= len; i++){
+            dp[i] = cost[i - 1] + Math.min(dp[i - 1], dp[i - 2]);
+        }
+        return Math.min(dp[len], dp[len - 1]);
+    }
+
+    private static void p70() {
+        int n = 6;
+        int ret1 = climbStairs(n);
+        System.out.println(ret1);
+    }
+
+    /**
+     * --------------------------------------------------------------
+     * dp[i]: How many distinct ways can you climb to the ith step?
+     * if (i < 0 ) return 0;
+     * dp[0] = 1;
+     * dp[1] = 1;
+     * dp[i] = dp[i-1] + dp[i-2], when i > 1
+     * Because when you stand on the [i-1]th step,
+     * you only need to take one more step to reach the top!
+     * --------------------------------------------------------------
+     * Example:
+     * n : 0 1 2 3 4 5  6
+     * dp: 1 1 2 3 5 8 13
+     * --------------------------------------------------------------
+     */
+    private static int climbStairs(int n) {
+
+        if (n <= 0) return 0;
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+
+        for (int i = 2; i <= n; i++){
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
     }
 
     private static void p268() {
