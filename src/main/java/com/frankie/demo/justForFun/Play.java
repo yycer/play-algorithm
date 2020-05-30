@@ -21,7 +21,54 @@ public class Play {
 //        p70();  // 70. Climbing Stairs
 //        p746(); // 746. Min Cost Climbing Stairs
 //        p198(); // 198. House Robber
-        p213();  // 213. House Robber II
+//        p213();  // 213. House Robber II
+        p64(); // 64. Minimum Path Sum
+    }
+
+    private static void p64() {
+        int[][] grid = {{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
+//        int ret1 = minPathSumTwoDimensional(grid);
+        int ret1 = minPathSumOneDimensional(grid);
+        System.out.println(ret1);
+    }
+
+    private static int minPathSumOneDimensional(int[][] grid) {
+        int row = grid.length, col = grid[0].length;
+        if (row == 0 || col == 0) return 0;
+
+        int[] dp = new int[col + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for (int i = 1; i <= row; i++){
+            for (int j = 1; j <= col; j++){
+                dp[j] = grid[i - 1][j - 1] + Math.min(dp[j], dp[j - 1]);
+            }
+            dp[0] = Integer.MAX_VALUE;
+        }
+        return dp[col];
+    }
+
+    private static int minPathSumTwoDimensional(int[][] grid) {
+        int row = grid.length, col = grid[0].length;
+        if (row == 0 || col == 0) return 0;
+
+        // Step1: Set row.
+        for (int i = 1; i < col; i++){
+            grid[0][i] += grid[0][i - 1];
+        }
+
+        // Step2: Set col.
+        for (int i = 1; i < row; i++){
+            grid[i][0] += grid[i - 1][0];
+        }
+
+        // Step3: Set others.
+        for (int i = 1; i < row; i++){
+            for (int j = 1; j < col; j++){
+                grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);
+            }
+        }
+        return grid[row - 1][col - 1];
     }
 
     private static void p213() {
