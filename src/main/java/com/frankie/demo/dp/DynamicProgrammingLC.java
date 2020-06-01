@@ -36,6 +36,7 @@ public class DynamicProgrammingLC {
 
     /**
      * 494. Target Sum
+     * https://leetcode.com/problems/target-sum/discuss/97334/Java-(15-ms)-C%2B%2B-(3-ms)-O(ns)-iterative-DP-solution-using-subset-sum-with-explanation
      */
     private static void p494() {
         int[] nums = {1, 1, 1, 1, 1};
@@ -47,9 +48,11 @@ public class DynamicProgrammingLC {
     private static int findTargetSumWays(int[] nums, int S) {
 
         int sum = Arrays.stream(nums).sum();
+        // Be careful.
         if (sum < S || ((sum + S) & 1) == 1){
             return 0;
         }
+        // Amazing!!!
         int W = (sum + S) >> 1;
         int[] dp = new int[W + 1];
         dp[0] = 1;
