@@ -21,8 +21,8 @@ public class Play {
 //        p70();  // 70. Climbing Stairs
 //        p746(); // 746. Min Cost Climbing Stairs
 //        p198(); // 198. House Robber
-//        p213();  // 213. House Robber II
-        p64(); // 64. Minimum Path Sum
+//        p213(); // 213. House Robber II
+//        p64();  // 64. Minimum Path Sum
     }
 
     private static void p64() {
