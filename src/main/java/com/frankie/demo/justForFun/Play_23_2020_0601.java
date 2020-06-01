@@ -10,11 +10,121 @@ import java.util.stream.IntStream;
 public class Play_23_2020_0601 {
 
     public static void main(String[] args) {
-//        p413(); // 413. Arithmetic Slices
-//        p343(); // 343. Integer Break
-//        p279(); // 279. Perfect Squares
-//        p300(); // 300. Longest Increasing Subsequence
-        p376(); // 376. Wiggle Subsequence
+//        p413();  // 413. Arithmetic Slices
+//        p343();  // 343. Integer Break
+//        p279();  // 279. Perfect Squares
+//        p300();  // 300. Longest Increasing Subsequence
+//        p376();  // 376. Wiggle Subsequence
+//        p1143(); // 1143. Longest Common Subsequence
+//        p416();  // 416. Partition Equal Subset Sum
+    }
+
+    private static void p416() {
+//        int[] nums = {1, 5, 2, 4};
+//        int[] nums = {1, 5, 2, 3};
+        int[] nums = {1, 2, 5};
+//        boolean ret1 = canPartition(nums);
+        boolean ret1 = canPartitionUsingOneDimensional(nums);
+        System.out.println(ret1);
+    }
+
+    private static boolean canPartitionUsingOneDimensional(int[] nums) {
+
+        int sum = IntStream.of(nums).sum();
+        if ((sum & 1) == 1) return false;
+        int half = sum >> 1;
+
+        int len = nums.length;
+        boolean[] dp = new boolean[half + 1];
+        dp[0] = true;
+
+        // One-dimensional: <----------------
+        for (int n: nums){
+            for (int a = half; a >= n; a--){
+                dp[a] |= dp[a - n];
+                if (a == half && dp[a]){
+                    return true;
+                }
+            }
+        }
+        return dp[half];
+    }
+
+    private static boolean canPartition(int[] nums) {
+
+        int sum = IntStream.of(nums).sum();
+        if ((sum & 1) == 1) return false;
+        int half = (sum >> 1);
+
+        int len = nums.length;
+        boolean[][] dp = new boolean[len + 1][half + 1];
+        dp[0][0] = true;
+        for (int i = 1; i <= len; i++){
+            dp[i][0] = true;
+            for (int a = 1; a <= half; a++){
+                // Bag has some rest.
+                if (a - nums[i - 1] >= 0){
+                    dp[i][a] = dp[i - 1][a] || dp[i - 1][a - nums[i - 1]];
+                } else {
+                    dp[i][a] = dp[i - 1][a];
+                }
+                // Return result as soon as possible.
+                if (a == half && dp[i][a]){
+                    return true;
+                }
+            }
+        }
+        return dp[len][half];
+    }
+
+    private static void p1143() {
+        String text1 = "ace";
+        String text2 = "acdef";
+        int ret1 = longestCommonSubsequence(text1, text2);
+        System.out.println(ret1);
+    }
+
+    private static int longestCommonSubsequence(String text1, String text2) {
+
+        int len1 = text1.length();
+        int len2 = text2.length();
+        if (len1 == 0 || len2 == 0) return 0;
+        int[][] dp = new int[len1 + 1][len2 + 1];
+
+        for (int i = 1; i <= len1; i++){
+            for (int j = 1; j <= len2; j++){
+                if (text1.charAt(i - 1) == text2.charAt(j - 1)){
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[len1][len2];
+    }
+
+    /**
+     * Exception:
+     * text1 = "bsbininm"
+     * text2 = "jmjkbkjkv"
+     * Output   = 2
+     * Expected = 1
+     * -------------------------------
+     */
+    private static int longestCommonSubsequenceNotWork(String text1, String text2) {
+
+        int len1 = text1.length();
+        int len2 = text2.length();
+        if (len1 == 0 || len2 == 0) return 0;
+
+        int[][] dp = new int[len1 + 1][len2 + 1];
+        for (int i = 1; i <= len1; i++){
+            for (int j = 1; j <= len2; j++){
+                int inc = text1.charAt(i - 1) == text2.charAt(j - 1) ? 1 : 0;
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]) + inc;
+            }
+        }
+        return dp[len1][len2];
     }
 
     /**
