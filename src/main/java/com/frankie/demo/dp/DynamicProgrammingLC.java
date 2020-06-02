@@ -31,7 +31,7 @@ public class DynamicProgrammingLC {
 //        p413();  // Arithmetic Slices
 //        p343();  // Integer Break
 //        p279();  // Perfect Squares
-//        p494();  // Target Sum
+        p494();  // Target Sum
     }
 
     /**
@@ -39,8 +39,11 @@ public class DynamicProgrammingLC {
      * https://leetcode.com/problems/target-sum/discuss/97334/Java-(15-ms)-C%2B%2B-(3-ms)-O(ns)-iterative-DP-solution-using-subset-sum-with-explanation
      */
     private static void p494() {
-        int[] nums = {1, 1, 1, 1, 1};
-        int S = 3;
+//        int[] nums = {1, 1, 1, 1, 1};
+//        int S = 3;
+
+        int[] nums = {0, 0, 0, 0, 0, 0, 0, 0, 1};
+        int S = 1;
         int ret1 = findTargetSumWays(nums, S);
         System.out.println(ret1);
     }

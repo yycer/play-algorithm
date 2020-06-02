@@ -17,22 +17,29 @@ public class Play_23_2020_0601 {
 //        p376();  // 376. Wiggle Subsequence
 //        p1143(); // 1143. Longest Common Subsequence
 //        p416();  // 416. Partition Equal Subset Sum
-        p494();  // 494. Target Sum
+//        p494();  // 494. Target Sum
     }
 
     private static void p494() {
 //        int[] nums = {1, 1, 1, 1, 1};
+//        int S = 3;
 //        int[] nums = {1000};
-        int[] nums = {1, 2, 1};
 //        int S = 1000;
+        int[] nums = {1, 2, 1};
         int S = 0;
+//        int[] nums = {0, 0, 0, 0, 0, 0, 0, 0, 1};
+//        int S = 1;
         int ret1 = findTargetSumWays(nums, S);
         System.out.println(ret1);
     }
 
     /**
+     * --------------------------------------------------
      * Exception: nums = [1000], S = 1000
+     * --------------------------------------------------
+     * --------------   Amazing test case  --------------
      * Exception: nums = [[0, 0, 0, 0, 0, 0, 0, 0, 1], S = 1
+     * --------------------------------------------------
      */
     private static int findTargetSumWays(int[] nums, int S) {
         /**
@@ -56,7 +63,8 @@ public class Play_23_2020_0601 {
         for (int i = 1; i <= len; i++){
             dp[i][0] = 1;
             int cur = nums[i - 1];
-            for (int a = 1; a <= half; a++){
+            for (int a = half; a >= 0; a--){
+                // If bag has some rest.
                 if (a - cur >= 0){
                     dp[i][a] = dp[i - 1][a] + dp[i - 1][a - cur];
                 } else {
