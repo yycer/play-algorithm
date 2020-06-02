@@ -19,6 +19,66 @@ public class Play_23_2020_0602 {
 //        p77();  // 77. Combinations
 //        p39();  // 39. Combination Sum
 //        p40();  // 40. Combination Sum II
+//        p216(); // 216. Combination Sum III
+        p377(); // 377. Combination Sum IV
+    }
+
+    /**
+     * https://leetcode.com/problems/combination-sum-iv/discuss/111860/Coin-change-AND-this-problem
+     */
+    private static void p377() {
+        int[] nums = {1, 2, 3};
+        int target = 4;
+        int ret1 = combinationSum4(nums, target);
+        System.out.println(ret1);
+    }
+
+    private static int combinationSum4(int[] nums, int target) {
+        int[] dp = new int[target + 1];
+        dp[0] = 1;
+
+        for (int a = 1; a <= target; a++){
+            for (int n: nums){
+                if (a - n >= 0){
+                    dp[a] += dp[a - n];
+                }
+            }
+        }
+        return dp[target];
+    }
+
+    private static void p216() {
+        int k = 3;
+        int n = 7;
+        List<List<Integer>> ans = combinationSum3(k, n);
+        for (List<Integer> c: ans){
+            System.out.println(c);
+        }
+    }
+
+    /**
+     * https://leetcode.com/problems/combination-sum-iii/discuss/60614/Simple-and-clean-Java-code-backtracking.
+     */
+    private static List<List<Integer>> combinationSum3(int k, int n) {
+
+        List<List<Integer>> ans = new LinkedList<>();
+        combinationSum3(ans, new LinkedList<>(), k, 1, n);
+        return ans;
+    }
+
+    private static void combinationSum3(List<List<Integer>> ans, LinkedList<Integer> tmp, int k, int start, int remain) {
+        if (tmp.size() > k){
+            return;
+        }
+        if (tmp.size() == k && remain == 0){
+            ans.add(new LinkedList<>(tmp));
+            return;
+        }
+        for (int i = start; i <= 9; i++){
+            tmp.add(i);
+            combinationSum3(ans, tmp, k, i + 1, remain - i);
+            tmp.removeLast();
+        }
     }
 
     private static void p40() {
