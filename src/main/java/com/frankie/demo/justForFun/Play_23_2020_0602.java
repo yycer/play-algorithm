@@ -16,7 +16,73 @@ public class Play_23_2020_0602 {
 //        p322(); // 322. Coin Change
 //        p518(); // 518. Coin Change 2
 //        p139(); // 139. Word Break
-        p77(); // 77. Combinations
+//        p77();  // 77. Combinations
+//        p39();  // 39. Combination Sum
+//        p40();  // 40. Combination Sum II
+    }
+
+    private static void p40() {
+        int[] candidates = {10, 1, 2, 7, 6, 1, 5};
+        int target = 8;
+        List<List<Integer>> ans = combinationSum2(candidates, target);
+        for (List<Integer> c : ans) {
+            System.out.println(c);
+        }
+    }
+
+    private static List<List<Integer>> combinationSum2(int[] candidates, int target) {
+
+        Arrays.sort(candidates);
+        List<List<Integer>> ans = new LinkedList<>();
+        combinationSum2(candidates, ans, new LinkedList<>(), target, 0);
+        return ans;
+    }
+
+    private static void combinationSum2(int[] candidates, List<List<Integer>> ans, LinkedList<Integer> tmp, int remain, int start) {
+        if (remain < 0){
+            return;
+        } else if (remain == 0){
+            ans.add(new LinkedList<>(tmp));
+        } else {
+            for (int i = start; i < candidates.length; i++){
+                int cur = candidates[i];
+                // Skip duplicates.
+                if (i > start && cur == candidates[i - 1]){
+                    continue;
+                }
+                tmp.add(cur);
+                combinationSum2(candidates, ans, tmp, remain - cur, i + 1);
+                tmp.removeLast();
+            }
+        }
+    }
+
+    private static void p39() {
+        int[] candidates = {2, 3, 6, 7};
+        int target = 7;
+        combinationSum(candidates, target);
+    }
+
+    private static List<List<Integer>> combinationSum(int[] candidates, int target) {
+
+        Arrays.sort(candidates);
+        List<List<Integer>> ans = new LinkedList<>();
+        combinationSum(candidates, ans, new LinkedList<>(), target, 0);
+        return ans;
+    }
+
+    private static void combinationSum(int[] candidates, List<List<Integer>> ans, LinkedList<Integer> tmp, int remain, int start) {
+        if (remain < 0){
+            return;
+        } else if (remain == 0){
+            ans.add(new LinkedList<>(tmp));
+        } else {
+            for (int i = start; i < candidates.length; i++){
+                tmp.add(candidates[i]);
+                combinationSum(candidates, ans, tmp, remain - candidates[i], i);
+                tmp.removeLast();
+            }
+        }
     }
 
     private static void p77() {
