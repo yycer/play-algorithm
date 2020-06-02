@@ -1,6 +1,8 @@
 package com.frankie.demo.justForFun;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -14,6 +16,35 @@ public class Play_23_2020_0602 {
 //        p322(); // 322. Coin Change
 //        p518(); // 518. Coin Change 2
 //        p139(); // 139. Word Break
+        p77(); // 77. Combinations
+    }
+
+    private static void p77() {
+        int n = 4, k = 2;
+        List<List<Integer>> ret1 = combine_77(n, k);
+        System.out.println(ret1.size());
+    }
+
+    /**
+     * 如何处理k个元素?
+     */
+    private static List<List<Integer>> combine_77(int n, int k) {
+        List<List<Integer>> ans = new LinkedList<>();
+        combine_77(ans, new ArrayList<>(), 1, n, k);
+        return ans;
+    }
+
+    private static void combine_77(List<List<Integer>> ans, ArrayList<Integer> tmpList, int lo, int hi, int k) {
+        if (k == 0){
+            ans.add(new LinkedList<>(tmpList));
+            return;
+        }
+
+        for (int i = lo; i <= hi; i++){
+            tmpList.add(i);
+            combine_77(ans, tmpList, i + 1, hi, k - 1);
+            tmpList.remove(tmpList.size() - 1);
+        }
     }
 
     private static void p139() {
