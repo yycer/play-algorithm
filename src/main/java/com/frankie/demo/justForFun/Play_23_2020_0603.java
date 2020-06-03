@@ -1,6 +1,7 @@
 package com.frankie.demo.justForFun;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author: Yao Frankie
@@ -11,6 +12,59 @@ public class Play_23_2020_0603 {
     public static void main(String[] args) {
 //        p322(); // 322. Coin Change
 //        p518(); // 518. Coin Change 2
+//        p139(); // 139. Word Break todo: Not really understand
+//        p377(); // 377. Combination Sum IV
+    }
+
+    private static void p377() {
+        int[] nums = {1, 2, 3};
+        int target = 4;
+        int ret1 = combinationSum4(nums, target);
+        System.out.println(ret1);
+    }
+
+    private static int combinationSum4(int[] nums, int target) {
+
+        int len = nums.length;
+        int[][] dp = new int[len + 1][target + 1];
+        dp[0][0] = 1;
+
+        for (int i = 1; i <= len; i++){
+            dp[i][0] = 1;
+            for (int j = 1; j <= target; j++){
+                // has rest
+                if (j - nums[i - 1] >= 0){
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - nums[i - 1]];
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[len][target];
+    }
+
+    private static void p139() {
+        String s = "catsandog";
+        List<String> wordDict = Arrays.asList("cats", "dog", "sand", "and", "cat");
+        boolean ret1 = wordBreak(s, wordDict);
+        System.out.println(ret1);
+    }
+
+    private static boolean wordBreak(String s, List<String> wordDict) {
+
+        int len = s.length();
+        boolean[] dp = new boolean[len + 1];
+        dp[0] = true;
+
+        for (int i = 1; i <= len; i++){
+            for (int j = 0; j < i; j++){
+                if (dp[j] && wordDict.contains(s.substring(j, i))){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[len];
     }
 
     private static void p518() {
