@@ -16,6 +16,37 @@ public class Play_23_2020_0603 {
 //        p139(); // 139. Word Break todo: Not really understand
 //        p377(); // 377. Combination Sum IV
 //        p121(); // 121. Best Time to Buy and Sell Stock
+//        p122(); // 122. Best Time to Buy and Sell Stock II
+    }
+
+    private static void p122() {
+        int[] prices = {7, 1, 5, 3, 6, 4};
+//        int ret1 = maxProfit_122(prices);
+        int ret1 = maxProfit_122_Amzaing(prices);
+        System.out.println(ret1);
+    }
+
+    private static int maxProfit_122(int[] prices) {
+        int len = prices.length;
+        int preMin = prices[0];
+        int maxPro = 0;
+
+        for (int i = 1; i < len; i++){
+            if (prices[i] > preMin) {
+                maxPro += (prices[i] - preMin);
+            }
+            preMin = prices[i];
+        }
+        return maxPro;
+    }
+
+    private static int maxProfit_122_Amzaing(int[] prices) {
+        int len = prices.length;
+        int max = 0;
+        for (int i = 1; i < len; i++){
+            max += Math.max(0, prices[i] - prices[i - 1]);
+        }
+        return max;
     }
 
     private static void p121() {
