@@ -2,6 +2,7 @@ package com.frankie.demo.justForFun;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * @author: Yao Frankie
@@ -14,6 +15,51 @@ public class Play_23_2020_0603 {
 //        p518(); // 518. Coin Change 2
 //        p139(); // 139. Word Break todo: Not really understand
 //        p377(); // 377. Combination Sum IV
+//        p121(); // 121. Best Time to Buy and Sell Stock
+    }
+
+    private static void p121() {
+        int[] prices = {7, 1, 5, 3, 6, 4};
+//        int ret1 = maxProfit(prices);
+//        int ret1 = maxProfitOptimize(prices);
+        int ret1 = maxProfitUsingPreMin(prices);
+        System.out.println(ret1);
+    }
+
+    private static int maxProfit(int[] prices) {
+        int len = prices.length;
+        int[] dp = new int[len];
+        for (int i = 0; i < len - 1; i++){
+            for (int j = i + 1; j < len; j++){
+                dp[j] = Math.max(dp[j], prices[j] - prices[i]);
+            }
+        }
+        return IntStream.of(dp).max().orElse(0);
+    }
+
+    private static int maxProfitOptimize(int[] prices) {
+        int len = prices.length;
+        int max = 0;
+        for (int i = 0; i < len - 1; i++){
+            for (int j = i + 1; j < len; j++){
+                max = Math.max(max, prices[j] - prices[i]);
+            }
+        }
+        return max;
+    }
+
+    private static int maxProfitUsingPreMin(int[] prices) {
+        int len = prices.length;
+        if (len == 0) return 0;
+        int preMin = prices[0];
+        int maxPro = 0;
+
+        for (int i = 1; i < len; i++){
+            int cur = prices[i];
+            maxPro = Math.max(maxPro, cur - preMin);
+            preMin = Math.min(preMin, cur);
+        }
+        return maxPro;
     }
 
     private static void p377() {
