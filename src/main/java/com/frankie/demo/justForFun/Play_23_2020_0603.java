@@ -40,8 +40,13 @@ public class Play_23_2020_0603 {
         buy[1]  = -Math.min(prices[0], prices[1]);
         sell[1] = Math.max(0, buy[0] + prices[1]);
 
+        // 冷冻期的定义：当你卖掉股票后，隔天无法购买股票。
         for (int i = 2; i < len; i++){
+            // 如果当天我持有股票，说明什么？
+            // 要么我昨天[i-1]就持有股票，要么我在前天[i-2]或者之前就卖掉了，然后当天又买了。
             buy[i]  = Math.max(buy[i - 1], sell[i - 2] - prices[i]);
+            // 如果当天我未持有股票，说明什么？
+            // 要么我昨天[i-1]就未持有股票，要么我昨天[i-1]或者之前就买了，然后当天又卖了。
             sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i]);
         }
         return sell[len - 1];
