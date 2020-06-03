@@ -17,6 +17,34 @@ public class Play_23_2020_0603 {
 //        p377(); // 377. Combination Sum IV
 //        p121(); // 121. Best Time to Buy and Sell Stock
 //        p122(); // 122. Best Time to Buy and Sell Stock II
+//        p309(); // 309. Best Time to Buy and Sell Stock with Cooldown
+    }
+
+    private static void p309() {
+        int[] prices = {1, 2, 3, 0, 2};
+        int ret1 = maxProfit_309(prices);
+        System.out.println(ret1);
+    }
+
+    /**
+     * https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/discuss/75931/Easiest-JAVA-solution-with-explanations
+     */
+    private static int maxProfit_309(int[] prices) {
+
+        int len = prices.length;
+        if (len < 2) return 0;
+        int[] sell = new int[len];
+        int[] buy  = new int[len];
+
+        buy[0]  = -prices[0];
+        buy[1]  = -Math.min(prices[0], prices[1]);
+        sell[1] = Math.max(0, buy[0] + prices[1]);
+
+        for (int i = 2; i < len; i++){
+            buy[i]  = Math.max(buy[i - 1], sell[i - 2] - prices[i]);
+            sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i]);
+        }
+        return sell[len - 1];
     }
 
     private static void p122() {
