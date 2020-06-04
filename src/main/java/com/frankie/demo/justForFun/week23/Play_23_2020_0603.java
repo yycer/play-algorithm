@@ -1,4 +1,4 @@
-package com.frankie.demo.justForFun;
+package com.frankie.demo.justForFun.week23;
 
 import java.util.Arrays;
 import java.util.List;
