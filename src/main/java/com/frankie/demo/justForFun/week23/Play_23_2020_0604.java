@@ -10,7 +10,41 @@ public class Play_23_2020_0604 {
 //        p70();  // 70. Climbing Stairs
 //        p746(); // 746. Min Cost Climbing Stairs
 //        p198(); // 198. House Robber
-        p213(); // 213. House Robber II
+//        p213(); // 213. House Robber II
+        p509(); // 509. Fibonacci Number
+    }
+
+    private static void p509() {
+        int N = 7;
+        int ret1 = fib(N);
+        System.out.println(ret1);
+    }
+
+    private static int fib(int N) {
+
+        if (N == 0) return 0;
+        int[] dp = new int[N + 1];
+        dp[1] = 1;
+
+        for (int i = 2; i <= N; i++){
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+
+        return dp[N];
+    }
+
+    private static int fibUsingTwoVariable(int N) {
+
+        if (N == 0) return 0;
+        int pre = 0;
+        int cur = 1;
+
+        for (int i = 2; i <= N; i++){
+            int tmp = cur;
+            cur += pre;
+            pre = tmp;
+        }
+        return cur;
     }
 
     private static void p213() {
