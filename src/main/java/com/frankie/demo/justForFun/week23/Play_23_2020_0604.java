@@ -9,6 +9,58 @@ public class Play_23_2020_0604 {
     public static void main(String[] args) {
 //        p70();  // 70. Climbing Stairs
 //        p746(); // 746. Min Cost Climbing Stairs
+//        p198(); // 198. House Robber
+        p213(); // 213. House Robber II
+    }
+
+    private static void p213() {
+        int[] nums = {1, 2, 3, 1};
+        int ret1 = rob_213(nums);
+        System.out.println(ret1);
+    }
+
+    private static int rob_213(int[] nums) {
+        int len = nums.length;
+        if (len == 0) return 0;
+        if (len == 1) return nums[0];
+        return Math.max(robCircle(nums, 0, len - 1), robCircle(nums, 1, len));
+    }
+
+    private static int robCircle(int[] nums, int lo, int hi) {
+        int pre = 0;
+        int max = nums[lo];
+
+        for (int i = lo + 1; i < hi; i++){
+            int tmp = max;
+            max = Math.max(max, pre + nums[i]);
+            pre = tmp;
+        }
+        return max;
+    }
+
+    private static void p198() {
+        int[] nums = {1, 2, 3, 1};
+        int ret1 = rob_198(nums);
+        System.out.println(ret1);
+    }
+
+    private static int rob_198(int[] nums) {
+        int len = nums.length;
+        // Corner case.
+        if (len == 0) return 0;
+        if (len == 1) return nums[0];
+
+        // Initialization dp.
+        int[] dp = new int[len];
+        dp[0] = nums[0];
+        // Think about nums = [2, 1]
+        dp[1] = Math.max(dp[0], nums[1]);
+
+        for (int i = 2; i < len; i++){
+            // formula.
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i]);
+        }
+        return dp[len - 1];
     }
 
     private static void p746() {
