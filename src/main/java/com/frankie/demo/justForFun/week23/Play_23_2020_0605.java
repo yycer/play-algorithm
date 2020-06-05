@@ -18,6 +18,85 @@ public class Play_23_2020_0605 {
 //        p300();  // 300. Longest Increasing Subsequence
 //        p376();  // 376. Wiggle Subsequence
 //        p1143(); // 1143. Longest Common Subsequence
+//        p416();  // 416. Partition Equal Subset Sum
+    }
+
+    private static void p416() {
+        int[] nums = {1, 5, 11, 5};
+        boolean a = canPartition(nums);
+        System.out.println(a);
+    }
+
+    private static boolean canPartition(int[] nums) {
+        int len  = nums.length;
+        int sum  = IntStream.of(nums).sum();
+        int half = (sum >> 1);
+        if ((sum & 1) == 1) return false;
+
+        boolean[][] dp = new boolean[len + 1][half + 1];
+        for (int i = 1; i <= len; i++){
+            dp[i][0] = true;
+            for (int j = 1; j <= half; j++){
+                // If bag has rest.
+                if (j - nums[i - 1] >= 0){
+                    // Why use dp[i - 1][j - nums[i - 1]]?
+                    // The same coin can only be used once, think about [1, 2, 5].
+                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[len][half];
+    }
+
+    private static boolean canPartitionUsingOneDimension(int[] nums) {
+
+        int sum  = IntStream.of(nums).sum();
+        int half = (sum >> 1);
+        if ((sum & 1) == 1) return false;
+
+        // We need the first true element.
+        boolean[] dp = new boolean[half + 1];
+        dp[0] = true;
+
+        for (int n: nums){
+            // The same coin can only be used once,
+            // so need to traversal in reverse order.
+            for (int i = half; i >= 1; i--){
+                // If bag has rest.
+                if (i - n >= 0) {
+                    dp[i] |= dp[i - n];
+                }
+            }
+        }
+
+        return dp[half];
+    }
+
+    private static boolean canPartitionUsingOneDimensionOptimize(int[] nums) {
+
+        int sum  = IntStream.of(nums).sum();
+        int half = (sum >> 1);
+        if ((sum & 1) == 1) return false;
+
+        // We need the first true element.
+        boolean[] dp = new boolean[half + 1];
+        dp[0] = true;
+
+        for (int n: nums){
+            // The same coin can only be used once,
+            // so need to traversal in reverse order.
+            for (int i = half; i >= n; i--){
+                dp[i] |= dp[i - n];
+                // End early.
+                if (i == half && dp[i]){
+                    return true;
+                }
+            }
+        }
+
+        return dp[half];
     }
 
     private static void p1143() {
@@ -343,14 +422,3 @@ public class Play_23_2020_0605 {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
