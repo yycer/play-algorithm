@@ -15,7 +15,71 @@ public class Play_23_2020_0605 {
 //        p413(); // 413. Arithmetic Slices
 //        p343(); // 343. Integer Break
 //        P279(); // 279. Perfect Squares
-        p300(); // 300. Longest Increasing Subsequence
+//        p300(); // 300. Longest Increasing Subsequence
+        p376(); // 376. Wiggle Subsequence
+    }
+
+    private static void p376() {
+        int[] nums = {1, 17, 5, 10, 13, 15, 10, 5, 16, 8};
+        int a = wiggleMaxLength(nums);
+        System.out.println(a);
+    }
+
+    private static int wiggleMaxLength(int[] nums) {
+
+        // Corner case.
+        int len = nums.length;
+        // Think about []
+        if (len == 0) return 0;
+
+        // Initialize rise and drop array.
+        int[] rise = new int[len];
+        int[] drop = new int[len];
+        rise[0] = 1;
+        drop[0] = 1;
+
+        for (int i = 1; i < len; i++){
+            int cur = nums[i];
+            int pre = nums[i - 1];
+            // rise
+            if (cur > pre){
+                rise[i] = drop[i - 1] + 1;
+                drop[i] = drop[i - 1];
+            }
+            // drop
+            else if (cur < pre){
+                drop[i] = rise[i - 1] + 1;
+                rise[i] = rise[i - 1];
+            }
+            // Two adjacent elements are equal.
+            else {
+                rise[i] = rise[i - 1];
+                drop[i] = drop[i - 1];
+            }
+        }
+        return Math.max(rise[len - 1], drop[len - 1]);
+    }
+
+    private static int wiggleMaxLengthUsingTwoVariable(int[] nums) {
+
+        // Corner case.
+        int len = nums.length;
+        if (len == 0) return 0;
+
+        int rise = 1, drop = 1;
+        for (int i = 1; i < len; i++){
+            int cur = nums[i];
+            int pre = nums[i - 1];
+            // rise
+            if (cur > pre){
+                rise = drop + 1;
+            }
+            // drop
+            else if (cur < pre){
+                drop = rise + 1;
+            }
+        }
+        return Math.max(rise, drop);
     }
 
     private static void p300() {
