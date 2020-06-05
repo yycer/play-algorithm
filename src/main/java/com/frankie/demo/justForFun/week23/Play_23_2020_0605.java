@@ -1,5 +1,7 @@
 package com.frankie.demo.justForFun.week23;
 
+import java.util.Arrays;
+
 /**
  * @author: Yao Frankie
  * @date: 2020/6/1 9:40
@@ -7,7 +9,50 @@ package com.frankie.demo.justForFun.week23;
 public class Play_23_2020_0605 {
 
     public static void main(String[] args) {
-        p64(); // 64. Minimum Path Sum
+//        p64(); // 64. Minimum Path Sum
+        p62(); // 62. Unique Paths
+    }
+
+    private static void p62() {
+        int m = 2;
+        int n = 4;
+//        int ret1 = uniquePaths(m, n);
+        int ret1 = uniquePathsUsingOneDimension(m, n);
+        System.out.println(ret1);
+    }
+
+    private static int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        dp[0][0] = 1;
+
+        // Step1: Set row.
+        for (int i = 1; i < n; i++){
+            dp[0][i] = 1;
+        }
+
+        // Step2: Set column.
+        for (int i = 1; i < m; i++){
+            dp[i][0] = 1;
+        }
+
+        // Step3: Set others.
+        for (int i = 1; i < m; i++){
+            for (int j = 1; j < n; j++){
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+
+    private static int uniquePathsUsingOneDimension(int m, int n) {
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        for (int i = 1; i < m; i++){
+            for (int j = 1; j < n; j++){
+                dp[j] += dp[j - 1];
+            }
+        }
+        return dp[n - 1];
     }
 
     private static void p64() {
