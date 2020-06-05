@@ -13,6 +13,53 @@ public class Play_23_2020_0605 {
 //        p64();  // 64. Minimum Path Sum
 //        p62();  // 62. Unique Paths
 //        p413(); // 413. Arithmetic Slices
+        p343(); // 343. Integer Break
+    }
+
+    private static void p343() {
+//        int n = 10;
+        int n = 5;
+        int ret1 = integerBreak(n);
+        System.out.println(ret1);
+    }
+
+    private static int integerBreak(int n) {
+
+        if (n <= 1) return 0;
+        if (n == 2) return 1;
+        if (n == 3) return 2;
+        if (n == 4) return 4;
+        int[] dp = new int[n + 1];
+        dp[2] = 1;
+        dp[3] = 2;
+        dp[4] = 4;
+
+        for (int i = 5; i <= n; i++){
+            // Why j >= i / 2? Think about n = 6.
+            for (int j = i - 1; j >= i / 2; j--){
+                // Why using max3? Think about n = 5.
+                dp[i] = max3(dp[i], j * (i - j), dp[j] * (i - j));
+            }
+        }
+        return dp[n];
+    }
+
+    private static int integerBreakOptimize(int n) {
+
+        int[] dp = new int[n + 1];
+
+        for (int i = 2; i <= n; i++){
+            // Why j >= i / 2? Think about n = 6.
+            for (int j = i - 1; j >= i / 2; j--){
+                // Why using max3? Think about n = 5.
+                dp[i] = max3(dp[i], j * (i - j), dp[j] * (i - j));
+            }
+        }
+        return dp[n];
+    }
+
+    private static int max3(int a, int b, int c){
+        return Math.max(a, Math.max(b, c));
     }
 
     private static void p413() {
