@@ -15,6 +15,62 @@ public class Play_23_2020_0605 {
 //        p413(); // 413. Arithmetic Slices
 //        p343(); // 343. Integer Break
 //        P279(); // 279. Perfect Squares
+        p300(); // 300. Longest Increasing Subsequence
+    }
+
+    private static void p300() {
+        int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};
+        int a = lengthOfLIS(nums);
+        System.out.println(a);
+    }
+
+    // 10, 9, 2, 5, 3, 7, 101, 18
+    //  1  0  0
+    private static int lengthOfLIS(int[] nums) {
+        int len = nums.length;
+        if (len == 0) return 0;
+        int[] dp = new int[len];
+        dp[0] = 1;
+
+        for (int i = 1; i < len; i++){
+            int cur = nums[i];
+            // Be careful.
+            int max = 1;
+            for (int j = i - 1; j >= 0; j--){
+                if (cur > nums[j]){
+                    max = Math.max(max, dp[j] + 1);
+                }
+            }
+            dp[i] = max;
+        }
+        // Think about [2, 4, 5, 3]
+        return IntStream.of(dp).max().orElse(0);
+    }
+
+    private static int lengthOfLISOptimize(int[] nums) {
+        // Corner case.
+        int len = nums.length;
+        if (len == 0) return 0;
+        int realMax = 1;
+
+        // Initialize dp.
+        int[] dp = new int[len];
+        dp[0] = 1;
+
+        for (int i = 1; i < len; i++){
+            int cur = nums[i];
+            // Be careful.
+            int max = 1;
+            for (int j = i - 1; j >= 0; j--){
+                if (cur > nums[j]){
+                    max = Math.max(max, dp[j] + 1);
+                }
+            }
+            dp[i]   = max;
+            realMax = Math.max(realMax, max);
+        }
+        // Think about [2, 8, 9, 3]
+        return realMax;
     }
 
     private static void P279() {
