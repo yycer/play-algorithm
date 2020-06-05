@@ -1,6 +1,7 @@
 package com.frankie.demo.justForFun.week23;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 /**
  * @author: Yao Frankie
@@ -9,8 +10,43 @@ import java.util.Arrays;
 public class Play_23_2020_0605 {
 
     public static void main(String[] args) {
-//        p64(); // 64. Minimum Path Sum
-        p62(); // 62. Unique Paths
+//        p64();  // 64. Minimum Path Sum
+//        p62();  // 62. Unique Paths
+//        p413(); // 413. Arithmetic Slices
+    }
+
+    private static void p413() {
+        int[] A = {1, 2, 3, 4};
+        int ret1 = numberOfArithmeticSlices(A);
+        System.out.println(ret1);
+    }
+
+    private static int numberOfArithmeticSlices(int[] A) {
+        int len = A.length;
+        int[] dp = new int[len];
+        for (int i = 2; i < len; i++){
+            // formula
+            if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]){
+                dp[i] = dp[i - 1] + 1;
+            }
+        }
+        return IntStream.of(dp).sum();
+    }
+
+    private static int numberOfArithmeticSlicesOptimize(int[] A) {
+
+        int ans  = 0;
+        int len  = A.length;
+        int[] dp = new int[len];
+
+        for (int i = 2; i < len; i++){
+            // formula
+            if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]){
+                dp[i] = dp[i - 1] + 1;
+                ans += dp[i];
+            }
+        }
+        return ans;
     }
 
     private static void p62() {
