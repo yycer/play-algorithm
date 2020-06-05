@@ -10,13 +10,40 @@ import java.util.stream.IntStream;
 public class Play_23_2020_0605 {
 
     public static void main(String[] args) {
-//        p64();  // 64. Minimum Path Sum
-//        p62();  // 62. Unique Paths
-//        p413(); // 413. Arithmetic Slices
-//        p343(); // 343. Integer Break
-//        P279(); // 279. Perfect Squares
-//        p300(); // 300. Longest Increasing Subsequence
-        p376(); // 376. Wiggle Subsequence
+//        p64();   // 64. Minimum Path Sum
+//        p62();   // 62. Unique Paths
+//        p413();  // 413. Arithmetic Slices
+//        p343();  // 343. Integer Break
+//        P279();  // 279. Perfect Squares
+//        p300();  // 300. Longest Increasing Subsequence
+//        p376();  // 376. Wiggle Subsequence
+//        p1143(); // 1143. Longest Common Subsequence
+    }
+
+    private static void p1143() {
+        String text1 = "abcde";
+        String text2 = "ace";
+        int a = longestCommonSubsequence(text1, text2);
+        System.out.println(a);
+    }
+
+    private static int longestCommonSubsequence(String text1, String text2) {
+        int len1 = text1.length();
+        int len2 = text2.length();
+
+        int[][] dp = new int[len1 + 1][len2 + 1];
+        for (int i = 1; i <= len1; i++){
+            for (int j = 1; j <= len2; j++){
+                char c1 = text1.charAt(i - 1);
+                char c2 = text2.charAt(j - 1);
+                if (c1 == c2){
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[len1][len2];
     }
 
     private static void p376() {
