@@ -13,7 +13,31 @@ public class Play_23_2020_0605 {
 //        p64();  // 64. Minimum Path Sum
 //        p62();  // 62. Unique Paths
 //        p413(); // 413. Arithmetic Slices
-        p343(); // 343. Integer Break
+//        p343(); // 343. Integer Break
+//        P279(); // 279. Perfect Squares
+    }
+
+    private static void P279() {
+        int n = 12;
+        int a = numSquares(n);
+        System.out.println(a);
+    }
+
+    private static int numSquares(int n) {
+
+        // Think about n = 9, we will use f(0) + 1 = 1.
+        int[] dp = new int[n + 1];
+
+        for (int i = 1; i <= n; i++){
+            int sqrt = (int) Math.sqrt(i);
+            int min  = Integer.MAX_VALUE;
+            for (int j = 1; j <= sqrt; j++){
+                min = Math.min(min, dp[i - j * j] + 1);
+            }
+            dp[i] = min;
+        }
+
+        return dp[n];
     }
 
     private static void p343() {
