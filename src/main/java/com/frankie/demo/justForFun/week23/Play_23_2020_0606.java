@@ -10,7 +10,46 @@ public class Play_23_2020_0606 {
 
     public static void main(String[] args) {
 //        p494(); // 494. Target Sum
-        p516(); // 516. Longest Palindromic Subsequence
+//        p516(); // 516. Longest Palindromic Subsequence
+//        p474(); // 474. Ones and Zeroes
+    }
+
+    private static void p474() {
+        String[] strs = {"10", "0001", "111001", "1", "0"};
+        int m = 5;
+        int n = 3;
+        int a = findMaxForm(strs, m, n);
+        System.out.println(a);
+    }
+
+    private static int findMaxForm(String[] strs, int m, int n) {
+
+        int[][] dp = new int[m + 1][n + 1];
+
+        for (String s: strs){
+            // Step1: count zero and one.
+            int[] arr = countZeroAndOne(s);
+
+            for (int i = m; i >= arr[0]; i--){
+                for (int j = n; j >= arr[1]; j--){
+                    dp[i][j] = Math.max(dp[i][j], dp[i - arr[0]][j - arr[1]] + 1);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+
+    private static int[] countZeroAndOne(String s) {
+        int zero = 0;
+        int one  = 0;
+        for (char c: s.toCharArray()){
+            if (c == '0'){
+                zero++;
+            } else if (c == '1'){
+                one++;
+            }
+        }
+        return new int[]{zero, one};
     }
 
     private static void p516() {
