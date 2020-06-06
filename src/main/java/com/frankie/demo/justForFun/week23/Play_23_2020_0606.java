@@ -9,7 +9,44 @@ import java.util.stream.IntStream;
 public class Play_23_2020_0606 {
 
     public static void main(String[] args) {
-        p494(); // 494. Target Sum
+//        p494(); // 494. Target Sum
+        p516(); // 516. Longest Palindromic Subsequence
+    }
+
+    private static void p516() {
+//        String s = "xbcacby";
+        String s = "bbbab";
+        int a = longestPalindromeSubseq(s);
+        System.out.println(a);
+    }
+
+    private static int longestPalindromeSubseq(String s) {
+        int len = s.length();
+        // Corner case
+        if (len == 0) return 0;
+        if (len == 1) return 1;
+        int[][] dp = new int[len][len];
+
+        /**
+         * ------->
+         *        ^
+         *        |
+         *        |
+         */
+        for (int i = len - 2; i >= 0; i--){
+            dp[i][i] = 1;
+            for (int j = i + 1; j < len; j++){
+                char row = s.charAt(i);
+                char col = s.charAt(j);
+                if (row == col){
+                    dp[i][j] = dp[i + 1][j - 1] + 2;
+                } else {
+                    dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        return dp[0][len - 1];
     }
 
     private static void p494() {
