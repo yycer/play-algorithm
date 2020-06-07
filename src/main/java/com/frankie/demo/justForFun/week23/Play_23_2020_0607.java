@@ -9,7 +9,65 @@ import java.util.Arrays;
 public class Play_23_2020_0607 {
 
     public static void main(String[] args) {
-        p322(); // 322. Coin Change
+//        p322(); // 322. Coin Change
+        p518(); // 518. Coin Change 2
+    }
+
+    private static void p518() {
+        int[] coins = {1, 2, 5};
+        int amount = 5;
+        int a = change_518(amount, coins);
+        System.out.println(a);
+    }
+
+    private static int change_518(int amount, int[] coins) {
+
+        int len = coins.length;
+        int[][] dp = new int[len + 1][amount + 1];
+        dp[0][0] = 1;
+
+        for (int i = 1; i <= len; i++){
+            dp[i][0] = 1;
+            for (int j = 1; j <= amount; j++){
+                // Has rest.
+                if (j - coins[i - 1] >= 0){
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i - 1]];
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[len][amount];
+    }
+
+    private static int change_518_using_one_dimension(int amount, int[] coins) {
+
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;
+
+        for (int c: coins){
+            for (int j = 1; j <= amount; j++){
+                if (j - c >= 0){
+                    dp[j] += dp[j - c];
+                }
+            }
+        }
+        return dp[amount];
+    }
+
+
+    private static int change_518_using_one_dimension_optimize(int amount, int[] coins) {
+
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;
+
+        for (int c: coins){
+            for (int j = c; j <= amount; j++){
+                // Bag has rest.
+                dp[j] += dp[j - c];
+            }
+        }
+        return dp[amount];
     }
 
     private static void p322() {
