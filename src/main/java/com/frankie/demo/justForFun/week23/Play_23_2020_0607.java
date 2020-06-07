@@ -1,6 +1,7 @@
 package com.frankie.demo.justForFun.week23;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author: Yao Frankie
@@ -10,7 +11,30 @@ public class Play_23_2020_0607 {
 
     public static void main(String[] args) {
 //        p322(); // 322. Coin Change
-        p518(); // 518. Coin Change 2
+//        p518(); // 518. Coin Change 2
+//        p139(); // 139. Word Break
+    }
+
+    private static void p139() {
+        String s = "catsandog";
+        List<String> wordDict = Arrays.asList("cats", "dog", "sand", "and", "cat");
+        boolean a = wordBreak(s, wordDict);
+        System.out.println(a);
+    }
+
+    private static boolean wordBreak(String s, List<String> wordDict) {
+        int len = s.length();
+        boolean[] dp = new boolean[len + 1];
+        dp[0] = true;
+
+        for (int i = 1; i <= len; i++){
+            for (int j = 0; j < i; j++){
+                if (dp[j] && wordDict.contains(s.substring(j, i))){
+                    dp[i] = true;
+                }
+            }
+        }
+        return dp[len];
     }
 
     private static void p518() {
