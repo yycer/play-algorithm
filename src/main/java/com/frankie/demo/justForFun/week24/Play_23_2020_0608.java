@@ -9,6 +9,46 @@ public class Play_23_2020_0608 {
     public static void main(String[] args) {
 //        p121(); // 121. Best Time to Buy and Sell Stock
 //        p122(); // 122. Best Time to Buy and Sell Stock II
+//        p123(); // 123. Best Time to Buy and Sell Stock III
+    }
+
+    private static void p123() {
+//        int[] prices = {3, 3, 5, 0, 0, 3, 1, 4};
+        int[] prices = {1, 2, 3, 4, 5};
+        int a = maxProfit_123(prices);
+        System.out.println(a);
+    }
+
+    private static int maxProfit_123(int[] prices) {
+
+        int b1 = Integer.MIN_VALUE, s1 = 0;
+        int b2 = Integer.MIN_VALUE, s2 = 0;
+
+        for (int i = 0; i < prices.length; i++){
+            int cur = prices[i];
+            b1 = Math.max(b1, -cur);
+            s1 = Math.max(s1, b1 + cur);
+            b2 = Math.max(b2, s1 - cur);
+            s2 = Math.max(s2, b2 + cur);
+        }
+        return s2;
+    }
+
+    private static int maxProfit_123_not_work(int[] nums) {
+
+        int first = 0, second = 0;
+        int len = nums.length;
+
+        for (int i = 1; i < len; i++){
+            int diff = Math.max(0, nums[i] - nums[i - 1]);
+            if (diff >= first){
+                first   = diff;
+                second = first;
+            } else {
+                second = Math.max(second, diff);
+            }
+        }
+        return first + second;
     }
 
     private static void p122() {
