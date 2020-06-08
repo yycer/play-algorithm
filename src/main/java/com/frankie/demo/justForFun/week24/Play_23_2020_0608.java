@@ -11,6 +11,31 @@ public class Play_23_2020_0608 {
 //        p122(); // 122. Best Time to Buy and Sell Stock II
 //        p123(); // 123. Best Time to Buy and Sell Stock III
 //        p309(); // 309. Best Time to Buy and Sell Stock with Cooldown
+//        p714(); // 714. Best Time to Buy and Sell Stock with Transaction Fee
+    }
+
+    private static void p714() {
+        int[] prices = {1, 3, 2, 8, 4, 9};
+        int fee = 2;
+        int a = maxProfit(prices, fee);
+        System.out.println(a);
+    }
+
+    private static int maxProfit(int[] prices, int fee) {
+
+        int len = prices.length;
+        if (len == 0) return 0;
+        int[] hold   = new int[len];
+        int[] unhold = new int[len];
+        hold[0] = -prices[0];
+
+        for (int i = 1; i < len; i++){
+            int cur = prices[i];
+            hold[i]   = Math.max(hold[i - 1], unhold[i - 1] - cur);
+            unhold[i] = Math.max(unhold[i - 1], hold[i - 1] + cur - fee);
+        }
+
+        return unhold[len - 1];
     }
 
     private static void p309() {
