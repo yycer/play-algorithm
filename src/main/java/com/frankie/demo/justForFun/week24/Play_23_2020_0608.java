@@ -1,5 +1,7 @@
 package com.frankie.demo.justForFun.week24;
 
+import java.util.Arrays;
+
 /**
  * @author: Yao Frankie
  * @date: 2020/6/1 9:40
@@ -12,6 +14,72 @@ public class Play_23_2020_0608 {
 //        p123(); // 123. Best Time to Buy and Sell Stock III
 //        p309(); // 309. Best Time to Buy and Sell Stock with Cooldown
 //        p714(); // 714. Best Time to Buy and Sell Stock with Transaction Fee
+//        p583(); // 583. Delete Operation for Two Strings
+    }
+
+    private static void p583() {
+//        String word1 = "sea";
+        String word1 = "";
+//        String word2 = "eat";
+        String word2 = "e";
+        int a = minDistance(word1, word2);
+        System.out.println(a);
+    }
+
+    private static int minDistanceNotWork(String word1, String word2) {
+        int len1 = word1.length();
+        int len2 = word2.length();
+        if (len1 == 0 && len2 == 0) return 0;
+        if (len1 == 0) return len2;
+        if (len2 == 0) return len1;
+
+        int[][] dp = new int[len1 + 1][len2 + 1];
+        Arrays.fill(dp[0], 1);
+        dp[0][0] = 0;
+        for (int i = 1; i <= len1; i++){
+            dp[i][0] = 1;
+            for (int j = 1; j <= len2; j++){
+                char row = word1.charAt(i - 1);
+                char col = word2.charAt(j - 1);
+                if (row == col){
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + 1;
+                }
+            }
+        }
+        return dp[len1][len2];
+    }
+
+    private static int minDistance(String word1, String word2) {
+        int len1 = word1.length();
+        int len2 = word2.length();
+        if (len1 == 0) return len2;
+        if (len2 == 0) return len1;
+
+        int[][] dp = new int[len1 + 1][len2 + 1];
+
+        // Set first row.
+        for (int i = 1; i <= len1; i++){
+            dp[0][i] = i;
+        }
+        // Set first col.
+        for (int i = 1; i <= len2; i++){
+            dp[i][0] = i;
+        }
+
+        for (int i = 1; i <= len1; i++){
+            for (int j = 1; j <= len2; j++){
+                char row = word1.charAt(i - 1);
+                char col = word2.charAt(j - 1);
+                if (row == col){
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + 1;
+                }
+            }
+        }
+        return dp[len1][len2];
     }
 
     private static void p714() {
