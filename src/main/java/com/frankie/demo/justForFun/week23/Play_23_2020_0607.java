@@ -13,6 +13,28 @@ public class Play_23_2020_0607 {
 //        p322(); // 322. Coin Change
 //        p518(); // 518. Coin Change 2
 //        p139(); // 139. Word Break
+        p377(); // 377. Combination Sum IV
+    }
+
+    private static void p377() {
+        int[] nums = {1, 2, 3};
+        int target = 4;
+        int a = combinationSum4(nums, target);
+        System.out.println(a);
+    }
+
+    private static int combinationSum4(int[] nums, int target) {
+
+        int[] dp = new int[target + 1];
+        dp[0] = 1;
+        for (int j = 1; j <= target; j++){
+            for (int n: nums){
+                if (j - n >= 0){
+                    dp[j] += dp[j - n];
+                }
+            }
+        }
+        return dp[target];
     }
 
     private static void p139() {
