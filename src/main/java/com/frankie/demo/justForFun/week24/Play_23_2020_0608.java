@@ -15,6 +15,88 @@ public class Play_23_2020_0608 {
 //        p309(); // 309. Best Time to Buy and Sell Stock with Cooldown
 //        p714(); // 714. Best Time to Buy and Sell Stock with Transaction Fee
 //        p583(); // 583. Delete Operation for Two Strings
+//        p72();  // 72. Edit Distance
+//        p650(); // 650. 2 Keys Keyboard
+    }
+
+    private static void p650() {
+        int n = 10;
+        int a = minSteps(n);
+        System.out.println(a);
+    }
+
+    private static int minSteps(int n) {
+        if (n <= 1) return 0;
+        if (n == 2) return 2;
+        if (n == 3) return 3;
+        int[] dp = new int[n + 1];
+        dp[2] = 2;
+        dp[3] = 3;
+        for (int i = 4; i <= n; i++){
+            int sqrt = (int) Math.sqrt(i);
+            for (int j = 2; j <= sqrt; j++){
+                if (i % j == 0){
+                    dp[i] = dp[j] + dp[i / j];
+                    break;
+                } else {
+                    dp[i] = i;
+                }
+            }
+        }
+        return dp[n];
+    }
+
+    private static int minStepsAmazing(int n) {
+
+        int ans = 0;
+        for (int i = 2; i <= n; i++){
+            while (n % i == 0){
+                ans += i;
+                n /= i;
+            }
+        }
+        return ans;
+    }
+
+    private static void p72() {
+        String word1 = "horse";
+        String word2 = "ros";
+        int a = minDistance_72(word1, word2);
+        System.out.println(a);
+    }
+
+    private static int minDistance_72(String word1, String word2) {
+        int len1 = word1.length();
+        int len2 = word2.length();
+
+        int[][] dp = new int[len1 + 1][len2 + 1];
+
+        // Set row.
+        for (int i = 1; i <= len2; i++){
+            dp[0][i] = i;
+        }
+
+        // Set col.
+        for (int i = 1; i <= len1; i++){
+            dp[i][0] = i;
+        }
+
+        for (int i = 1; i <= len1; i++){
+            for (int j = 1; j <= len2; j++){
+                char row = word1.charAt(i - 1);
+                char col = word2.charAt(j - 1);
+                if (row == col){
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = min3(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]) + 1;
+                }
+            }
+        }
+        return dp[len1][len2];
+    }
+
+    private static int min3(int a, int b, int c) {
+        return Math.min(a, Math.min(b, c));
     }
 
     private static void p583() {
