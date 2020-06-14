@@ -1,5 +1,9 @@
 package com.frankie.demo.justForFun.week24;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author: Yao Frankie
  * @date: 2020/6/1 9:40
@@ -7,7 +11,49 @@ package com.frankie.demo.justForFun.week24;
 public class Play_23_2020_0611 {
 
     public static void main(String[] args) {
-        p394(); // 394. Decode String
+//        p394(); // 394. Decode String
+        p127(); // 127. Word Ladder
+    }
+
+    private static void p127() {
+        String beginWord = "hot";
+        String endWord = "dog";
+        List<String> wordList = new ArrayList<>();
+        wordList.add("hot");
+        wordList.add("dog");
+        int a = ladderLength(beginWord, endWord, wordList);
+        System.out.println(a);
+    }
+
+    private static int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        // Early break.
+        if (!wordList.contains(endWord)) return 0;
+        int ans = 0;
+        ArrayDeque<String> q = new ArrayDeque<>();
+        q.offer(beginWord);
+
+        while (!q.isEmpty()){
+            ans++;
+            int size = q.size();
+            while (size-- > 0){
+                String cur = q.poll();
+                char[] ch = cur.toCharArray();
+                for (int i = 0; i < cur.length(); i++){
+                    char back = ch[i];
+                    for (char c = 'a'; c <= 'z'; c++){
+                        if (c == back) continue;
+                        ch[i] = c;
+                        String tmp = new String(ch);
+                        if (tmp.equals(endWord)) return ans + 1;
+                        if (!wordList.contains(tmp)) continue;
+                        wordList.remove(tmp);
+                        q.offer(tmp);
+                    }
+                    ch[i] = back;
+                }
+            }
+        }
+        return 0;
     }
 
     private static void p394() {
