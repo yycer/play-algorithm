@@ -12,6 +12,89 @@ public class MathTest {
 //        p204();
 //        p7();
 //        p279();
+        gcd();
+    }
+
+    // Greatest Common Divisor.
+    private static void gcd() {
+        int a = 20;
+        int b = 15;
+        int ans1 = gcdV1(a, b);
+        int ans2 = gcdV2(a, b);
+        int ans3 = gcdV3(a, b);
+        int ans4 = gcdV4(a, b);
+
+//        System.out.println(ans1);
+//        System.out.println(ans2);
+//        System.out.println(ans3);
+        System.out.println(ans4);
+    }
+
+    /**
+     * 暴力法
+     */
+    private static int gcdV1(int a, int b) {
+
+        int big   = Math.max(a, b);
+        int small = Math.min(a, b);
+
+        for (int i = small / 2; i > 1; i--){
+            if (big % i == 0 && small % i == 0){
+                return i;
+            }
+        }
+        return 1;
+    }
+
+    /**
+     * 辗转相除法
+     */
+    private static int gcdV2(int a, int b) {
+
+        int big   = Math.max(a, b);
+        int small = Math.min(a, b);
+
+        if (big % small == 0){
+            return small;
+        }
+
+        return gcdV2(big % small, small);
+    }
+
+    /**
+     * 更相减损法
+     */
+    private static int gcdV3(int a, int b) {
+        if (a == b) return a;
+
+        int big   = Math.max(a, b);
+        int small = Math.min(a, b);
+
+        return gcdV3(big - small, small);
+    }
+
+    /**
+     * 更相减损法 & 移位
+     */
+    private static int gcdV4(int a, int b) {
+
+        if (a == b) return a;
+
+        if ((a & 1) == 0 && (b & 1) == 0){
+            return gcdV4(a >>> 1, b >>> 1) << 1;
+        } else if ((a & 1) == 0 && (b & 1) == 1){
+            return gcdV4(a >>> 1, b);
+        } else if ((a & 1) == 1 && (b & 1) == 0){
+            return gcdV4(a, b >>> 1);
+        } else {
+            int big   = Math.max(a, b);
+            int small = Math.min(a, b);
+            return gcdV4(big - small, small);
+        }
+    }
+
+
+    private static void gcdBruteForce() {
     }
 
     /**
