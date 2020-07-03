@@ -1,18 +1,200 @@
 package com.frankie.demo.math;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author: Yao Frankie
  * @date: 2020/5/15 10:21
  */
+
+
 public class MathTest {
 
+    public static class Bucket{
+        Integer min;
+        Integer max;
+    }
     public static void main(String[] args) {
 //        p204();
 //        p7();
 //        p279();
-        gcd();
+//        gcd();
+
+//        p125();
+
+//        p560();
+
+        int a = 8;
+        int ans = (int) Math.ceil((double) a / 6);
+        System.out.println(ans);
+    }
+
+    private static void calBugs() {
+
+        // 0 1 1 2 3 5 8
+        // 0 1 2 3 4 5 6
+
+    }
+
+    private static void p560() {
+
+        int[] nums = {1, 1, 1};
+        int k = 2;
+        int ans = 0;
+        int len = nums.length;
+        int[] preSum = new int[len + 1];
+        // key is prefixSum, val is frequency.
+        HashMap<Integer, Integer> map = new HashMap<>();
+        // HashSet<Integer> set = new HashSet<>();
+
+        // Build preSum.
+        for (int i = 0; i < len; i++){
+            preSum[i + 1] = preSum[i] + nums[i];
+        }
+
+        // sum of range[i, j] = preSum[j] - preSum[i - 1]
+        // 0
+        // 1
+        // 2
+        // 3
+        for (int n: preSum){
+            // 2
+            // 1
+            // 0
+            // 1
+            int target = k - n;
+            if (map.containsKey(target)){
+                // 1
+                // 2
+                ans += map.get(target);
+            }
+            map.put(n, map.getOrDefault(n, 0) + 1);
+
+        }
+        // nums   =    [1, 1, 1]
+        // preSum = [0, 1, 2, 3]
+        // map    = {0:1, 1:1, 2:1, 3:1}
+
+        System.out.println(ans);
+
+    }
+
+    private static void sum4() {
+        int[] nums = {1, 0, -1, 0, -2, 2};
+        int target = 0;
+        List<List<Integer>> ans = new LinkedList<>();
+        int len = nums.length;
+
+        for (int i = 0; i < len - 3; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int first = nums[i];
+            for (int j = i + 1; j < len - 2; j++) {
+                if (j > 0 && nums[j] == nums[j - 1]) continue;
+                int second = nums[j];
+                int rest = target - first - second;
+                int lo = j + 1;
+                int hi = len - 1;
+                while (lo < hi) {
+                    int sum = nums[lo] + nums[hi];
+                    if (sum == rest) {
+                        ans.add(Arrays.asList(first, second, nums[lo], nums[hi]));
+                        while (lo < hi && nums[lo] == nums[lo + 1]) lo++;
+                        while (lo < hi && nums[hi] == nums[hi - 1]) hi++;
+                        lo++;
+                        hi--;
+                    } else if (sum < rest) {
+                        lo++;
+                    } else {
+                        hi--;
+                    }
+                }
+            }
+        }
+        System.out.println(ans);
+    }
+
+    private static void find() {
+
+        int[] nums = {5, 7, 7, 8, 8, 10};
+        int target = 8;
+        int left = getLeftIndex(nums, target);
+        int right = getRightIndex(nums, target);
+
+//        if (left == -1 && right == -1) return 0;
+        int ans = right - left + 1;
+        System.out.println(ans);
+    }
+
+    private static int getLeftIndex(int[] nums, int target) {
+
+        int lo = 0;
+        int hi = nums.length - 1;
+
+        while (lo <= hi){
+            int mid = (lo + hi) >>> 1;
+            int cur = nums[mid];
+            if (cur >= target){
+                hi = mid - 1;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return nums[lo] == target ? lo : -1;
+    }
+
+    private static int getRightIndex(int[] nums, int target) {
+
+        int lo = 0;
+        int hi = nums.length - 1;
+
+        while (lo <= hi){
+            int mid = (lo + hi) >>> 1;
+            int cur = nums[mid];
+            if (cur <= target){
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return nums[hi] == target ? hi : -1;
+    }
+
+    private static void p125() {
+        boolean ans = isPalindrome("race a car");
+        System.out.println(ans);
+    }
+
+    public static boolean isPalindrome(String s) {
+
+        s = s.toLowerCase();
+        int len = s.length();
+        if (len == 0) return true;
+
+        int lo = 0;
+        int hi = len - 1;
+
+        while (lo < hi){
+            if (s.charAt(lo) < '0' || s.charAt(lo) > '9' || s.charAt(lo) < 'a' || s.charAt(lo) > 'z'){
+                lo++;
+                continue;
+            }
+
+            if (s.charAt(hi) < '0' || s.charAt(hi) > '9' || s.charAt(hi) < 'a' || s.charAt(hi) > 'z'){
+                hi--;
+                continue;
+            }
+
+            if (s.charAt(lo) != s.charAt(hi)){
+                return false;
+            }
+            lo++;
+            hi--;
+        }
+
+        return true;
     }
 
     // Greatest Common Divisor.
