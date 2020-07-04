@@ -31,7 +31,50 @@ public class DynamicProgrammingLC {
 //        p413();  // Arithmetic Slices
 //        p343();  // Integer Break
 //        p279();  // Perfect Squares
-        p494();  // Target Sum
+//        p494();  // Target Sum
+//        getBestGoldMining();
+        getBestGoldMiningOptimize();
+    }
+
+    private static void getBestGoldMining() {
+
+        int   n = 5;  // Number of gold mines.
+        int   w = 10; // Number of workers.
+        int[] p = { 5,   5,   3,   4,   3 }; // Number of workers required for gold mining.
+        int[] g = {400, 500, 200, 300, 350}; // Gold reverses.
+
+        int[][] dp = new int[n + 1][w + 1];
+        for (int i = 1; i <= n; i++){
+            for (int j = 1; j <= w; j++){
+                // Don't have enough workers.
+                if (j < p[i - 1]){
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    // State transition equation.
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - p[i - 1]] + g[i - 1]);
+                }
+            }
+        }
+
+        System.out.println(dp[n][w]);
+    }
+
+    private static void getBestGoldMiningOptimize() {
+
+        int   n = 5;  // Number of gold mines.
+        int   w = 10; // Number of workers.
+        int[] p = { 5,   5,   3,   4,   3 }; // Number of workers required for gold mining.
+        int[] g = {400, 500, 200, 300, 350}; // Gold reverses.
+
+        int[] dp = new int[w + 1];
+        for (int i = 1; i <= n; i++){
+            for (int j = w; j >= p[i - 1]; j--){
+                // State transition equation.
+                dp[j] = Math.max(dp[j], dp[j - p[i - 1]] + g[i - 1]);
+            }
+        }
+
+        System.out.println(dp[w]);
     }
 
     /**
