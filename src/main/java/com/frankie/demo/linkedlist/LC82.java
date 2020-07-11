@@ -12,41 +12,32 @@ public class LC82 {
         ListNode l2 = new ListNode(2);
         ListNode l3 = new ListNode(3);
         ListNode l4 = new ListNode(3);
+        ListNode l41 = new ListNode(3);
         ListNode l5 = new ListNode(4);
         ListNode l6 = new ListNode(4);
         ListNode l7 = new ListNode(5);
         head.next = l2;
         l2.next = l3;
         l3.next = l4;
-        l4.next = l5;
+        l4.next = l41;
+        l41.next = l5;
         l5.next = l6;
         l6.next = l7;
 
-        ListNode dummy = new ListNode(Integer.MAX_VALUE);
-        dummy.next = head;
-        ListNode pre = dummy;
-        ListNode cur = head;
-
-        while (cur != null && cur.next != null){
-            if (cur.val != pre.val && cur.val != cur.next.val){
-                cur = cur.next;
-                pre = pre.next;
-            } else {
-                int preVal = cur.val;
-                cur = cur.next;
-                while (cur != null && cur.next != null){
-                    if (cur.val == preVal || cur.val == cur.next.val){
-                        preVal = cur.val;
-                        cur = cur.next;
-                    } else {
-                        pre.next = cur;
-                        break;
-                    }
-                }
-                if (cur.val != preVal && cur.next == null){
-                    pre.next = cur;
-                }
+        ListNode dummy = new ListNode(0), fast = head, slow = dummy;
+        slow.next = fast;
+        while(fast != null) {
+            while (fast.next != null && fast.val == fast.next.val) {
+                fast = fast.next;    //while loop to find the last node of the dups.
             }
+            if (slow.next != fast) { //duplicates detected.
+                slow.next = fast.next; //remove the dups.
+                fast = slow.next;     //reposition the fast pointer.
+            } else { //no dup, move down both pointer.
+                slow = slow.next;
+                fast = fast.next;
+            }
+
         }
         System.out.println(dummy);
     }
