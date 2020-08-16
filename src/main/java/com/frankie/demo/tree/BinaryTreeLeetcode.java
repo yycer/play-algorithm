@@ -2,8 +2,6 @@ package com.frankie.demo.tree;
 
 import com.frankie.demo.utils.TreeNode;
 
-import java.awt.*;
-
 /**
  * @author: Yao Frankie
  * @date: 2020/5/20 13:08
@@ -35,7 +33,83 @@ public class BinaryTreeLeetcode {
 //        p110();
 //        p104();
 //        p543();
-        p111();
+//        p111();
+        p222();
+    }
+
+    // 222. Count Complete Tree Nodes
+    private static void p222() {
+        TreeNode cur = buildCur();
+        int ans = countNodes(cur);
+        System.out.println(ans);
+    }
+
+    private static TreeNode buildCur() {
+        TreeNode n1 = new TreeNode(8);
+        TreeNode n2 = new TreeNode(3);
+        TreeNode n3 = new TreeNode(6);
+        TreeNode n4 = new TreeNode(1);
+        TreeNode n5 = new TreeNode(7);
+        TreeNode n6 = new TreeNode(3);
+        TreeNode n7 = new TreeNode(6);
+        TreeNode n8 = new TreeNode(2);
+        TreeNode n9 = new TreeNode(3);
+        TreeNode n10 = new TreeNode(8);
+        n1.left = n2;
+        n1.right = n3;
+        n2.left = n4;
+        n2.right = n5;
+        n3.left = n6;
+        n3.right = n7;
+        n4.left = n8;
+        n4.right = n9;
+        n5.left = n10;
+        return n1;
+    }
+
+    private static int countNodes(TreeNode root) {
+        if (root == null) return 0;
+        int h = 0;
+        TreeNode node = root;
+        while (node.left != null) {
+            h++;
+            node = node.left;
+        }
+
+        int upper = (1 << h) - 1;
+        int start = 0, end = upper;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (hasNode(root, mid, h)) {
+                start = mid;
+            }
+            else {
+                end = mid;
+            }
+        }
+        if (hasNode(root, end, h)) {
+            return upper + end + 1;
+        }
+        return upper + start + 1;
+
+    }
+
+    public static boolean hasNode(TreeNode root, int idx, int h) {
+        int start = 0;
+        int end = (1 << h) - 1;
+        TreeNode node = root;
+        for (int i = 0; i < h; ++i) {
+            int mid = start + (end - start) / 2;
+            if (mid >= idx) {
+                node  = node.left;
+                end = mid;
+            }
+            else {
+                node = node.right;
+                start = mid;
+            }
+        }
+        return node != null;
     }
 
     /**
