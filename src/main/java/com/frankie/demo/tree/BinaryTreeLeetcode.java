@@ -2,6 +2,9 @@ package com.frankie.demo.tree;
 
 import com.frankie.demo.utils.TreeNode;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author: Yao Frankie
  * @date: 2020/5/20 13:08
@@ -34,7 +37,59 @@ public class BinaryTreeLeetcode {
 //        p104();
 //        p543();
 //        p111();
-        p222();
+//        p222();
+//        p113();
+    }
+
+    private static List<List<Integer>> ans113 = new LinkedList<>();
+
+    private static void p113() {
+        TreeNode root = buildRootFor113();
+        int sum = 22;
+        pathSum(root, sum);
+    }
+
+    private static TreeNode buildRootFor113() {
+        TreeNode root = new TreeNode(5);
+        TreeNode n4 = new TreeNode(4);
+        TreeNode n8 = new TreeNode(8);
+        TreeNode n11 = new TreeNode(11);
+        TreeNode n13 = new TreeNode(13);
+        TreeNode n4_2 = new TreeNode(4_2);
+        TreeNode n7 = new TreeNode(7);
+        TreeNode n2 = new TreeNode(2);
+        TreeNode n5 = new TreeNode(5);
+        TreeNode n1 = new TreeNode(1);
+        root.left = n4;
+        root.right = n8;
+        n4.left = n11;
+        n11.left = n7;
+        n11.right = n2;
+        n8.left = n13;
+        n8.right = n4_2;
+        n4_2.left = n5;
+        n4_2.right = n1;
+        return root;
+    }
+
+    private static List<List<Integer>> pathSum(TreeNode root, int sum) {
+        dfs(root, sum, new LinkedList<>());
+        return ans113;
+    }
+
+    private static void dfs(TreeNode root, int sum, LinkedList<Integer> child) {
+        if (root == null) return;
+        System.out.println(root.val);
+        sum -= root.val;
+        child.add(root.val);
+        if (root.left == null && root.right == null && sum == 0){
+            ans113.add(new LinkedList<>(child));
+            return;
+        }
+        dfs(root.left, sum, child);
+        dfs(root.right, sum, child);
+        child.removeLast();
+        sum += root.val;
     }
 
     // 222. Count Complete Tree Nodes
