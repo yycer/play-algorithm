@@ -1,5 +1,7 @@
 package com.frankie.demo.binarySearch;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
+
 import java.util.Arrays;
 
 /**
@@ -15,7 +17,46 @@ public class BinarySearchLeetcode {
 //        p278();
 //        p153();
 //        p34();
-        p33();
+//        p33();
+        p668();
+    }
+
+    private static void p668() {
+        int m = 45, n = 12, k = 471;
+        findKthNumber1(m, n, k);
+    }
+
+    private static int findKthNumber1(int m, int n, int k) {
+
+        int l = 1, r = m * n;
+        while (l < r){
+            int mid = l + r + 1 >>> 1;
+            if (count(m, n, mid) <= k) l = mid;
+            else r = mid - 1;
+        }
+        System.out.println("l = " + l + ", r = " + r);
+        return r;
+    }
+
+
+    private static int findKthNumber(int m, int n, int k) {
+
+        int l = 1, r = m * n;
+        while (l < r){
+            int mid = l + r >>> 1;
+            System.out.println("mid = " + mid);
+            if (count(m, n, mid) >= k) r = mid;
+            else l = mid + 1;
+        }
+        return r;
+    }
+
+    private static int count(int m, int n, int mid){
+        int cnt = 0;
+        for (int i = 1; i <= m; i++){
+            cnt += Math.min(mid / i, n);
+        }
+        return cnt;
     }
 
     /**
